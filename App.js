@@ -6,6 +6,7 @@ import store from './src/redux/store';
 
 import SignUpPage from './src/SignUpPage';
 import LoginPage from './src/LoginPage';
+import WelcomePage from './src/WelcomePage';
 
 const Stack = createStackNavigator();
 
@@ -13,7 +14,12 @@ export default function App() {
   return (
     <Provider store={store}>
       <NavigationContainer>
-        <Stack.Navigator initialRouteName="Daftar Akun">
+        <Stack.Navigator initialRouteName="Welcome">
+          <Stack.Screen
+            name="Welcome"
+            component={WelcomePage}
+            options={{headerShown: false}}
+          />
           <Stack.Screen
             name="Daftar Akun"
             component={SignUpPage}

@@ -70,7 +70,7 @@ class SignUpPage extends Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    paddingTop: getStatusBarHeight() + 50,
+    paddingTop: getStatusBarHeight() + 40,
     paddingBottom: 50,
     paddingLeft: 30,
     paddingRight: 30,
