@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "559639773947",
+    "firebase_url": "https://aseler.firebaseio.com",
+    "project_id": "aseler",
+    "storage_bucket": "aseler.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:559639773947:android:ae6f60c9f8a022e10b265e",
+        "android_client_info": {
+          "package_name": "com.aseler"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "559639773947-aa9p2c8lr0j0adipv8j345o2ionnhf80.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA2Kcqa1xfVPYbNQ57ZzBT-wBUlpEH-gL8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "559639773947-aa9p2c8lr0j0adipv8j345o2ionnhf80.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

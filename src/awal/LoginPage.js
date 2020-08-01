@@ -1,55 +1,56 @@
 import React, {Component} from 'react';
-import {View, StyleSheet, Text} from 'react-native';
-import {getStatusBarHeight} from 'react-native-status-bar-height';
 import {
-  Item,
-  Input,
-  Form,
-  Label,
-  Button,
-  Thumbnail,
-  Text
-} from 'native-base';
+  View,
+  StyleSheet,
+  Text,
+  TextInput,
+  Image,
+  // Item,
+  // Input,
+  // Form,
+  // Label,
+  // Button,
+  // Thumbnail,
+} from 'react-native';
+import {getStatusBarHeight} from 'react-native-status-bar-height';
 
-import Logo from '../images/logo aselern.png';
-import { TouchableOpacity } from 'react-native-gesture-handler';
+import Logo from '../../assets/image/aseler.png';
+import {TouchableOpacity} from 'react-native-gesture-handler';
 
 class LoginPage extends Component {
-  constructor(props){
+  constructor(props) {
     super(props);
   }
 
   render() {
     return (
       <View style={styles.container}>
-        <View style={style.logoStyle}>
-          <Thumbnail square large source={Logo}/>
-          <Text style={style.textLogoStyle}>Aseler</Text>
+        <View style={styles.logoStyle}>
+          <Image source={Logo} />
+          <Text style={styles.textLogoStyle}>Aseler</Text>
         </View>
-        <Form style={style.formLoginStyles}>
+        <TextInput placeholder="Email" />
+        {/* <Form style={styles.formLoginStyles}>
           <Item floatingLabel>
             <Label>
               <Text style={styles.inputStyle}>Username</Text>
             </Label>
-            <Input style={styles.inputStyle}/>
+            <Input style={styles.inputStyle} />
           </Item>
           <Item floatingLabel>
             <Label>
               <Text style={styles.inputStyle}>Password</Text>
             </Label>
-            <Input style={styles.inputStyle} secureTextEntry={true}/>
+            <Input style={styles.inputStyle} secureTextEntry={true} />
           </Item>
-        </Form>
-        <Button block info style={styles.footerBottomStyle}>
-          <Text>Sign In</Text>
-        </Button>
+        </Form> */}
+        {/* <Button style={styles.footerBottomStyle}>Daftar</Button> */}
         <View style={styles.footersignUpStyle}>
           <TouchableOpacity>
-            <Text style={style.signUpStyle}>
+            <Text style={styles.signUpStyle}>
               Don't have an account? Register now
             </Text>
           </TouchableOpacity>
-
         </View>
       </View>
     );
@@ -65,40 +66,40 @@ const styles = StyleSheet.create({
     paddingRight: 30,
     backgroundColor: '#FFFFFF',
   },
-  logoStyle:{
+  logoStyle: {
     marginTop: 70,
     marginBottom: 80,
     alignItems: 'center',
-    justifyContent: 'center'
+    justifyContent: 'center',
   },
-  textLogoStyle:{
+  textLogoStyle: {
     fontSize: 15,
-    color: 'white'
+    color: 'black',
   },
   formLoginStyles: {
     marginTop: -30,
     paddingLeft: 10,
-    paddingRight: 30
+    paddingRight: 30,
   },
-  inputStyle:{
-    color: 'white',
+  inputStyle: {
+    color: 'black',
     marginBottom: 6,
-    fontSize: 14
+    fontSize: 14,
   },
-  footerBottomStyle:{
-    marginTop : 26,
+  footerBottomStyle: {
+    marginTop: 26,
     paddingTop: 10,
     marginLeft: 16,
-    marginRight: 16
+    marginRight: 16,
   },
-  footersignUpStyle:{
+  footersignUpStyle: {
     marginTop: 25,
-    alignItems: 'center'
+    alignItems: 'center',
   },
-  signUpStyle:{
-    color: 'white',
-    fontSize: 12
-  }
+  signUpStyle: {
+    color: 'black',
+    fontSize: 12,
+  },
 });
 
 export default LoginPage;

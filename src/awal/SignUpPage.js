@@ -7,8 +7,27 @@ import {
   TouchableWithoutFeedback,
 } from 'react-native';
 import {getStatusBarHeight} from 'react-native-status-bar-height';
+import firebase from '../../Firebase';
 
 class SignUpPage extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      email: '',
+      password: '',
+      ulangiPassword: '',
+      errorMessage: null,
+    };
+  }
+
+  // handleSignUp = () => {
+  //   firebase
+  //     .auth()
+  //     .createUserWithEmailAndPassword(this.state.email, this.state.password)
+  //     .then(() => this.props.navigation.navigate('TabScreen'))
+  //     .catch((error) => this.setState({errorMessage: error.message}));
+  //   console.log('button pressed');
+  // };
   render() {
     return (
       <View style={styles.container}>
@@ -17,14 +36,48 @@ class SignUpPage extends Component {
           Lengkapi informasi data diri kamu terlebih dahulu untuk membuat akun
           baru
         </Text>
-        <InputForm question="Nama Lengkap" example="John Doe" />
         <InputForm
           question="Email"
           example="example@email.com"
           type="email-address"
+          onChangeText={(email) => this.setState({email: email})}
         />
-        <InputForm question="Kata Sandi" example="......" pass={true} />
-        <TouchableWithoutFeedback>
+        <InputForm
+          question="Kata Sandi"
+          example="......"
+          pass={true}
+          onChangeText={(pass) => this.setState({password: pass})}
+        />
+        <InputForm
+          question="Ulangi Kata Sandi"
+          example="......"
+          pass={true}
+          onChangeText={(pass) => this.setState({ulangiPassword: pass})}
+        />
+        <TouchableWithoutFeedback
+          onPress={() => {
+            // if (
+            //   this.state.email != '' &&
+            //   this.state.password != '' &&
+            //   this.state.ulangiPassword != ''
+            // ) {
+            //   if (validateEmail(this.state.email)) {
+            //     if (this.state.password == this.state.ulangiPassword) {
+            //       if (this.state.errorMessage != null) {
+            //         alert(this.state.errorMessage);
+            //       }
+            //       this.handleSignUp;
+            //     } else {
+            //       alert('Kata sandi tidak sama');
+            //     }
+            //   } else {
+            //     alert('Harap isi email dengan benar');
+            //   }
+            // } else {
+            //   alert('Harap isi dengan lengkap');
+            // }
+            this.props.navigation.navigate('TabScreen');
+          }}>
           <View
             style={{
               backgroundColor: '#284B63',
@@ -82,7 +135,7 @@ const styles = StyleSheet.create({
     fontSize: 20,
   },
   p: {
-    color: '#000000',
+    color: '#353535',
     fontFamily: 'OpenSans-Regular',
     fontSize: 14,
   },
@@ -115,5 +168,11 @@ class InputForm extends Component {
     );
   }
 }
+
+const validateEmail = (email) => {
+  const expression = /^(([^<>()\[\]\\.,;:\s@”]+(\.[^<>()\[\]\\.,;:\s@”]+)*)|(“.+”))@((\[[0–9]{1,3}\.[0–9]{1,3}\.[0–9]{1,3}\.[0–9]{1,3}])|(([a-zA-Z\-0–9]+\.)+[a-zA-Z]{2,}))$/;
+
+  return expression.test(String(email).toLowerCase());
+};
 
 export default SignUpPage;

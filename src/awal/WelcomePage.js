@@ -2,35 +2,40 @@ import React, {Component} from 'react';
 import {View, StyleSheet, Text, Image} from 'react-native';
 import {getStatusBarHeight} from 'react-native-status-bar-height';
 import AppIntroSlider from 'react-native-app-intro-slider';
-import SignUpPage from './SignUpPage';
 
 const slides = [
   {
     key: 1,
     title: 'Selamat Datang',
     desc: 'Mengatur penjualan online kamu dalam satu aplikasi',
-    image: require('../assets/image/welcome1.png'),
+    image: require('../../assets/image/welcome1.png'),
   },
   {
     key: 2,
     title: '',
     desc: 'Semua orang dapat mengakses toko online kamu dengan satu link URL',
-    image: require('../assets/image/welcome2.png'),
+    image: require('../../assets/image/welcome2.png'),
   },
   {
     key: 3,
     title: '',
     desc:
       'Kamu bisa menghubungi WhatsApp pembeli tanpa mengetik berulang-ulang',
-    image: require('../assets/image/welcome3.png'),
+    image: require('../../assets/image/welcome3.png'),
   },
 ];
 
 class WelcomePage extends Component {
-  //   state = {
-  //     isFirst: true,
-  //     isLogin: false,
-  //   };
+  state = {
+    isFirst: true,
+  };
+  // componentDidMount() {
+  //   if (this.state.isFirst) {
+  //     this.setState({isFirst: false});
+  //   } else {
+  //     this.props.navigation.navigate('Daftar Akun');
+  //   }
+  // }
   _renderItem = ({item}) => {
     return (
       <View style={styles.container}>
@@ -80,7 +85,6 @@ class WelcomePage extends Component {
     );
   };
   render() {
-    // if (this.state.isFirst) {
     return (
       <AppIntroSlider
         renderItem={this._renderItem}
@@ -96,13 +100,6 @@ class WelcomePage extends Component {
         renderDoneButton={this._renderDoneButton}
       />
     );
-    // } else {
-    //   if (this.state.isLogin) {
-    //     return <View style={styles.container}></View>;
-    //   } else {
-    //     return <SignUpPage />;
-    //   }
-    // }
   }
 }
 
