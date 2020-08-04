@@ -6,7 +6,7 @@ export default class Card extends Component {
   render() {
     return (
       <TouchableWithoutFeedback onPress={this.props.onPress}>
-        <View style={[this.props.style, styles.dropShadow]}>
+        <View style={[styles.dropShadow, this.props.style]}>
           {this.props.children}
         </View>
       </TouchableWithoutFeedback>

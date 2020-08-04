@@ -6,7 +6,7 @@ import {Provider} from 'react-redux';
 import store from './src/redux/store';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 
-import SignUpPage from './src/awal/SignUpPage';
+import SignUpPage from './src/awal/SignupPage';
 import LoginPage from './src/awal/LoginPage';
 import WelcomePage from './src/awal/WelcomePage';
 import PesananPage from './src/pesanan/PesananPage';
@@ -14,6 +14,11 @@ import SplashPage from './src/SplashPage';
 import ProdukPage from './src/produk/ProdukPage';
 import ProfilPage from './src/profil/ProfilPage';
 import DetailPesanan0 from './src/pesanan/DetailPesanan0';
+import DetailPesanan1 from './src/pesanan/DetailPesanan1';
+import DetailPesanan2 from './src/pesanan/DetailPesanan2';
+import NewProdukPage from './src/produk/NewProdukPage';
+import PilihKategoriPage from './src/produk/PilihKategoriPage';
+import PilihVariasiPage from './src/produk/PilihVariasiPage';
 
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -56,6 +61,16 @@ function PesananScreen() {
         component={DetailPesanan0}
         options={{headerTitle: '', tabBarVisible: false}}
       />
+      <Stack.Screen
+        name="DetailPesanan1"
+        component={DetailPesanan1}
+        options={{headerTitle: '', tabBarVisible: false}}
+      />
+      <Stack.Screen
+        name="DetailPesanan2"
+        component={DetailPesanan2}
+        options={{headerTitle: '', tabBarVisible: false}}
+      />
     </Stack.Navigator>
   );
 }
@@ -71,6 +86,21 @@ function ProdukScreen() {
         headerTitleStyle: {fontFamily: 'OpenSans-Regular', fontSize: 18},
       }}>
       <Stack.Screen name="Produk Saya" component={ProdukPage} />
+      <Stack.Screen
+        name="Tambah Data Produk"
+        component={NewProdukPage}
+        options={{tabBarVisible: false}}
+      />
+      <Stack.Screen
+        name="Pilih Kategori"
+        component={PilihKategoriPage}
+        options={{tabBarVisible: false}}
+      />
+      <Stack.Screen
+        name="Pilih Variasi"
+        component={PilihVariasiPage}
+        options={{tabBarVisible: false}}
+      />
     </Stack.Navigator>
   );
 }
@@ -95,7 +125,14 @@ function getTabBarVisibility(route) {
     ? route.state.routes[route.state.index].name
     : '';
 
-  if (routeName === 'DetailPesanan0') {
+  if (
+    routeName === 'DetailPesanan0' ||
+    routeName === 'DetailPesanan1' ||
+    routeName === 'DetailPesanan2' ||
+    routeName === 'Tambah Data Produk' ||
+    routeName === 'Pilih Kategori' ||
+    routeName === 'Pilih Variasi'
+  ) {
     return false;
   }
 
@@ -125,12 +162,13 @@ function TabScreen() {
       <Tab.Screen
         name="ProdukScreen"
         component={ProdukScreen}
-        options={{
+        options={({route}) => ({
           tabBarLabel: 'Produk',
           tabBarIcon: ({color, size}) => (
             <Ionicons name="cube" color={color} size={size} />
           ),
-        }}
+          tabBarVisible: getTabBarVisibility(route),
+        })}
       />
       <Tab.Screen
         name="ProfilScreen"

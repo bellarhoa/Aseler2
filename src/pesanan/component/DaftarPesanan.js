@@ -24,6 +24,7 @@ export default class DaftarPesanan extends React.Component {
           />
         )}
         keyExtractor={(item) => item.tanggal}
+        scrollEnabled={false}
       />
     );
   }
@@ -54,6 +55,7 @@ class PesananPerHari extends React.Component {
             />
           )}
           keyExtractor={(item) => item.id}
+          scrollEnabled={false}
         />
       </View>
     );
@@ -70,11 +72,11 @@ class RowPesanan extends React.Component {
     } else if (this.props.status === 1) {
       sts = 'Belum Konfirmasi';
       stsColor = '#E5989B';
-      press = () => this.props.navigation.navigate('DetailPesanan0');
+      press = () => this.props.navigation.navigate('DetailPesanan1');
     } else if (this.props.status === 2) {
       sts = 'Belum Kirim';
       stsColor = '#B5838D';
-      press = () => this.props.navigation.navigate('DetailPesanan0');
+      press = () => this.props.navigation.navigate('DetailPesanan2');
     } else if (this.props.status === 3) {
       sts = 'Selesai';
       stsColor = '#06D6A0';

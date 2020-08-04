@@ -9,11 +9,24 @@ export default class SplashPage extends Component {
   //     this.props.navigation.navigate(user ? 'TabScreen' : 'AwalScreen');
   //   });
   // }
+  performTimeConsumingTask = async () => {
+    return new Promise((resolve) =>
+      setTimeout(() => {
+        resolve('result');
+      }, 2000),
+    );
+  };
+  async componentDidMount() {
+    const data = await this.performTimeConsumingTask();
+    if (data !== null) {
+      this.props.navigation.navigate('AwalScreen');
+    }
+  }
   render() {
     return (
       <View style={styles.viewStyles}>
         <Image
-          style={styles.image}
+          style={{height: 150, width: 200, marginBottom: 10}}
           source={require('../assets/image/aseler.png')}
         />
         <ActivityIndicator size="small" color="#284B63" />
@@ -28,8 +41,5 @@ const styles = {
     alignItems: 'center',
     justifyContent: 'center',
     backgroundColor: 'white',
-  },
-  image: {
-    height: 150,
   },
 };

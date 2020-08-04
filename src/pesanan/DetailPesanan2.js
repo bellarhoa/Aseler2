@@ -5,7 +5,7 @@ import BarisHargaDP from './component/BarisHarga_DetailPesanan';
 import ButtonDP from './component/Button_DetailPesanan';
 import {ScrollView} from 'react-native-gesture-handler';
 
-export default class DetailPesanan0 extends React.Component {
+export default class DetailPesanan2 extends React.Component {
   render() {
     return (
       <View
@@ -17,7 +17,7 @@ export default class DetailPesanan0 extends React.Component {
           paddingRight: 16,
         }}>
         <ScrollView>
-          <BarisInfoDP pertanyaan="Status Pesanan" jawaban="Belum Bayar" />
+          <BarisInfoDP pertanyaan="Status Pesanan" jawaban="Belum Kirim" />
           <Text style={styles.judul}>Data Pembeli</Text>
           <BarisInfoDP pertanyaan="Nama Lengkap" jawaban="John Doe" />
           <BarisInfoDP
@@ -94,7 +94,7 @@ export default class DetailPesanan0 extends React.Component {
               textColor="white"
             />
             <ButtonDP
-              text="Tandai Pesanan sudah Dibayar"
+              text="Tandai Pesanan sudah Dikirim"
               backgroundColor="#284B63"
               textColor="white"
             />
