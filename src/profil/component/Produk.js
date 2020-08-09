@@ -1,7 +1,6 @@
 import React, {Component} from 'react';
 import {View, StyleSheet, TouchableOpacity, Image} from 'react-native';
-import Warning from '../component/Warning';
-import DaftarProduk from './component/DaftarProduk';
+import DaftarProduk from '../../produk/component/DaftarProduk';
 
 const data = [
   {
@@ -66,38 +65,17 @@ const data = [
   },
 ];
 
-class ProdukPage extends Component {
+class Produk extends Component {
   render() {
     return (
       <View style={styles.container}>
-        <Warning navigation={this.props.navigation} />
         <DaftarProduk data={data} navigation={this.props.navigation} />
-        <TouchableOpacity
-          style={{
-            position: 'absolute',
-            bottom: 12,
-            right: 12,
-            shadowColor: '#000',
-            shadowOffset: {
-              width: 0,
-              height: 2,
-            },
-            shadowOpacity: 0.25,
-            shadowRadius: 2,
-            elevation: 3,
-          }}
-          onPress={() => this.props.navigation.navigate('Tambah Data Produk')}>
-          <Image
-            style={{width: 45, height: 45}}
-            source={require('../../assets/image/plus.png')}
-          />
-        </TouchableOpacity>
       </View>
     );
   }
 }
 
-export default ProdukPage;
+export default Produk;
 
 const styles = StyleSheet.create({
   container: {

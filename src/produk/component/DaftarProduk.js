@@ -8,6 +8,7 @@ import {
   Dimensions,
 } from 'react-native';
 import Card from '../../component/Card';
+import { TouchableNativeFeedback, TouchableOpacity, LongPressGestureHandler } from 'react-native-gesture-handler';
 
 export default class DaftarProduk extends React.Component {
   render() {
@@ -16,11 +17,12 @@ export default class DaftarProduk extends React.Component {
         data={this.props.data}
         renderItem={({item}) => (
           <Produk
-            onPress={item.onPress}
+            //onPress={item.onPress}
             image={item.image}
             namaProduk={item.nama}
             harga={item.harga}
             sisaStok={item.sisaStok}
+            navigation = {this.props.navigation}
           />
         )}
         keyExtractor={(item) => item.id}
@@ -35,22 +37,24 @@ export default class DaftarProduk extends React.Component {
 class Produk extends React.Component {
   render() {
     return (
-      <Card
+        <Card
+        onPress={() => this.props.navigation.navigate('Detail Produk')}
         style={{
           width: Dimensions.get('window').width / 2 - 40,
           margin: 5,
         }}
-        onPress={this.props.onPress}>
-        <View>
-          <Image
-            style={{
+        //onPress={this.props.onPress}
+        >
+          <View>
+            <Image
+            style={{  
               resizeMode: 'stretch',
               height: Dimensions.get('window').width / 2 - 40,
               width: Dimensions.get('window').width / 2 - 40,
             }}
             source={this.props.image}
-          />
-          <Text
+            />
+            <Text
             style={[
               styles.txt,
               {marginTop: 8, marginLeft: 12, marginRight: 12, height: 30},
@@ -58,8 +62,8 @@ class Produk extends React.Component {
             ellipsizeMode="tail"
             numberOfLines={2}>
             {this.props.namaProduk}
-          </Text>
-          <View
+            </Text>
+            <View
             style={{
               flexDirection: 'row',
               justifyContent: 'space-between',
@@ -67,14 +71,14 @@ class Produk extends React.Component {
               marginBottom: 12,
               marginLeft: 12,
               marginRight: 12,
-            }}>
-            <Text style={styles.txt}>
+              }}>
+              <Text style={styles.txt}>
               Rp {currencyFormat(this.props.harga)}
-            </Text>
-            <Text style={styles.stok}>{this.props.sisaStok} tersisa</Text>
+              </Text>
+              <Text style={styles.stok}>{this.props.sisaStok} tersisa</Text>
+            </View>
           </View>
-        </View>
-      </Card>
+        </Card>
     );
   }
 }
