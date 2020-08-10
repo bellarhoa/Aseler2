@@ -16,11 +16,11 @@ export default class DaftarProduk extends React.Component {
         data={this.props.data}
         renderItem={({item}) => (
           <Produk
-            onPress={item.onPress}
             image={item.image}
             namaProduk={item.nama}
             harga={item.harga}
             sisaStok={item.sisaStok}
+            navigation={this.props.navigation}
           />
         )}
         keyExtractor={(item) => item.id}
@@ -40,7 +40,7 @@ class Produk extends React.Component {
           width: Dimensions.get('window').width / 2 - 40,
           margin: 5,
         }}
-        onPress={this.props.onPress}>
+        onPress={() => this.props.navigation.navigate('Pilih Kategori')}>
         <View>
           <Image
             style={{

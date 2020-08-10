@@ -1,21 +1,37 @@
 const initialState = {
-  formData: [],
+  produk: [],
 };
 
 //Reducer
 const rootReducer = (state = initialState, action) => {
   switch (action.type) {
-    case 'ADD_NEW_FORM':
-      const {name, age, gender, phone, email} = action.form;
+    case 'ADD_NEW_PRODUCT':
+      const {
+        gambar,
+        nama,
+        harga,
+        stok,
+        merek,
+        berat,
+        kategori,
+        variasi,
+        deskripsi,
+        publik,
+      } = action.form;
       return {
         ...state,
-        formData: state.formData.concat({
+        produk: state.produk.concat({
           key: Math.random().toString(),
-          name: name,
-          age: age,
-          gender: gender,
-          phone: phone,
-          email: email,
+          gambar: gambar,
+          nama: nama,
+          harga: harga,
+          stok: stok,
+          merek: merek,
+          berat: berat,
+          kategori: kategori,
+          variasi: variasi,
+          deskripsi: deskripsi,
+          publik: publik,
         }),
       };
     case 'DELETE_FORM':

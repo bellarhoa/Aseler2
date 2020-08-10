@@ -5,7 +5,7 @@ import SelectMultiple from 'react-native-select-multiple';
 const fruits = ['Apples', 'Oranges', 'Pears'];
 
 export default class PilihVariasiPage extends React.Component {
-  state = {selectedFruits: []};
+  state = {selectedFruits: [], new: false};
   onSelectionsChange = (selectedFruits) => {
     // selectedFruits is array of { label, value }
     this.setState({selectedFruits});
@@ -18,6 +18,7 @@ export default class PilihVariasiPage extends React.Component {
           selectedItems={this.state.selectedFruits}
           onSelectionsChange={this.onSelectionsChange}
         />
+
         <TouchableOpacity
           style={{
             position: 'absolute',

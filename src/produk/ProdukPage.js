@@ -71,7 +71,7 @@ class ProdukPage extends Component {
     return (
       <View style={styles.container}>
         <Warning navigation={this.props.navigation} />
-        <DaftarProduk data={data} />
+        <DaftarProduk data={data} navigation={this.props.navigation} />
         <TouchableOpacity
           style={{
             position: 'absolute',
