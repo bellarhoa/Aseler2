@@ -5,6 +5,7 @@ import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import {Provider} from 'react-redux';
 import store from './src/redux/store';
 import Ionicons from 'react-native-vector-icons/Ionicons';
+import {createMaterialTopTabNavigator} from '@react-navigation/material-top-tabs';
 
 import SignUpPage from './src/awal/SignupPage';
 import LoginPage from './src/awal/LoginPage';
@@ -12,6 +13,7 @@ import WelcomePage from './src/awal/WelcomePage';
 import PesananPage from './src/pesanan/PesananPage';
 import SplashPage from './src/SplashPage';
 import ProdukPage from './src/produk/ProdukPage';
+import PesanTamplate from './src/profil/chat_template/PesanTemplate'
 import ProfilPage from './src/profil/ProfilPage';
 import DetailPesanan0 from './src/pesanan/DetailPesanan0';
 import DetailPesanan1 from './src/pesanan/DetailPesanan1';
@@ -19,9 +21,12 @@ import DetailPesanan2 from './src/pesanan/DetailPesanan2';
 import NewProdukPage from './src/produk/NewProdukPage';
 import PilihKategoriPage from './src/produk/PilihKategoriPage';
 import PilihVariasiPage from './src/produk/PilihVariasiPage';
+import DetailProduk from './src/produk/DetailProduk';
+import ProfilToko from './src/profil/ProfilToko';
 
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
+const Tab2 = createMaterialTopTabNavigator();
 
 function AwalScreen() {
   return (
@@ -101,6 +106,11 @@ function ProdukScreen() {
         component={PilihVariasiPage}
         options={{tabBarVisible: false}}
       />
+      <Stack.Screen
+        name="Detail Produk"
+        component={DetailProduk}
+        options={{tabBarVisible: false}}
+      />
     </Stack.Navigator>
   );
 }
@@ -116,6 +126,11 @@ function ProfilScreen() {
         headerTitleStyle: {fontFamily: 'OpenSans-Regular', fontSize: 18},
       }}>
       <Stack.Screen name="Profil Saya" component={ProfilPage} />
+      <Stack.Screen
+        name="Profil Toko"
+        component={ProfilToko}
+        options={{tabBarVisible: false}}
+      />
     </Stack.Navigator>
   );
 }
@@ -208,4 +223,29 @@ export default function App() {
       </NavigationContainer>
     </Provider>
   );
+}
+
+function MyTabs(){
+  return(
+    <Tab2.Navigator
+      initialRouteName = "Profile Toko"
+      tabBarOptions={{
+        activeTintColor: '#e91e63',
+        labelStyle: {fontSize: 12},
+        style: {backgroundColor: 'powderblue'}
+      }}>
+      <Tab2.Screen 
+        name = "Home" 
+        component = {HomeScreen} 
+        options={{tabBarLabel: 'Home'}}/>
+      <Tab2.Screen 
+        name = "Setting" 
+        component = {SettingsScreen} 
+        options={{tabBarLabel: 'Setting'}}/>
+      <Tab2.Screen 
+        name = "Album" 
+        component = {SettingsScreen} 
+        options={{tabBarLabel: 'Album'}}/>
+    </Tab2.Navigator>
+  )
 }

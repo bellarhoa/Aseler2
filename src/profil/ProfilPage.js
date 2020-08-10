@@ -84,9 +84,9 @@ export default class ProfilPage extends React.Component {
             </View>
           </View>
           <TouchableWithoutFeedback style={{alignItems: 'center'}}>
-            <Card style={styles.button}>
+            <Card style={styles.button} onPress={() => this.props.navigation.navigate('Profil Toko')}>
               <Text style={[styles.h4, {color: '#353535'}]}>
-                Salin Link Toko
+                Lihat Profil Toko
               </Text>
             </Card>
           </TouchableWithoutFeedback>

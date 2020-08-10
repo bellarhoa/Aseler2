@@ -8,6 +8,11 @@ import {
   Dimensions,
 } from 'react-native';
 import Card from '../../component/Card';
+import {
+  TouchableNativeFeedback,
+  TouchableOpacity,
+  LongPressGestureHandler,
+} from 'react-native-gesture-handler';
 
 export default class DaftarProduk extends React.Component {
   render() {
@@ -16,6 +21,7 @@ export default class DaftarProduk extends React.Component {
         data={this.props.data}
         renderItem={({item}) => (
           <Produk
+            //onPress={item.onPress}
             image={item.image}
             namaProduk={item.nama}
             harga={item.harga}
@@ -36,11 +42,13 @@ class Produk extends React.Component {
   render() {
     return (
       <Card
+        onPress={() => this.props.navigation.navigate('Detail Produk')}
         style={{
           width: Dimensions.get('window').width / 2 - 40,
           margin: 5,
         }}
-        onPress={() => this.props.navigation.navigate('Pilih Kategori')}>
+        //onPress={this.props.onPress}
+      >
         <View>
           <Image
             style={{

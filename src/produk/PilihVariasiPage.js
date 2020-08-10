@@ -1,24 +1,23 @@
 import React from 'react';
 import {View, StyleSheet, TouchableOpacity, Image} from 'react-native';
-import SelectMultiple from 'react-native-select-multiple';
+//import SelectMultiple from 'react-native-select-multiple';
 
 const fruits = ['Apples', 'Oranges', 'Pears'];
 
 export default class PilihVariasiPage extends React.Component {
-  state = {selectedFruits: [], new: false};
-  onSelectionsChange = (selectedFruits) => {
-    // selectedFruits is array of { label, value }
-    this.setState({selectedFruits});
-  };
+  // state = {selectedFruits: []};
+  // onSelectionsChange = (selectedFruits) => {
+  //   // selectedFruits is array of { label, value }
+  //   this.setState({selectedFruits});
+  // };
   render() {
     return (
       <View style={styles.container}>
-        <SelectMultiple
+        {/* <SelectMultiple
           items={fruits}
           selectedItems={this.state.selectedFruits}
           onSelectionsChange={this.onSelectionsChange}
-        />
-
+        /> */}
         <TouchableOpacity
           style={{
             position: 'absolute',
