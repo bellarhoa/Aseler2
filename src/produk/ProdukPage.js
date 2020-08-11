@@ -1,120 +1,116 @@
-import React, {Component} from 'react';
-import {View, StyleSheet, TouchableOpacity, Image} from 'react-native';
-import Warning from '../component/Warning';
-import DaftarProduk from './component/DaftarProduk';
+import React, {Component} from "react";
+import {
+    View,
+    Text,
+    StyleSheet, 
+    Image,
+    FlatList
+}from "react-native";
+import {TouchableWithoutFeedback} from 'react-native-gesture-handler';
 
-const data = [
-  {
-    id: 1,
-    image: {
-      uri:
-        'https://raw.githubusercontent.com/bellarhoa/Marketplace-Sederhana/master/assets/product_mug(1).jpg',
+const listKategori = [
+    {
+      id: 1,
+      gambar : require  ('../../assets/image/tas1.jpg'),
+      title: 'Boneka',
+      jumlah: '12 Produk',
     },
-    nama: 'Nama Produk 1',
-    harga: 32000,
-    sisaStok: 128,
-  },
-  {
-    id: 2,
-    image: {
-      uri:
-        'https://raw.githubusercontent.com/bellarhoa/Marketplace-Sederhana/master/assets/product_phonecase(1).jpg',
-    },
-    nama: 'Nama Produk 2',
-    harga: 27000,
-    sisaStok: 273,
-  },
-  {
-    id: 3,
-    image: {
-      uri:
-        'https://raw.githubusercontent.com/bellarhoa/Marketplace-Sederhana/master/assets/product_phonecase(2).jpg',
-    },
-    nama: 'Nama Produk 3',
-    harga: 17000,
-    sisaStok: 375,
-  },
-  {
-    id: 4,
-    image: {
-      uri:
-        'https://raw.githubusercontent.com/bellarhoa/Marketplace-Sederhana/master/assets/product_mug(2).jpg',
-    },
-    nama: 'Nama Produk 4',
-    harga: 84000,
-    sisaStok: 285,
-  },
-  {
-    id: 5,
-    image: {
-      uri:
-        'https://raw.githubusercontent.com/bellarhoa/Marketplace-Sederhana/master/assets/product_mug(1).jpg',
-    },
-    nama: 'Nama Produk 5',
-    harga: 63000,
-    sisaStok: 936,
-  },
-  {
-    id: 6,
-    image: {
-      uri:
-        'https://raw.githubusercontent.com/bellarhoa/Marketplace-Sederhana/master/assets/product_phonecase(1).jpg',
-    },
-    nama: 'Nama Produk 6',
-    harga: 36000,
-    sisaStok: 274,
-  },
-];
+    {
+        id: 2,
+        gambar : require  ('../../assets/image/tas2.jpg'),
+        title: 'Boneka',
+        jumlah: '12 Produk',
+      },
 
-class ProdukPage extends Component {
-  render() {
-    return (
-      <View style={styles.container}>
-        <Warning navigation={this.props.navigation} />
-        <DaftarProduk data={data} navigation={this.props.navigation} />
-        <TouchableOpacity
-          style={{
-            position: 'absolute',
-            bottom: 12,
-            right: 12,
-            shadowColor: '#000',
-            shadowOffset: {
-              width: 0,
-              height: 2,
-            },
-            shadowOpacity: 0.25,
-            shadowRadius: 2,
-            elevation: 3,
-          }}
-          onPress={() => this.props.navigation.navigate('Tambah Data Produk')}>
-          <Image
-            style={{width: 45, height: 45}}
-            source={require('../../assets/image/plus.png')}
-          />
-        </TouchableOpacity>
-      </View>
-    );
-  }
+      {
+        id: 3,
+        gambar : require  ('../../assets/image/tas3.jpg'),
+        title: 'Boneka',
+        jumlah: '12 Produk',
+      },
+      {
+        id: 4,
+        gambar : require  ('../../assets/image/tas1.jpg'),
+        title: 'Boneka',
+        jumlah: '12 Produk',
+      },
+      
+  ];
+
+class ProdukPage extends Component{
+    render(){
+        return(
+            <View style={{flex: 1, backgroundColor: 'white'}}>
+            <FlatList
+            style={{marginTop: 10}}
+            data={listKategori}
+            renderItem={({item}) => (
+                <Item
+                title={item.title}
+                jumlah={item.jumlah}
+                gambar={item.gambar}
+                tekan={() => this.props.navigation.navigate(item.title)}
+                />
+            )}
+            keyExtractor={(item) => item.id}
+            />
+            </View>
+        );
+    }
 }
+
+const Item = ({title, jumlah, gambar, tekan}) => (
+    <TouchableWithoutFeedback onPress={tekan}>
+      <View
+        style={{
+          flexDirection: 'row',
+          paddingTop: 10,
+          paddingBottom: 10,
+          paddingLeft: 20,
+          paddingRight: 20,
+          borderBottomWidth: 1,
+          borderBottomColor: '#C4C4C4',
+          alignItems: 'center',
+          justifyContent: 'space-between',
+        }}>
+        <View
+          style={{
+            flexDirection: 'row',
+            alignItems: 'center',
+            //marginTop: 10,
+          }}>
+              <View style={{flex: 0.18}}>
+                  <Image source={gambar}
+                  style={{flex:1, width: 60, height: 60, resizeMode: 'cover'}}/>
+                </View>
+          <View style={{marginLeft: 30}}>
+            <Text style={[styles.h2, {color: '#353535'}]}>{title}</Text>
+          </View>
+          <View style={{flex: 1, alignItems:'flex-end'}}>
+            <Text style={[styles.h4, {color: '#858585'}]}>{jumlah}</Text>
+          </View>
+        </View>
+      </View>
+    </TouchableWithoutFeedback>
+  );
 
 export default ProdukPage;
 
+
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    paddingTop: 20,
-    paddingBottom: 10,
-    paddingLeft: 30,
-    paddingRight: 30,
-    backgroundColor: '#FFFFFF',
-  },
-  touchableOpacityStyle: {
-    position: 'absolute',
-    width: 45,
-    height: 45,
-    alignItems: 'center',
-    justifyContent: 'center',
-    right: 18,
-    bottom: 18,
-  },
-});
+    container:{
+        flex: 1,
+        alignItems:'center',
+        justifyContent: 'center', 
+    },
+    h1: {
+        color: '#FFFFFF',
+        fontFamily: 'OpenSans-SemiBold',
+        fontSize: 18,
+      },
+      h2: {
+        color: '#FFFFFF',
+        fontFamily: 'OpenSans-SemiBold',
+        fontSize: 16,
+      },
+})

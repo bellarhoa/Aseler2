@@ -14,30 +14,26 @@ const listProfil = [
   },
   {
     id: 2,
-    icon: 'basket',
-    title: 'Profil Toko',
-    desc: 'Mengedit data toko',
-    isRequired: true,
-  },
-  {
-    id: 3,
-    icon: 'card-outline',
-    title: 'Pembayaran',
-    desc: 'Beritahu pembeli metode pembayarannya',
-    isRequired: true,
-  },
-  {
-    id: 4,
-    icon: 'bicycle',
-    title: 'Pengiriman',
-    desc: 'Beritahu pembeli metode pengirimannya',
-    isRequired: true,
-  },
-  {
-    id: 5,
     icon: 'chatbubble-ellipses',
     title: 'Pesan Template',
     desc: 'Tidak perlu mengetik berulang-ulang',
+    isRequired: false,
+  },
+];
+
+const listProfil2 = [
+  {
+    id: 3,
+    icon: 'chatbubble-ellipses',
+    title: 'Daftar Pesanan Selesai',
+    desc: 'Berisi semua pesanan yang sudah selesai',
+    isRequired: false,
+  },
+  {
+    id: 4,
+    icon: 'chatbubble-ellipses',
+    title: 'Daftar Pesanan Dibatalkan',
+    desc: 'Berisi semua pesanan yang dibatalkan',
     isRequired: false,
   },
 ];
@@ -46,7 +42,7 @@ export default class ProfilPage extends React.Component {
   render() {
     return (
       <View style={{flex: 1, backgroundColor: 'white'}}>
-        <View style={{height: 166, backgroundColor: '#284B63'}}>
+        <View style={{height: 224, backgroundColor: '#284B63'}}>
           <View
             style={{
               flexDirection: 'row',
@@ -83,16 +79,34 @@ export default class ProfilPage extends React.Component {
               <Text style={[styles.h5, {textAlign: 'left'}]}>Dibatalkan</Text>
             </View>
           </View>
-          <TouchableWithoutFeedback style={{alignItems: 'center'}}>
+          <View style={{marginTop: 15}}>
+            <Text style={[styles.h6]}>Harga Total Pemasukan</Text>
+            <Text style={[styles.h7]}>Rp. 90.000.000</Text>
+          </View>
+          {/* <TouchableWithoutFeedback style={{alignItems: 'center'}}>
             <Card style={styles.button} onPress={() => this.props.navigation.navigate('Profil Toko')}>
               <Text style={[styles.h4, {color: '#353535'}]}>
                 Lihat Profil Toko
               </Text>
             </Card>
-          </TouchableWithoutFeedback>
+          </TouchableWithoutFeedback> */}
         </View>
         <FlatList
-          style={{marginTop: 20}}
+          style={{marginTop: 10}}
+          data={listProfil2}
+          renderItem={({item}) => (
+            <Item
+              icon={item.icon}
+              title={item.title}
+              desc={item.desc}
+              isRequired={item.isRequired}
+              tekan={() => this.props.navigation.navigate(item.title)}
+            />
+          )}
+          keyExtractor={(item) => item.id}
+        />
+        <FlatList
+          style={{marginTop: null}}
           data={listProfil}
           renderItem={({item}) => (
             <Item
@@ -175,6 +189,21 @@ const styles = StyleSheet.create({
     color: '#FFFFFF',
     fontFamily: 'OpenSans-Regular',
     fontSize: 13,
+  },
+  h6: {
+    fontSize: 13, 
+    fontFamily: 'OpenSans', 
+    color: 'white', 
+    alignContent: 'center',
+    textAlign:'center'
+  },
+  h7:{
+    marginTop: 5,
+    fontSize: 30,  
+    fontFamily: 'OpenSans-SemiBold', 
+    color: 'white', 
+    alignContent: 'center',
+    textAlign:'center'
   },
   button: {
     marginTop: 20,

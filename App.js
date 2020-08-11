@@ -7,7 +7,7 @@ import store from './src/redux/store';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import {createMaterialTopTabNavigator} from '@react-navigation/material-top-tabs';
 
-import SignUpPage from './src/awal/SignupPage';
+import SignUpPage from './src/awal/SignUpPage';
 import LoginPage from './src/awal/LoginPage';
 import WelcomePage from './src/awal/WelcomePage';
 import PesananPage from './src/pesanan/PesananPage';
@@ -23,6 +23,8 @@ import PilihKategoriPage from './src/produk/PilihKategoriPage';
 import PilihVariasiPage from './src/produk/PilihVariasiPage';
 import DetailProduk from './src/produk/DetailProduk';
 import ProfilToko from './src/profil/ProfilToko';
+import LihatChat from './src/profil/chat_template/LihatChat';
+import EditChat from './src/profil/chat_template/EditChat';
 
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -76,6 +78,16 @@ function PesananScreen() {
         component={DetailPesanan2}
         options={{headerTitle: '', tabBarVisible: false}}
       />
+      <Stack.Screen
+        name="LihatChat"
+        component={LihatChat}
+        options={{headerTitle: '', tabBarVisible: false}}
+      />
+      <Stack.Screen
+        name="EditChat"
+        component={EditChat}
+        options={{headerTitle: '', tabBarVisible: false}}
+      />
     </Stack.Navigator>
   );
 }
@@ -90,7 +102,7 @@ function ProdukScreen() {
         headerTitleAlign: 'center',
         headerTitleStyle: {fontFamily: 'OpenSans-Regular', fontSize: 18},
       }}>
-      <Stack.Screen name="Produk Saya" component={ProdukPage} />
+      <Stack.Screen name="Produk Saya" component={PesanTamplate} />
       <Stack.Screen
         name="Tambah Data Produk"
         component={NewProdukPage}
