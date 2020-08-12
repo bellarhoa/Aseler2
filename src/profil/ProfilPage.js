@@ -11,6 +11,7 @@ const listProfil = [
     title: 'Profil Akun',
     desc: 'Mengedit data akun aplikasi',
     isRequired: false,
+    next: 'EditAkun',
   },
   {
     id: 2,
@@ -18,6 +19,7 @@ const listProfil = [
     title: 'Pesan Template',
     desc: 'Tidak perlu mengetik berulang-ulang',
     isRequired: false,
+    next: 'PesanTamplate',
   },
 ];
 
@@ -28,6 +30,7 @@ const listProfil2 = [
     title: 'Daftar Pesanan Selesai',
     desc: 'Berisi semua pesanan yang sudah selesai',
     isRequired: false,
+    next: 'PesananSelesai',
   },
   {
     id: 4,
@@ -35,6 +38,7 @@ const listProfil2 = [
     title: 'Daftar Pesanan Dibatalkan',
     desc: 'Berisi semua pesanan yang dibatalkan',
     isRequired: false,
+    next: 'PesananBatal',
   },
 ];
 
@@ -100,7 +104,7 @@ export default class ProfilPage extends React.Component {
               title={item.title}
               desc={item.desc}
               isRequired={item.isRequired}
-              tekan={() => this.props.navigation.navigate(item.title)}
+              tekan={() => this.props.navigation.navigate(item.next)}
             />
           )}
           keyExtractor={(item) => item.id}
@@ -114,7 +118,7 @@ export default class ProfilPage extends React.Component {
               title={item.title}
               desc={item.desc}
               isRequired={item.isRequired}
-              tekan={() => this.props.navigation.navigate(item.title)}
+              tekan={() => this.props.navigation.navigate(item.next)}
             />
           )}
           keyExtractor={(item) => item.id}
@@ -124,7 +128,7 @@ export default class ProfilPage extends React.Component {
   }
 }
 
-const Item = ({icon, title, desc, isRequired, tekan}) => (
+const Item = ({icon, title,next, desc, isRequired, tekan}) => (
   <TouchableWithoutFeedback onPress={tekan}>
     <View
       style={{

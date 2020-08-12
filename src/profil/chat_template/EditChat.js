@@ -12,64 +12,88 @@ import {TouchableWithoutFeedback} from 'react-native-gesture-handler';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import Button_chat from '../../profil/chat_template/component/Button_chat';
 
-const listKategori = [
-    {
-      id: 1,
-      title: 'Boneka',
-      jumlah: '12 Produk',
-    },
-    {
-        id: 2,
-        title: 'Boneka',
-        jumlah: '12 Produk',
-      },
-  ];
 
 class EditChat extends Component{
     render(){
         return(
 
             <View style={{flex: 1, backgroundColor: 'white'}}>
-            
-            <View
-              style={{
-                marginTop: 20,
-                marginLeft: 20
-              }}>
-              <View style={{ justifyContent: 'center'}}>
-                <Text style={{color: '#353535', fontSize : 26, fontFamily : 'OpenSans-SemiBold',}}>Terima Kasih</Text>
-              </View>
-            </View>
+              <View style={{paddingLeft: 20, paddingEnd: 20}}>
+                <InputForm
+                    question="Judul Pesan "
+                    example="Tulis judul pesan"
+                    onChangeText={(pass) => this.setState({ulangiPassword: pass})}
+                    />
+                <Text style={{marginTop : 20}}> Isi Pesan Tamplate </Text>
 
-            <InputForm
-                question="Ulangi Kata Sandi"
-                example="......"
-                pass={true}
-                onChangeText={(pass) => this.setState({ulangiPassword: pass})}
-                />
-
-            <View
-              style={{
-                marginTop: 30,
-                marginLeft: 20
-              }}>
-              <View style={{ justifyContent: 'center'}}>
-                <Text>Miniso Indonesia Official</Text>
-              </View>
-            </View>
-
-            <View style = {{flexDirection : 'row',justifyContent :'space-evenly', marginTop : 20, alignItems: 'center', alignContent : 'center'}}>
-                <Button_chat 
-                text="Hapus"
-                backgroundColor="#F45B69"
-                borderColor="white"
-                textColor="white"
-                >
-                <View>
-                <Ionicons name= 'trash' color="white" size={20} />
+              <View
+                  style={{
+                    backgroundColor: '#EFEFEF',
+                    borderRadius: 5,
+                  }}>
+                  <TextInput
+                    style={{
+                      padding: 9,
+                      fontFamily: 'OpenSans-Regular',
+                      fontSize: 14,
+                      height: 300,
+                      textAlignVertical: 'top',
+                    }}
+                    multiline={true}
+                    placeholder="Tulis pesan template yang dikirim"
+                    keyboardType={this.props.type}
+                    onChangeText={(pass) => this.setState({ulangiPassword: pass})}
+                    returnKeyType="done"
+                  />
                 </View>
-                </Button_chat>
-            </View>
+                </View>
+
+                <View style = {{
+                  flexDirection : 'row',
+                  justifyContent :'space-evenly', 
+                  marginTop : 20, 
+                  alignItems: 'center', 
+                  alignContent : 'center',
+                  }}>
+                    <TouchableWithoutFeedback onPress = {() => this.props.navigation.navigate('PesanTamplate')}>
+                      <View
+                        style={[
+                          this.props.style,
+                          {
+                            flexDirection: 'row',
+                            backgroundColor:'#284B63',
+                            borderColor: 'white',
+                            borderWidth: 1,
+                            borderRadius: 16,
+                            paddingTop: 6,
+                            paddingBottom: 6,
+                            paddingRight: 8,
+                            margin: 5,
+                            shadowColor: '#000',
+                            shadowOffset: {
+                              width: 0,
+                              height: 2,
+                            },
+                            shadowOpacity: 0.25,
+                            shadowRadius: 2,
+                            elevation: 3,
+                            width : 200,
+                            justifyContent: "center",
+                          },
+                        ]}>
+                      {this.props.children}
+                        <Text
+                          style={{
+                            color: 'white',
+                            fontFamily: 'OpenSans-SemiBold',
+                            fontSize: 14,
+                            marginLeft : 15,
+                          }}>
+                          Simpan
+                        </Text>
+                      </View>
+                    </TouchableWithoutFeedback>
+                </View>
 
             </View>
         );
@@ -104,39 +128,6 @@ class InputForm extends Component {
       );
     }
   }
-
-const Item = ({title, jumlah, gambar, tekan}) => (
-    <TouchableWithoutFeedback onPress={tekan}>
-      <View
-        style={{
-          flexDirection: 'row',
-          paddingTop: 6,
-          paddingBottom: null,
-          paddingLeft: 20,
-          paddingRight: 20,
-          borderBottomWidth: 1,
-          borderBottomColor: '#C4C4C4',
-          alignItems: 'center',
-          justifyContent: 'space-between',
-        }}>
-        <View
-          style={{
-            flexDirection: 'row',
-            alignItems: 'center',
-            marginTop: 5,
-            //backgroundColor : 'pink',
-            
-          }}>
-          <View style={{marginLeft: 10, height: 40, alignItems:'center',marginTop: 8,}}>
-            <Text style={[styles.h2, {color: '#353535'}]}>{title}</Text>
-          </View>
-          <View style={{flex: 1,height: 40, alignItems:'flex-end'}}>
-            <Ionicons name= 'send' color="#284B63" size={20} />
-          </View>
-        </View>
-      </View>
-    </TouchableWithoutFeedback>
-  );
 
 const styles = StyleSheet.create({
     container:{

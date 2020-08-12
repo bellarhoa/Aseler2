@@ -46,7 +46,7 @@ class LihatChat extends Component{
                 backgroundColor="#3C6E71"
                 borderColor="white"
                 textColor="white"
-                onPress = {this.props.navigation.navigate('EditChat')}
+                onPress={() => this.props.navigation.navigate('EditChat')}
                 >
                 <View>
                 <Ionicons name= 'create' color="white" size={20} />

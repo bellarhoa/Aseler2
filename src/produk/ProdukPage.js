@@ -13,26 +13,30 @@ const listKategori = [
       id: 1,
       gambar : require  ('../../assets/image/tas1.jpg'),
       title: 'Boneka',
-      jumlah: '12 Produk',
+      tersisa: 'Tersisa 12',
+      terjual: 'Terjual 12',
     },
     {
         id: 2,
         gambar : require  ('../../assets/image/tas2.jpg'),
         title: 'Boneka',
-        jumlah: '12 Produk',
+        tersisa: 'Tersisa 12',
+        terjual: 'Terjual 12',
       },
 
       {
         id: 3,
         gambar : require  ('../../assets/image/tas3.jpg'),
         title: 'Boneka',
-        jumlah: '12 Produk',
+        tersisa: 'Tersisa 12',
+        terjual: 'Terjual 12',
       },
       {
         id: 4,
         gambar : require  ('../../assets/image/tas1.jpg'),
         title: 'Boneka',
-        jumlah: '12 Produk',
+        tersisa: 'Tersisa 12',
+        terjual: 'Terjual 12',
       },
       
   ];
@@ -47,7 +51,8 @@ class ProdukPage extends Component{
             renderItem={({item}) => (
                 <Item
                 title={item.title}
-                jumlah={item.jumlah}
+                tersisa={item.tersisa}
+                terjual={item.terjual}
                 gambar={item.gambar}
                 tekan={() => this.props.navigation.navigate(item.title)}
                 />
@@ -59,7 +64,7 @@ class ProdukPage extends Component{
     }
 }
 
-const Item = ({title, jumlah, gambar, tekan}) => (
+const Item = ({title, gambar, terjual, tersisa, tekan}) => (
     <TouchableWithoutFeedback onPress={tekan}>
       <View
         style={{
@@ -77,18 +82,30 @@ const Item = ({title, jumlah, gambar, tekan}) => (
           style={{
             flexDirection: 'row',
             alignItems: 'center',
-            //marginTop: 10,
+            flex: 1,
           }}>
               <View style={{flex: 0.18}}>
                   <Image source={gambar}
                   style={{flex:1, width: 60, height: 60, resizeMode: 'cover'}}/>
                 </View>
-          <View style={{marginLeft: 30}}>
-            <Text style={[styles.h2, {color: '#353535'}]}>{title}</Text>
-          </View>
-          <View style={{flex: 1, alignItems:'flex-end'}}>
-            <Text style={[styles.h4, {color: '#858585'}]}>{jumlah}</Text>
-          </View>
+                <View style={{flex: 1}}>
+                  <View style={{ alignItems: 'center'}}>
+                    <Text style={[styles.h1]}>{title}</Text>
+                  </View>
+                  <View style={{
+                  flexDirection: 'row',
+                  alignItems: 'center',
+                  flex : 1,
+                  marginLeft: 60,
+                  marginEnd: 60
+                  }}>
+                    <Text style={[styles.h2]}>{tersisa}</Text>
+                    <View style={{flex: 1,alignItems:'flex-end'}}>
+                    <Text style={[styles.h2]}>{terjual}</Text>
+                    </View>
+                  </View>
+                  
+                </View>
         </View>
       </View>
     </TouchableWithoutFeedback>
@@ -104,13 +121,13 @@ const styles = StyleSheet.create({
         justifyContent: 'center', 
     },
     h1: {
-        color: '#FFFFFF',
+        color: 'black',
         fontFamily: 'OpenSans-SemiBold',
-        fontSize: 18,
+        fontSize: 14,
       },
       h2: {
-        color: '#FFFFFF',
+        color: '#858585',
         fontFamily: 'OpenSans-SemiBold',
-        fontSize: 16,
+        fontSize: 14,
       },
 })
