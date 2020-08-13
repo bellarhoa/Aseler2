@@ -11,6 +11,8 @@ target 'Aseler' do
   pod 'RNVectorIcons', :path => '../node_modules/react-native-vector-icons'
 
 
+  pod 'RealmJS', :path => '../node_modules/realm'
+
   target 'AselerTests' do
     inherit! :complete
     # Pods for testing

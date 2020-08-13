@@ -87,6 +87,9 @@ export default class DetailPesanan1 extends React.Component {
               text="Kirim Pesan Template"
               backgroundColor="#284B63"
               textColor="white"
+              onPress={() =>
+                this.props.navigation.navigate('Pilih Pesan Template')
+              }
             />
             <ButtonDP
               text="Hubungi Pembeli"

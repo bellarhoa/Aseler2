@@ -11,6 +11,26 @@ const pesananA = [
     produk: 'Jam Tangan, Tas Selempang',
     status: 0,
     harga: 82000,
+    tanggal: '15 Agustus 2020',
+  },
+  {
+    id: 2,
+    nama: 'Rhobiatul Adhawiyah',
+    produk: 'Jam Dinding',
+    status: 0,
+    harga: 14000,
+    tanggal: '15 Agustus 2020',
+  },
+];
+
+const pesananB = [
+  {
+    id: 1,
+    nama: 'Bella Rhobiatul Adhawiyah',
+    produk: 'Jam Tangan, Tas Selempang',
+    status: 1,
+    harga: 82000,
+    tanggal: '15 Agustus 2020',
   },
   {
     id: 2,
@@ -18,36 +38,27 @@ const pesananA = [
     produk: 'Jam Dinding',
     status: 1,
     harga: 14000,
+    tanggal: '15 Agustus 2020',
   },
 ];
 
-const pesananB = [
+const pesananC = [
   {
     id: 1,
-    nama: 'Adhawiyah',
-    produk: 'Tas Selempang, Rumah 2 Lantai',
+    nama: 'Bella Rhobiatul Adhawiyah',
+    produk: 'Jam Tangan, Tas Selempang',
     status: 2,
-    harga: 100000,
+    harga: 82000,
+    tanggal: '15 Agustus 2020',
   },
   {
     id: 2,
-    nama: 'Nabila',
-    produk: 'Jam Dinding, Mobil',
-    status: 3,
-    harga: 278000,
+    nama: 'Rhobiatul Adhawiyah',
+    produk: 'Jam Dinding',
+    status: 2,
+    harga: 14000,
+    tanggal: '15 Agustus 2020',
   },
-  {
-    id: 3,
-    nama: 'Sukma',
-    produk: 'Motor, Sepeda Kayuh',
-    status: -1,
-    harga: 629000,
-  },
-];
-
-const data = [
-  {tanggal: '2020-07-29', pesanan: pesananA},
-  {tanggal: '2020-07-28', pesanan: pesananB},
 ];
 
 class DashboardPage extends Component {
@@ -118,15 +129,18 @@ class DashboardPage extends Component {
             judul="Pesanan Belum Dibayar"
             data={pesananA}
             navigation={this.props.navigation}
+            onPress={() =>
+              this.props.navigation.navigate('TanggalPesanan', pesananA)
+            }
           />
           <KategoriPesanan
             judul="Pesanan Belum Konfirmasi"
-            data={pesananA}
+            data={pesananB}
             navigation={this.props.navigation}
           />
           <KategoriPesanan
             judul="Pesanan Belum Dikirim"
-            data={pesananA}
+            data={pesananC}
             navigation={this.props.navigation}
           />
         </ScrollView>

@@ -1,11 +1,11 @@
 import React from 'react';
 import {View, StyleSheet, Text, Dimensions, Image} from 'react-native';
-import BarisInfoDP from './component/BarisInfo_DetailPesanan';
-import BarisHargaDP from './component/BarisHarga_DetailPesanan';
-import ButtonDP from './component/Button_DetailPesanan';
+import BarisInfoDP from '../component/BarisInfo_DetailPesanan';
+import BarisHargaDP from '../component/BarisHarga_DetailPesanan';
+import ButtonDP from '../component/Button_DetailPesanan';
 import {ScrollView} from 'react-native-gesture-handler';
 
-export default class DetailPesanan2 extends React.Component {
+export default class DetailPesanan0 extends React.Component {
   render() {
     return (
       <View
@@ -17,7 +17,7 @@ export default class DetailPesanan2 extends React.Component {
           paddingRight: 16,
         }}>
         <ScrollView>
-          <BarisInfoDP pertanyaan="Status Pesanan" jawaban="Belum Kirim" />
+          <BarisInfoDP pertanyaan="Status Pesanan" jawaban="Belum Bayar" />
           <Text style={styles.judul}>Data Pembeli</Text>
           <BarisInfoDP pertanyaan="Nama Lengkap" jawaban="John Doe" />
           <BarisInfoDP
@@ -87,6 +87,9 @@ export default class DetailPesanan2 extends React.Component {
               text="Kirim Pesan Template"
               backgroundColor="#284B63"
               textColor="white"
+              onPress={() =>
+                this.props.navigation.navigate('Pilih Pesan Template')
+              }
             />
             <ButtonDP
               text="Hubungi Pembeli"
@@ -94,7 +97,7 @@ export default class DetailPesanan2 extends React.Component {
               textColor="white"
             />
             <ButtonDP
-              text="Tandai Pesanan sudah Dikirim"
+              text="Tandai Pesanan sudah Dibayar"
               backgroundColor="#284B63"
               textColor="white"
             />

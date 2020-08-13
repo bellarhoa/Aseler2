@@ -4,7 +4,7 @@ import {TouchableWithoutFeedback, View, Text} from 'react-native';
 export default class ButtonDP extends React.Component {
   render() {
     return (
-      <TouchableWithoutFeedback>
+      <TouchableWithoutFeedback onPress={this.props.onPress}>
         <View
           style={[
             this.props.style,

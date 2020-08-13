@@ -14,7 +14,7 @@ const listKategori = [
     id: 2,
     gambar: require('../../assets/image/tas2.jpg'),
     title: 'Boneka',
-    tersisa: 'Tersisa 12',
+    tersisa: 'Tersisa 10',
     terjual: 'Terjual 12',
   },
 
@@ -37,7 +37,14 @@ const listKategori = [
 class ProdukPage extends Component {
   render() {
     return (
-      <View style={{flex: 1, backgroundColor: 'white'}}>
+      <View
+        style={{
+          flex: 1,
+          backgroundColor: 'white',
+          paddingTop: 20,
+          paddingLeft: 18,
+          paddingRight: 18,
+        }}>
         <FlatList
           style={{marginTop: 10}}
           data={listKategori}
@@ -47,7 +54,6 @@ class ProdukPage extends Component {
               tersisa={item.tersisa}
               terjual={item.terjual}
               gambar={item.gambar}
-              tekan={() => this.props.navigation.navigate(item.title)}
             />
           )}
           keyExtractor={(item) => item.id}
@@ -66,10 +72,10 @@ const Item = ({title, gambar, terjual, tersisa, tekan}) => (
         paddingBottom: 10,
         paddingLeft: 20,
         paddingRight: 20,
-        borderBottomWidth: 1,
-        borderBottomColor: '#C4C4C4',
-        alignItems: 'center',
-        justifyContent: 'space-between',
+        borderWidth: 1,
+        borderRadius: 5,
+        borderColor: '#d6d6d6',
+        marginBottom: 5,
       }}>
       <View
         style={{
@@ -84,16 +90,16 @@ const Item = ({title, gambar, terjual, tersisa, tekan}) => (
           />
         </View>
         <View style={{flex: 1}}>
-          <View style={{alignItems: 'center'}}>
-            <Text style={[styles.h1]}>{title}</Text>
-          </View>
+          <Text style={[styles.h1, {marginLeft: 20, marginTop: 8}]}>
+            {title}
+          </Text>
           <View
             style={{
               flexDirection: 'row',
               alignItems: 'center',
               flex: 1,
               marginLeft: 60,
-              marginEnd: 60,
+              marginRight: 60,
             }}>
             <Text style={[styles.h2]}>{tersisa}</Text>
             <View style={{flex: 1, alignItems: 'flex-end'}}>
