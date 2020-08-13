@@ -65,13 +65,13 @@ class LoginPage extends Component {
             <Text style={styles.p}>Belum mempunyai akun?</Text>
             <Text
               style={{
-                color: '#3C6E71',
+                color: '#1985A1',
                 fontFamily: 'OpenSans-SemiBold',
                 fontSize: 14,
                 textDecorationLine: 'underline',
                 marginLeft: 10,
               }}
-              onPress={() => this.props.navigation.navigate('Masuk Akun')}>
+              onPress={() => this.props.navigation.navigate('Daftar Akun')}>
               Daftar disini
             </Text>
           </View>
@@ -91,7 +91,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#FFFFFF',
   },
   h1: {
-    color: '#3C6E71',
+    color: '#1985A1',
     fontFamily: 'OpenSans-Bold',
     fontSize: 20,
   },

@@ -76,7 +76,7 @@ class SignUpPage extends Component {
             // } else {
             //   alert('Harap isi dengan lengkap');
             // }
-            this.props.navigation.navigate('TabScreen');
+            this.props.navigation.navigate('Daftar Akun 2');
           }}>
           <View
             style={{
@@ -104,7 +104,7 @@ class SignUpPage extends Component {
             <Text style={styles.p}>Sudah mempunyai akun?</Text>
             <Text
               style={{
-                color: '#3C6E71',
+                color: '#1985A1',
                 fontFamily: 'OpenSans-SemiBold',
                 fontSize: 14,
                 textDecorationLine: 'underline',
@@ -130,7 +130,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#FFFFFF',
   },
   h1: {
-    color: '#3C6E71',
+    color: '#1985A1',
     fontFamily: 'OpenSans-Bold',
     fontSize: 20,
   },

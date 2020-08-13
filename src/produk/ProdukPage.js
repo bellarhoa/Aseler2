@@ -1,6 +1,5 @@
 import React, {Component} from 'react';
 import {View, StyleSheet, TouchableOpacity, Image} from 'react-native';
-import Warning from '../component/Warning';
 import DaftarProduk from './component/DaftarProduk';
 
 const data = [
@@ -70,7 +69,6 @@ class ProdukPage extends Component {
   render() {
     return (
       <View style={styles.container}>
-        <Warning navigation={this.props.navigation} />
         <DaftarProduk data={data} navigation={this.props.navigation} />
         <TouchableOpacity
           style={{

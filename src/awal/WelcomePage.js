@@ -29,13 +29,6 @@ class WelcomePage extends Component {
   state = {
     isFirst: true,
   };
-  // componentDidMount() {
-  //   if (this.state.isFirst) {
-  //     this.setState({isFirst: false});
-  //   } else {
-  //     this.props.navigation.navigate('Daftar Akun');
-  //   }
-  // }
   _renderItem = ({item}) => {
     return (
       <View style={styles.container}>
@@ -49,7 +42,7 @@ class WelcomePage extends Component {
     return (
       <Text
         style={{
-          color: '#3C6E71',
+          color: '#1985A1',
           fontFamily: 'OpenSans-SemiBold',
           fontSize: 16,
           margin: 12,
@@ -75,7 +68,7 @@ class WelcomePage extends Component {
     return (
       <Text
         style={{
-          color: '#3C6E71',
+          color: '#1985A1',
           fontFamily: 'OpenSans-SemiBold',
           fontSize: 16,
           margin: 12,
@@ -113,7 +106,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#FFFFFF',
   },
   title: {
-    color: '#3C6E71',
+    color: '#1985A1',
     fontFamily: 'OpenSans-Bold',
     fontSize: 20,
     alignSelf: 'center',
