@@ -1,8 +1,8 @@
 import React from 'react';
 import {View, StyleSheet, Text, Dimensions, Image} from 'react-native';
-import BarisInfoDP from './component/BarisInfo_DetailPesanan';
-import BarisHargaDP from './component/BarisHarga_DetailPesanan';
-import ButtonDP from './component/Button_DetailPesanan';
+import BarisInfoDP from '../component/BarisInfo_DetailPesanan';
+import BarisHargaDP from '../component/BarisHarga_DetailPesanan';
+import ButtonDP from '../component/Button_DetailPesanan';
 import {ScrollView} from 'react-native-gesture-handler';
 
 export default class DetailPesanan1 extends React.Component {
@@ -48,7 +48,7 @@ export default class DetailPesanan1 extends React.Component {
                 borderColor: '#D3D3D3',
                 borderWidth: 1,
               }}
-              source={require('../../assets/image/profile.png')}
+              source={require('../../../assets/image/profile.png')}
             />
             <View style={{marginLeft: 8}}>
               <Text style={styles.produk}>Nama Produk</Text>

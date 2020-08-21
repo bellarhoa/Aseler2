@@ -10,6 +10,7 @@ import DaftarSelesai from './pesanan_selesai/DaftarSelesai';
 import PesananBatal from './pesanan_batal/PesananBatal';
 import DaftarBatal from './pesanan_batal/DaftarBatal';
 import EditAkun from './edit_akun/EditAkun';
+import TambahChat from './chat_template/TambahChat';
 
 const Stack = createStackNavigator();
 
@@ -38,6 +39,11 @@ export default function ProfilScreen() {
         name="EditChat"
         component={EditChat}
         options={{headerTitle: 'Edit Pesan Tamplate', tabBarVisible: false}}
+      />
+      <Stack.Screen
+        name="TambahChat"
+        component={TambahChat}
+        options={{headerTitle: 'Tambah Pesan Tamplate', tabBarVisible: false}}
       />
       <Stack.Screen
         name="PesananSelesai"

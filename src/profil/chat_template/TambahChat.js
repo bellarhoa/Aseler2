@@ -6,65 +6,38 @@ import {
     TextInput,
     Image,
     FlatList,
-    TouchableOpacity,
-    PickerIOSComponent
+    TouchableOpacity
 }from "react-native";
 import {TouchableWithoutFeedback} from 'react-native-gesture-handler';
 import Ionicons from 'react-native-vector-icons/Ionicons';
-import { updateChatTemplate, deleteChatTemplate} from '../../database/Data_chat';
-import realm from '../../database/Data_chat';
-import Button_chat from '../../profil/chat_template/component/Button_chat';
+import { insertNewChatTemplate, queryAllChatTemplate} from '../../database/Data_chat';
+import Button_chat from './component/Button_chat';
+import Realm from 'realm';
+let realm;
 
-class EditChat extends Component{
-  constructor(props){
-    super(props);
-    this.state = {
-      chat_id: 0,
-      chat_judul: '',
-      chat_isi:'',
-      isAddNew: true,
-    };
-  }
-
-  showDialogComponentForUpdate = (existingChatTemplate) => {
-    this.refs.popupDialog.show();
-    this.setState({
-        dialogTitle: 'Update a Chat Template',             
-        chat_id: existingTodoList.chat_id,
-        chat_judul: existingTodoList.chat_judul,
-        chat_isi: existingTodoList.chat_isi,
-        isAddNew: false
-    });
-}
-
-  showDeleteConfirmation = () =>{
-      Alert.alert(
-        'Delete',
-        'Delete a chat',
-        [
-            {
-                text: 'No', onPress: () => { },//Do nothing
-                style: 'cancel'
-            },
-            {
-                text: 'Yes', onPress: () => {
-
-                }
-            },
-        ],
-        { cancelable: true }
-    );
-  };
-
+class TambahChat extends Component{
+    constructor(props) {
+        super(props);
+        this.state = {
+          chat_id: null,
+          chat_judul: '',
+          chat_isi: '',
+          isAddNew: true,
+        };
+      }
+  
     render(){
-        return(  
+        return(
+
             <View style={{flex: 1, backgroundColor: 'white'}}>
               <View style={{paddingLeft: 20, paddingEnd: 20}}>
                 <InputForm
                     question="Judul Pesan "
                     example="Tulis judul pesan"
-                    onChangeText={(judul) => this.setState({chat_judul : judul})} value={this.state.chat_judul}
-                    />
+                    onChangeText={judul => this.setState({chat_judul:judul})}
+                    >
+                      
+                    </InputForm>
                 <Text style={{marginTop : 20}}> Isi Pesan Tamplate </Text>
 
               <View
@@ -83,8 +56,9 @@ class EditChat extends Component{
                     multiline={true}
                     placeholder="Tulis pesan template yang dikirim"
                     keyboardType={this.props.type}
-                    onChangeText={(isi) => this.setState({chat_isi : isi})} value={this.state.chat_isi}
+                    onChangeText={(pass) => this.setState({ulangiPassword: pass})}
                     returnKeyType="done"
+                    onChangeText={chat_isi => this.setState({chat_isi})}
                   />
                 </View>
                 </View>
@@ -96,13 +70,39 @@ class EditChat extends Component{
                   alignItems: 'center', 
                   alignContent : 'center',
                   }}>
-                    <TouchableWithoutFeedback onPress = {() => this.props.navigation.navigate('PesanTamplate')}>
+                    <TouchableWithoutFeedback 
+                    // customClick={this.tambah_chat.bind(this)}
+                    onPress = {() =>{
+                      if (this.state.chat_judul.trim() == "") {
+                        alert("Mohon Isi Judul");
+                        return;
+                      }
+                      if (this.state.chat_isi.trim() == "") {
+                        alert("Isi pesan belum ada");
+                        return;
+                      }
+                      if (this.state.isAddNew == true){
+                        const newChatTemplate = {
+                          chat_id: Math.floor(Date.now()/ 1000),
+                          chat_judul: this.state.chat_judul,
+                          chat_isi: this.state.chat_isi,
+                          creationDate: new Date()
+                        };
+                        insertNewChatTemplate(newChatTemplate).then().catch((error) =>{
+                        alert(`Insert new chat error ${error}`);
+                      });
+                      } else {
+
+                      }
+                    // alert(`Insert new chat ${newChatTemplate.chat_judul}`)
+                     this.props.navigation.navigate('PesanTamplate')}}
+                    >
                       <View
                         style={[
                           this.props.style,
                           {
                             flexDirection: 'row',
-                            backgroundColor:'#F45B69',
+                            backgroundColor:'#284B63',
                             borderColor: 'white',
                             borderWidth: 1,
                             borderRadius: 16,
@@ -118,59 +118,7 @@ class EditChat extends Component{
                             shadowOpacity: 0.25,
                             shadowRadius: 2,
                             elevation: 3,
-                            width : 120,
-                            justifyContent: "center",
-                          },
-                        ]}>
-                      {this.props.children}
-                      <View>
-                        <Ionicons name= 'trash' color="white" size={20} />
-                        </View>
-                        <Text
-                          style={{
-                            color: 'white',
-                            fontFamily: 'OpenSans-SemiBold',
-                            fontSize: 14,
-                            marginLeft : 10,
-                          }}>
-                          Hapus
-                        </Text>
-                        
-                      </View>
-                    </TouchableWithoutFeedback>
-                    <TouchableWithoutFeedback onPress = {() => 
-                      {const chatTemplate = {    
-                            chat_id:  this.state.chat_id,
-                            chat_judul: this.state.chat_judul,   
-                            chat_isi: this.state.chat_isi,                                        
-                        };    
-                        updateChatTemplate(chatTemplate).then().catch((error) => {
-                            alert(`Update todoList error ${error}`);
-                        });   
-                      this.props.navigation.navigate('PesanTamplate')}}
-                      >
-                      <View
-                        style={[
-                          this.props.style,
-                          {
-                            flexDirection: 'row',
-                            backgroundColor:'#284B63',
-                            borderColor: 'white',
-                            borderWidth: 1,
-                            borderRadius: 16,
-                            paddingTop: 6,
-                            paddingBottom: 6,
-                            paddingRight: 8,
-                            margin: 2,
-                            shadowColor: '#000',
-                            shadowOffset: {
-                              width: 0,
-                              height: 2,
-                            },
-                            shadowOpacity: 0.25,
-                            shadowRadius: 2,
-                            elevation: 3,
-                            width : 120,
+                            width : 200,
                             justifyContent: "center",
                           },
                         ]}>
@@ -185,13 +133,15 @@ class EditChat extends Component{
                           Simpan
                         </Text>
                       </View>
+                      
                     </TouchableWithoutFeedback>
                 </View>
+
             </View>
         );
     }
 }
-export default EditChat;
+export default TambahChat;
 
 class InputForm extends Component {
     render() {

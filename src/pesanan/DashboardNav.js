@@ -2,9 +2,9 @@ import React from 'react';
 import {createStackNavigator} from '@react-navigation/stack';
 
 import DashboardPage from './DashboardPage';
-import DetailPesanan0 from './DetailPesanan0';
-import DetailPesanan1 from './DetailPesanan1';
-import DetailPesanan2 from './DetailPesanan2';
+import DetailPesanan0 from './detail_pesanan/DetailPesanan0';
+import DetailPesanan1 from './detail_pesanan/DetailPesanan1';
+import DetailPesanan2 from './detail_pesanan/DetailPesanan2';
 import PesanTemplate from '../profil/chat_template/PesanTemplate';
 import LihatChat from '../profil/chat_template/LihatChat';
 import EditChat from '../profil/chat_template/EditChat';

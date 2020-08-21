@@ -9,99 +9,47 @@ import {
 } from 'react-native';
 import {TouchableWithoutFeedback} from 'react-native-gesture-handler';
 import Ionicons from 'react-native-vector-icons/Ionicons';
-
-const listKategori = [
-  {
-    id: 1,
-    title: 'Boneka',
-    jumlah: '12 Produk',
-  },
-  {
-    id: 2,
-    title: 'Boneka',
-    jumlah: '12 Produk',
-  },
-
-  {
-    id: 3,
-    title: 'Boneka',
-    jumlah: '12 Produk',
-  },
-  {
-    id: 4,
-    title: 'Boneka',
-    jumlah: '12 Produk',
-  },
-  {
-    id: 5,
-    title: 'Boneka',
-    jumlah: '12 Produk',
-  },
-  {
-    id: 6,
-    title: 'Boneka',
-    jumlah: '12 Produk',
-  },
-  {
-    id: 7,
-    title: 'Boneka',
-    jumlah: '12 Produk',
-  },
-  {
-    id: 8,
-    title: 'Boneka',
-    jumlah: '12 Produk',
-  },
-  {
-    id: 9,
-    title: 'Boneka',
-    jumlah: '12 Produk',
-  },
-
-  {
-    id: 10,
-    title: 'Boneka',
-    jumlah: '12 Produk',
-  },
-  {
-    id: 11,
-    title: 'Boneka',
-    jumlah: '12 Produk',
-  },
-  {
-    id: 12,
-    title: 'Boneka',
-    jumlah: '12 Produk',
-  },
-  {
-    id: 13,
-    title: 'Boneka',
-    jumlah: '12 Produk',
-  },
-  {
-    id: 14,
-    title: 'Boneka',
-    jumlah: '12 Produk',
-  },
-];
+import { updateChatTemplate, queryAllChatTemplate} from '../../database/Data_chat';
+import realm from '../../database/Data_chat';
+import Realm from 'realm';
 
 class PesanTemplate extends Component {
+  constructor (props){
+    super(props);
+    this.state = {
+      chatTemplate:[]
+    };
+    this.reloadData()
+    realm.addListener('change', () => {
+      this.reloadData();
+    });
+  }
+
+  reloadData = () => {
+    queryAllChatTemplate().then((chatTemplate) => {
+      this.setState({chatTemplate});
+    }).catch((error) => {
+      alert(`Insert new chat error ${error}`);
+    });
+    console.log('reloadData');
+  }
+
   render() {
     return (
       <View style={{flex: 1, backgroundColor: 'white'}}>
         <FlatList
           style={{marginTop: 10}}
-          data={listKategori}
-          renderItem={({item}) => (
+          data={this.state.chatTemplate}
+          renderItem={({item, index}) => (
             <Item
-              title={item.title}
-              jumlah={item.jumlah}
-              gambar={item.gambar}
-              tekan={() => this.props.navigation.navigate('LihatChat')}
+              title={item.chat_judul}
+              itemIndex = {index}
+              tekan={() => {this.props.navigation.navigate('EditChat', {id_chat : item.chat_id}); console.log(item.chat_id)}}
             />
           )}
-          keyExtractor={(item) => item.id}
+          keyExtractor={(item) => item.chat_id}
         />
+
         <TouchableOpacity
           style={{
             position: 'absolute',
@@ -116,7 +64,7 @@ class PesanTemplate extends Component {
             shadowRadius: 2,
             elevation: 3,
           }}
-          onPress={() => this.props.navigation.navigate('EditChat')}>
+          onPress={() => this.props.navigation.navigate('TambahChat')}>
           <Image
             style={{width: 60, height: 60, marginEnd: 5, marginBottom: 5}}
             source={require('../../../assets/image/plus.png')}
@@ -127,7 +75,7 @@ class PesanTemplate extends Component {
   }
 }
 
-const Item = ({title, jumlah, gambar, tekan}) => (
+const Item = ({title, tekan}) => (
   <TouchableWithoutFeedback onPress={tekan}>
     <View
       style={{

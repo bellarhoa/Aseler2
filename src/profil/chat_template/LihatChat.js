@@ -10,21 +10,31 @@ import {
 import {TouchableWithoutFeedback} from 'react-native-gesture-handler';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import Button_chat from '../../profil/chat_template/component/Button_chat';
-
-const listKategori = [
-    {
-      id: 1,
-      title: 'Boneka',
-      jumlah: '12 Produk',
-    },
-    {
-        id: 2,
-        title: 'Boneka',
-        jumlah: '12 Produk',
-      },
-  ];
+import { getChatTemplate, updateChatTemplate, queryAllChatTemplate} from '../../database/Data_chat';
+import realm from '../../database/Data_chat';
+import Realm from 'realm';
 
 class LihatChat extends Component{
+      constructor (props){
+        super(props);
+        this.state = {
+          chatTemplate:[]
+        };
+        this.reloadData()
+        realm.addListener('change', () => {
+          this.reloadData();
+        });
+      }
+
+      reloadData = () => {
+        getChatTemplate(this.props.navigation.state.params.id_chat).then((chatTemplate) => {
+          this.setState({chatTemplate});
+        }).catch((error) => {
+          alert(`Insert new chat error ${error}`);
+        });
+        console.log("Liha Chat"+this.props.navigation.state.params.id_chat);
+      }
+    
     render(){
         return(
 
@@ -60,7 +70,12 @@ class LihatChat extends Component{
                 marginLeft: 20
               }}>
               <View style={{ justifyContent: 'center'}}>
-                <Text style={{color: '#353535', fontSize : 26, fontFamily : 'OpenSans-SemiBold',}}>Terima Kasih</Text>
+            <Text style={{
+              color: '#353535', 
+              fontSize : 26, 
+              fontFamily : 'OpenSans-SemiBold',}}>
+                {this.state.chatTemplate.chat_judul}
+                </Text>
               </View>
             </View>
 
@@ -79,6 +94,8 @@ class LihatChat extends Component{
     }
 }
 export default LihatChat;
+
+
 
 const Item = ({title, jumlah, gambar, tekan}) => (
     <TouchableWithoutFeedback onPress={tekan}>

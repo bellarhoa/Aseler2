@@ -21,9 +21,6 @@ const listProfil = [
     isRequired: false,
     next: 'PesanTamplate',
   },
-];
-
-const listProfil2 = [
   {
     id: 3,
     icon: 'chatbubble-ellipses',
@@ -42,15 +39,20 @@ const listProfil2 = [
   },
 ];
 
+const listProfil2 = [
+  
+];
+
 export default class ProfilPage extends React.Component {
   render() {
     return (
       <View style={{flex: 1, backgroundColor: 'white'}}>
-        <View style={{height: 224, backgroundColor: '#284B63'}}>
+        <View style={{backgroundColor: '#284B63',paddingBottom: 20}}>
           <View
             style={{
-              flexDirection: 'row',
+              // flexDirection: 'row',
               marginTop: 20,
+              alignItems: 'center',
               justifyContent: 'center',
             }}>
             <Image
@@ -61,6 +63,10 @@ export default class ProfilPage extends React.Component {
               <Text style={styles.h1}>John Doe</Text>
               <Text style={styles.h3}>Miniso Indonesia</Text>
             </View>
+          </View>
+          <View style={{marginTop: 15}}>
+            <Text style={[styles.h6]}>Harga Total Pemasukan</Text>
+            <Text style={[styles.h7]}>Rp. 90.000.000</Text>
           </View>
           <View
             style={{
@@ -83,10 +89,7 @@ export default class ProfilPage extends React.Component {
               <Text style={[styles.h5, {textAlign: 'left'}]}>Dibatalkan</Text>
             </View>
           </View>
-          <View style={{marginTop: 15}}>
-            <Text style={[styles.h6]}>Harga Total Pemasukan</Text>
-            <Text style={[styles.h7]}>Rp. 90.000.000</Text>
-          </View>
+          
           {/* <TouchableWithoutFeedback style={{alignItems: 'center'}}>
             <Card style={styles.button} onPress={() => this.props.navigation.navigate('Profil Toko')}>
               <Text style={[styles.h4, {color: '#353535'}]}>
@@ -96,21 +99,7 @@ export default class ProfilPage extends React.Component {
           </TouchableWithoutFeedback> */}
         </View>
         <FlatList
-          style={{marginTop: 10}}
-          data={listProfil2}
-          renderItem={({item}) => (
-            <Item
-              icon={item.icon}
-              title={item.title}
-              desc={item.desc}
-              isRequired={item.isRequired}
-              tekan={() => this.props.navigation.navigate(item.next)}
-            />
-          )}
-          keyExtractor={(item) => item.id}
-        />
-        <FlatList
-          style={{marginTop: null}}
+          // style={{marginTop: 10}}
           data={listProfil}
           renderItem={({item}) => (
             <Item
@@ -123,6 +112,20 @@ export default class ProfilPage extends React.Component {
           )}
           keyExtractor={(item) => item.id}
         />
+        {/* <FlatList
+          style={{marginTop: null}}
+          data={listProfil}
+          renderItem={({item}) => (
+            <Item
+              icon={item.icon}
+              title={item.title}
+              desc={item.desc}
+              isRequired={item.isRequired}
+              tekan={() => this.props.navigation.navigate(item.next)}
+            />
+          )}
+          keyExtractor={(item) => item.id}
+        /> */}
       </View>
     );
   }

@@ -48,7 +48,7 @@ export default class DetailPesanan0 extends React.Component {
                 borderColor: '#D3D3D3',
                 borderWidth: 1,
               }}
-              source={require('../../assets/image/profile.png')}
+              source={require('../../../assets/image/profile.png')}
             />
             <View style={{marginLeft: 8}}>
               <Text style={styles.produk}>Nama Produk</Text>
