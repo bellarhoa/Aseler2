@@ -30,9 +30,9 @@ class EditChat extends Component{
     this.refs.popupDialog.show();
     this.setState({
         dialogTitle: 'Update a Chat Template',             
-        chat_id: existingTodoList.chat_id,
-        chat_judul: existingTodoList.chat_judul,
-        chat_isi: existingTodoList.chat_isi,
+        chat_id: existingChatTemplate.chat_id,
+        chat_judul: existingChatTemplate.chat_judul,
+        chat_isi: existingChatTemplate.chat_isi,
         isAddNew: false
     });
 }
@@ -48,7 +48,9 @@ class EditChat extends Component{
             },
             {
                 text: 'Yes', onPress: () => {
-
+                  deleteChatTemplate(chat_id).then().catch(error => {
+                    alert(`Failed to delete todoList with id = ${chat_id}, error=${error}`);
+                });
                 }
             },
         ],
@@ -62,7 +64,6 @@ class EditChat extends Component{
               <View style={{paddingLeft: 20, paddingEnd: 20}}>
                 <InputForm
                     question="Judul Pesan "
-                    example="Tulis judul pesan"
                     onChangeText={(judul) => this.setState({chat_judul : judul})} value={this.state.chat_judul}
                     />
                 <Text style={{marginTop : 20}}> Isi Pesan Tamplate </Text>
@@ -83,6 +84,7 @@ class EditChat extends Component{
                     multiline={true}
                     placeholder="Tulis pesan template yang dikirim"
                     keyboardType={this.props.type}
+                    autoCorrect={false}
                     onChangeText={(isi) => this.setState({chat_isi : isi})} value={this.state.chat_isi}
                     returnKeyType="done"
                   />
@@ -96,7 +98,28 @@ class EditChat extends Component{
                   alignItems: 'center', 
                   alignContent : 'center',
                   }}>
-                    <TouchableWithoutFeedback onPress = {() => this.props.navigation.navigate('PesanTamplate')}>
+                    <TouchableWithoutFeedback onPress = {() => {
+                      Alert.alert(
+                        'Delete',
+                        'Delete a chat',
+                        [
+                            {
+                                text: 'No', onPress: () => { },//Do nothing
+                                style: 'cancel'
+                            },
+                            {
+                                text: 'Yes', onPress: () => {
+                                  deleteChatTemplate(chat_id).then().catch(error => {
+                                    alert(`Failed to delete todoList with id = ${chat_id}, error=${error}`);
+                                });
+                                }
+                            },
+                        ],
+                        { cancelable: true }
+                    );
+                    this.props.navigation.navigate('PesanTamplate')
+                    }
+                      }>
                       <View
                         style={[
                           this.props.style,
