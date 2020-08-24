@@ -44,8 +44,11 @@ class PesanTemplate extends Component {
             <Item
               title={item.chat_judul}
               itemIndex = {index}
-              tekan={() => {this.props.navigation.navigate('EditChat'); 
-              console.log(item.chat_id)}}
+              //tekan={() => {this.state.navigation.navigate('LihatChat'); 
+              tekan={() => {this.props.navigation.navigate('EditChat', {item}); 
+              // console.log(item.chat_id)
+            }
+            }
             />
           )}
           keyExtractor={(item) => item.chat_id}

@@ -4,6 +4,7 @@ import {
     Text,
     StyleSheet, 
     TextInput,
+    Alert,
     Image,
     FlatList,
     TouchableOpacity,
@@ -26,6 +27,13 @@ class EditChat extends Component{
     };
   }
 
+  componentDidMount(){
+    this.setState({chat_id : this.props.route.params.item.chat_id});
+    this.setState({chat_judul : this.props.route.params.item.chat_judul});
+    this.setState({chat_isi : this.props.route.params.item.chat_isi});
+    console.log('qwerty'+JSON.stringify(this.props.route.params.item.chat_judul));
+  }
+
   showDialogComponentForUpdate = (existingChatTemplate) => {
     this.refs.popupDialog.show();
     this.setState({
@@ -37,33 +45,13 @@ class EditChat extends Component{
     });
 }
 
-  showDeleteConfirmation = () =>{
-      Alert.alert(
-        'Delete',
-        'Delete a chat',
-        [
-            {
-                text: 'No', onPress: () => { },//Do nothing
-                style: 'cancel'
-            },
-            {
-                text: 'Yes', onPress: () => {
-                  deleteChatTemplate(chat_id).then().catch(error => {
-                    alert(`Failed to delete todoList with id = ${chat_id}, error=${error}`);
-                });
-                }
-            },
-        ],
-        { cancelable: true }
-    );
-  };
-
     render(){
         return(  
             <View style={{flex: 1, backgroundColor: 'white'}}>
               <View style={{paddingLeft: 20, paddingEnd: 20}}>
                 <InputForm
                     question="Judul Pesan "
+                    example="Tulis judul pesan"
                     onChangeText={(judul) => this.setState({chat_judul : judul})} value={this.state.chat_judul}
                     />
                 <Text style={{marginTop : 20}}> Isi Pesan Tamplate </Text>
@@ -84,7 +72,6 @@ class EditChat extends Component{
                     multiline={true}
                     placeholder="Tulis pesan template yang dikirim"
                     keyboardType={this.props.type}
-                    autoCorrect={false}
                     onChangeText={(isi) => this.setState({chat_isi : isi})} value={this.state.chat_isi}
                     returnKeyType="done"
                   />
@@ -109,15 +96,17 @@ class EditChat extends Component{
                             },
                             {
                                 text: 'Yes', onPress: () => {
-                                  deleteChatTemplate(chat_id).then().catch(error => {
-                                    alert(`Failed to delete todoList with id = ${chat_id}, error=${error}`);
-                                });
+                                  deleteChatTemplate(this.state.chat_id).then(() => {
+                                    this.props.navigation.navigate('PesanTamplate');
+                                  }).catch(error => {
+                                    alert(`Failed to delete todoList with id = ${this.state.chat_id}, error=${error}`);
+                                });                                
                                 }
                             },
                         ],
                         { cancelable: true }
-                    );
-                    this.props.navigation.navigate('PesanTamplate')
+                        );
+                   
                     }
                       }>
                       <View
@@ -210,6 +199,50 @@ class EditChat extends Component{
                       </View>
                     </TouchableWithoutFeedback>
                 </View>
+                <TouchableWithoutFeedback onPress = {() => 
+                      {
+                      this.props.navigation.navigate('PesanTamplate')}}
+                      >
+                      <View
+                        style={[
+                          this.props.style,
+                          {
+                            flexDirection: 'row',
+                            backgroundColor:'#033C67',
+                            borderColor: 'white',
+                            borderWidth: 1,
+                            borderRadius: 16,
+                            paddingTop: 6,
+                            paddingBottom: 6,
+                            paddingRight: 8,
+                            marginTop: 10,
+                            marginLeft: 58,
+                            margin: 2,
+                            shadowColor: '#000',
+                            shadowOffset: {
+                              width: 0,
+                              height: 2,
+                            },
+                            shadowOpacity: 0.25,
+                            shadowRadius: 2,
+                            elevation: 3,
+                            width : 300,
+                            justifyContent: 'center',
+            
+                          },
+                        ]}>
+                      {this.props.children}
+                        <Text
+                          style={{
+                            color: 'white',
+                            fontFamily: 'OpenSans-SemiBold',
+                            fontSize: 14,
+                            marginLeft : 15,
+                          }}>
+                          Kirim
+                        </Text>
+                      </View>
+                    </TouchableWithoutFeedback>
             </View>
         );
     }
@@ -237,6 +270,7 @@ class InputForm extends Component {
               onChangeText={this.props.onChangeText}
               returnKeyType="done"
               secureTextEntry={this.props.pass}
+              value = {this.props.value}
             />
           </View>
         </View>
