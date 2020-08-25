@@ -4,6 +4,8 @@ import BarisInfoDP from '../component/BarisInfo_DetailPesanan';
 import BarisHargaDP from '../component/BarisHarga_DetailPesanan';
 import ButtonDP from '../component/Button_DetailPesanan';
 import {ScrollView} from 'react-native-gesture-handler';
+import {User2Schema} from '../../database/Data_chat';
+
 
 export default class DetailPesanan2 extends React.Component {
   render() {

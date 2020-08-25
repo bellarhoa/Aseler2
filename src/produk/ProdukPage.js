@@ -1,40 +1,90 @@
 import React, {Component} from 'react';
 import {View, Text, StyleSheet, Image, FlatList} from 'react-native';
 import {TouchableWithoutFeedback} from 'react-native-gesture-handler';
+import {IsiProduk, queryAllProduk} from '../database/Data_chat';
+import realm from '../database/Data_chat';
+import Realm from 'realm';
 
 const listKategori = [
   {
-    id: 1,
-    gambar: require('../../assets/image/tas1.jpg'),
-    title: 'Boneka',
-    tersisa: 'Tersisa 12',
-    terjual: 'Terjual 12',
+    produk_id: 1,
+    foto_produk: '../../assets/image/tas1.jpg',
+    nama_produk: 'Tas Selempang Cute',
+    tersisa_produk: 12,
+    terjual_produk: 12,
+    harga_produk: '84000',
   },
   {
-    id: 2,
-    gambar: require('../../assets/image/tas2.jpg'),
-    title: 'Boneka',
-    tersisa: 'Tersisa 10',
-    terjual: 'Terjual 12',
+    produk_id: 2,
+    foto_produk: '../../assets/image/tas2.jpg',
+    nama_produk: 'Tas Selempang Roses',
+    tersisa_produk: 10,
+    terjual_produk: 12,
+    harga_produk: '82000',
   },
 
   {
-    id: 3,
-    gambar: require('../../assets/image/tas3.jpg'),
-    title: 'Boneka',
-    tersisa: 'Tersisa 12',
-    terjual: 'Terjual 12',
+    produk_id: 3,
+    foto_produk: '../../assets/image/tas3.jpg',
+    nama_produk: 'Tas Selempang Fujiama',
+    tersisa_produk: 12,
+    terjual_produk: 12,
+    harga_produk: '83000',
   },
   {
-    id: 4,
-    gambar: require('../../assets/image/tas1.jpg'),
-    title: 'Boneka',
-    tersisa: 'Tersisa 12',
-    terjual: 'Terjual 12',
+    produk_id: 4,
+    foto_produk: '../../assets/image/tas1.jpg',
+    nama_produk: 'Tas Selempang Sakura',
+    tersisa_produk: 12,
+    terjual_produk: 12,
+    harga_produk: '85000',
+  },
+  {
+    produk_id: 5,
+    foto_produk: 'https://cf.shopee.co.id/file/609bb4d7ed433df33b621c7c09a30d68',
+    nama_produk: 'Tas Selempang Sakura',
+    tersisa_produk: 12,
+    terjual_produk: 12,
+    harga_produk: '85000',
+  },
+  {
+    produk_id: 6,
+    foto_produk: 'https://cf.shopee.co.id/file/609bb4d7ed433df33b621c7c09a30d68',
+    nama_produk: 'Tas Selempang Sakura',
+    tersisa_produk: 12,
+    terjual_produk: 12,
+    harga_produk: '85000',
   },
 ];
 
+
 class ProdukPage extends Component {
+  constructor (props){
+    super(props);
+    this.state = {
+      listKategori:[]
+    };
+    this.reloadData()
+    realm.addListener('change', () => {
+      this.reloadData();
+    });
+  }
+
+  // componentDidMount(){
+  //   IsiProduk(listKategori[5]).then().catch((error) =>{
+  //     alert(`Insert new chat error ${error}`);
+  //   });
+  // }
+
+  reloadData = () => {
+    queryAllProduk().then((listKategori) => {
+      this.setState({listKategori});
+    }).catch((error) => {
+      alert(`Insert new chat error ${error}`);
+    });
+    console.log('reloadData');
+  }
+
   render() {
     return (
       <View
@@ -47,13 +97,15 @@ class ProdukPage extends Component {
         }}>
         <FlatList
           style={{marginTop: 10}}
-          data={listKategori}
+          data={this.state.listKategori}
           renderItem={({item}) => (
             <Item
-              title={item.title}
-              tersisa={item.tersisa}
-              terjual={item.terjual}
-              gambar={item.gambar}
+              title={item.nama_produk}
+              tersisa={item.tersisa_produk}
+              terjual={item.terjual_produk}
+              gambar={item.foto_produk}
+              tekan={() => {this.props.navigation.navigate('EditProduk', {item})}
+              }
             />
           )}
           keyExtractor={(item) => item.id}
@@ -63,7 +115,9 @@ class ProdukPage extends Component {
   }
 }
 
-const Item = ({title, gambar, terjual, tersisa, tekan}) => (
+const Item = ({title, gambar, terjual, tersisa, tekan}) => {
+  console.log(gambar);
+  return(
   <TouchableWithoutFeedback onPress={tekan}>
     <View
       style={{
@@ -85,7 +139,7 @@ const Item = ({title, gambar, terjual, tersisa, tekan}) => (
         }}>
         <View style={{flex: 0.18}}>
           <Image
-            source={gambar}
+            source={{ uri: gambar}}
             style={{flex: 1, width: 60, height: 60, resizeMode: 'cover'}}
           />
         </View>
@@ -101,16 +155,16 @@ const Item = ({title, gambar, terjual, tersisa, tekan}) => (
               marginLeft: 60,
               marginRight: 60,
             }}>
-            <Text style={[styles.h2]}>{tersisa}</Text>
+            <Text style={[styles.h2]}>tersisa {tersisa}</Text>
             <View style={{flex: 1, alignItems: 'flex-end'}}>
-              <Text style={[styles.h2]}>{terjual}</Text>
+              <Text style={[styles.h2]}>terjual {terjual}</Text>
             </View>
           </View>
         </View>
       </View>
     </View>
   </TouchableWithoutFeedback>
-);
+)};
 
 export default ProdukPage;
 

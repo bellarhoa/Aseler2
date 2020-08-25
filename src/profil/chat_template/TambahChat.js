@@ -56,7 +56,6 @@ class TambahChat extends Component{
                     multiline={true}
                     placeholder="Tulis pesan template yang dikirim"
                     keyboardType={this.props.type}
-                    onChangeText={(pass) => this.setState({ulangiPassword: pass})}
                     returnKeyType="done"
                     onChangeText={chat_isi => this.setState({chat_isi})}
                   />

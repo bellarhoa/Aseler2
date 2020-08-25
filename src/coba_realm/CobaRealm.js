@@ -12,7 +12,7 @@ import Realm from 'realm';
  .then(realm => {  
    // Create Realm objects and write to local storage  
    realm.write(() => {  
-     let delallCar = realm.objects('chat_tamplate');  
+     let delallCar = realm.objects('chat_mplate');  
      realm.delete(delallCar)  
    })  
    // Write list car in CarSchema  

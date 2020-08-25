@@ -2,6 +2,8 @@ import React from 'react';
 import {View, StyleSheet, Image, Text, FlatList} from 'react-native';
 import Card from '../component/Card';
 import {TouchableWithoutFeedback} from 'react-native-gesture-handler';
+import {queryAllUser, tambahUser}from '../database/Data_chat';
+import realm from '../database/Data_chat';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 
 const listProfil = [
@@ -39,15 +41,58 @@ const listProfil = [
   },
 ];
 
-const listProfil2 = [
-  
+const User = [
+  {
+    user_id: 1,
+    nama_user: 'Ani Widi',
+    nama_toko: 'Miniso Indonesia Malang',
+    foto_produk: 'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&w=1000&q=80',
+    email : 'asd@asd.asd',
+    password_user: 'asd123',
+    userToken: '1234',
+    pemasukan_user: '90000000',
+  },
 ];
 
+ 
+
 export default class ProfilPage extends React.Component {
+  constructor (props){
+    super(props);
+    this.state = {
+      User:[]
+    };
+    this.reloadData()
+    realm.addListener('change', () => {
+      this.reloadData();
+    });
+  }
+
+  // componentDidMount(){
+  //  tambahUser (User[0]).then().catch((error) =>{
+  //     alert(` chat error ${error}`);
+  //   });
+  // }
+
+  reloadData = () => {
+    queryAllUser().then((User) => {
+      this.setState({User});
+    }).catch((error) => {
+      alert(`Reload error ${error}`);
+    });
+    console.log('Id : '+ User.nama_user);
+  }
+
+
   render() {
     return (
       <View style={{flex: 1, backgroundColor: 'white'}}>
-        <View style={{backgroundColor: '#284B63',paddingBottom: 20}}>
+        <View style={{
+          backgroundColor: '#284B63',
+          paddingBottom: 20
+          // value : {this.state.User}}
+        }}
+          >
           <View
             style={{
               // flexDirection: 'row',
@@ -99,7 +144,6 @@ export default class ProfilPage extends React.Component {
           </TouchableWithoutFeedback> */}
         </View>
         <FlatList
-          // style={{marginTop: 10}}
           data={listProfil}
           renderItem={({item}) => (
             <Item
