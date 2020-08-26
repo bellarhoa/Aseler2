@@ -109,9 +109,6 @@ const Item = ({title, tekan}) => (
           }}>
           <Text style={[styles.h2, {color: '#353535'}]}>{title}</Text>
         </View>
-        <View style={{flex: 1, height: 40, alignItems: 'flex-end'}}>
-          <Ionicons name="send" color="#284B63" size={20} />
-        </View>
       </View>
     </View>
   </TouchableWithoutFeedback>

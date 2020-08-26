@@ -130,18 +130,24 @@ class DashboardPage extends Component {
             data={pesananA}
             navigation={this.props.navigation}
             onPress={() =>
-              this.props.navigation.navigate('TanggalPesanan', pesananA)
+              this.props.navigation.navigate('DaftarPesanan', pesananA)
             }
           />
           <KategoriPesanan
             judul="Pesanan Belum Konfirmasi"
             data={pesananB}
             navigation={this.props.navigation}
+            onPress={() =>
+              this.props.navigation.navigate('DaftarPesanan', pesananA)
+            }
           />
           <KategoriPesanan
             judul="Pesanan Belum Dikirim"
             data={pesananC}
             navigation={this.props.navigation}
+            onPress={() =>
+              this.props.navigation.navigate('DaftarPesanan', pesananA)
+            }
           />
         </ScrollView>
       </View>

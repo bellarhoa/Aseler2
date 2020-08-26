@@ -1,157 +1,156 @@
 import React, {Component} from 'react';
 import {View, Text, StyleSheet, Image, FlatList} from 'react-native';
 import {TouchableWithoutFeedback} from 'react-native-gesture-handler';
+import {queryAllPesanan, tambahPesanan} from '../../database/Data_chat';
+import realm from '../../database/Data_chat';
 
 const listKategori = [
   {
-    id: 1,
-    nama: 'Nabila Fai',
-    produk: 'tas',
-    status: 'selesai',
-    harga: 'Rp. 70.000',
-    next: 'DaftarSelesai',
+    pesanan_id: Math.floor(Math.random()* 10000000000),
+    nama_pelanggan: 'Nabila',
+    alamat_pelanggan : 'Malang, Sumbersari 3 No 186',
+    notelp_pelanggan : '0987654321',
+    status_pesanan : 'Selesai',
+    metode_pembayaran: 'Transfer - BNI',
+    jumlah_produk : '2',
+    foto_produk: 'https://cf.shopee.co.id/file/ecc20f8291b0545ea15ceb545d7e2b95',
+    namaproduk_pesanan : 'Tas Selempang Kikono',
+    hargaproduk_pesanan: '78000',
+    modelproduk_pesanan : 'coklat',
+    gambarproduk_pesanan: 'https://cf.shopee.co.id/file/ecc20f8291b0545ea15ceb545d7e2b95',
+    biaya_pengiriman: '10000',
+    total_harga : '166000',
+    tanggal_pesan : '18 September 2020',
   },
   {
-    id: 2,
-    nama: 'Nabila Fai',
-    produk: 'dompet',
-    status: 'selesai',
-    harga: 'Rp. 70.000',
-    next: 'DaftarSelesai',
+    pesanan_id: Math.floor(Math.random()* 10000000000),
+    nama_pelanggan: 'Zahra',
+    alamat_pelanggan : 'Malang, Sigura gura 19 No 6',
+    notelp_pelanggan : '0987654321',
+    status_pesanan : 'Selesai',
+    metode_pembayaran: 'Transfer - BCA',
+    jumlah_produk : '1',
+    foto_produk: 'https://cf.shopee.co.id/file/d41792b94e34f7494d1930df6da74612',
+    namaproduk_pesanan : 'Tas Selempang Rantai',
+    hargaproduk_pesanan: '78000',
+    modelproduk_pesanan : 'pink',
+    gambarproduk_pesanan: 'https://cf.shopee.co.id/file/d41792b94e34f7494d1930df6da74612',
+    biaya_pengiriman: '10000',
+    total_harga : '88000',
+    tanggal_pesan : '20 September 2020',
   },
 
-  {
-    id: 3,
-    nama: 'Nabila Fai',
-    produk: 'baju',
-    status: 'selesai',
-    harga: 'Rp. 70.000',
-    next: 'DaftarSelesai',
-  },
-  {
-    id: 4,
-    nama: 'Nabila Fai',
-    produk: 'tas',
-    status: 'selesai',
-    harga: 'Rp. 70.000',
-    next: 'DaftarSelesai',
-  },
 ];
 
-class DaftarSelesai extends Component {
-  render() {
-    return (
-      <View style={{flex: 1, backgroundColor: 'white'}}>
-        <FlatList
-          style={{marginTop: 10}}
-          data={listKategori}
-          renderItem={({item}) => (
-            <Item
-              nama={item.nama}
-              produk={item.produk}
-              harga={item.harga}
-              status={item.status}
-              tekan={() => this.props.navigation.navigate(item.title)}
-            />
-          )}
-          keyExtractor={(item) => item.id}
-        />
-      </View>
-    );
+class DaftarPesanan extends Component {
+  constructor (props){
+    super(props);
+    this.state = {
+      listKategori:[]
+    };
+    this.reloadData()
+    realm.addListener('change', () => {
+      this.reloadData();
+    });
   }
+
+  // componentDidMount(){
+  //   tambahPesanan(listKategori[0]).then().catch((error) =>{
+  //     alert(`Insert new chat error ${error}`);
+  //   });
+  // }
+
+  reloadData = () => {
+    queryAllPesanan().then((listKategori) => {
+      this.setState({listKategori});
+    }).catch((error) => {
+      alert(`Insert new chat error ${error}`);
+    });
+    console.log('reloadData');
+  }
+
+    render(){
+        return(
+            <View style={{flex: 1, backgroundColor: 'white'}}>
+            <FlatList
+            style={{marginTop: 10}}
+            data={this.state.listKategori}
+            renderItem={({item}) => (
+                <Item
+                nama={item.nama_pelanggan}
+                produk={item.namaproduk_pesanan}
+                harga={item.hargaproduk_pesanan}
+                status={item.status_pesanan}
+                tekan={() => this.props.navigation.navigate('DetailPesanan0', {item})}
+                />
+            )}
+            keyExtractor={(item) => item.id}
+            />
+            </View>
+        );
+    }
 }
 
-class Item extends React.Component {
-  render() {
-    let sts, stsColor, press;
-    if (this.props.status === 0) {
-      sts = 'Belum Bayar';
-      stsColor = '#FFB4A2';
-      press = () => this.props.navigation.navigate('DetailPesanan0');
-    } else if (this.props.status === 1) {
-      sts = 'Belum Konfirmasi';
-      stsColor = '#E5989B';
-      press = () => this.props.navigation.navigate('DetailPesanan1');
-    } else if (this.props.status === 2) {
-      sts = 'Belum Kirim';
-      stsColor = '#B5838D';
-      press = () => this.props.navigation.navigate('DetailPesanan2');
-    } else if (this.props.status === 3) {
-      sts = 'Selesai';
-      stsColor = '#06D6A0';
-      press = () => this.props.navigation.navigate('DetailPesanan0');
-    } else if (this.props.status === -1) {
-      sts = 'Dibatalkan';
-      stsColor = '#F45B69';
-      press = () => this.props.navigation.navigate('DetailPesanan0');
-    }
-    return (
-      <TouchableWithoutFeedback onPress={press}>
+const Item = ({nama, produk, harga, tekan, status}) => (
+    <TouchableWithoutFeedback onPress={tekan}>
+      <View
+        style={{
+          flexDirection: 'row',
+          paddingTop: 15,
+          paddingBottom: 15,
+          paddingLeft: 30,
+          paddingRight: 30,
+          borderBottomWidth: 1,
+          borderBottomColor: '#C4C4C4',
+          alignItems: 'center',
+          justifyContent: 'space-between',
+        }}>
         <View
           style={{
             flexDirection: 'row',
-            paddingTop: 15,
-            paddingBottom: 15,
-            paddingLeft: 30,
-            paddingRight: 30,
-            borderBottomWidth: 1,
-            borderBottomColor: '#C4C4C4',
             alignItems: 'center',
-            justifyContent: 'space-between',
+            //marginTop: 10,
           }}>
-          <View
-            style={{
-              flexDirection: 'row',
-              alignItems: 'center',
-              //marginTop: 10,
-            }}>
-            <View>
-              <Text style={[styles.h2, {color: '#353535'}]}>
-                {this.props.nama}
-              </Text>
-              <Text style={[styles.h1, {color: '#858585'}]}>
-                {this.props.produk}
-              </Text>
-            </View>
-            <View style={{alignItems: 'flex-end', flex: 1}}>
-              <Text style={[styles.h4, {color: stsColor}]}>{sts}</Text>
-              <Text style={[styles.h3, {color: '#858585'}]}>
-                {this.props.harga}
-              </Text>
-            </View>
+          <View>
+            <Text style={[styles.h2, {color: '#353535'}]}>{nama}</Text>
+            <Text style={[styles.h1, {color: '#858585'}]}>{produk}</Text>
+          </View>
+          <View style={{alignItems:'flex-end', flex: 1}}>
+            <Text style={[styles.h4, {color: 'red'}]}>{status}</Text>
+            <Text style={[styles.h3, {color: '#858585'}]}>{harga}</Text>
           </View>
         </View>
-      </TouchableWithoutFeedback>
-    );
-  }
-}
+      </View>
+    </TouchableWithoutFeedback>
+  );
 
-export default DaftarSelesai;
+export default DaftarPesanan;
+
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  h1: {
-    color: '#FFFFFF',
-    fontFamily: 'OpenSans-SemiBold',
-    fontSize: 14,
-  },
-  h2: {
-    color: '#FFFFFF',
-    fontFamily: 'OpenSans-SemiBold',
-    fontSize: 16,
-    marginTop: 10,
-  },
-  h3: {
-    color: '#FFFFFF',
-    fontFamily: 'OpenSans-SemiBold',
-    fontSize: 16,
-  },
-  h4: {
-    fontFamily: 'OpenSans-SemiBold',
-    fontSize: 12,
-  },
-});
+    container:{
+        flex: 1,
+        alignItems:'center',
+        justifyContent: 'center', 
+    },
+    h1: {
+        color: '#FFFFFF',
+        fontFamily: 'OpenSans-SemiBold',
+        fontSize: 14,
+      },
+      h2: {
+        color: '#FFFFFF',
+        fontFamily: 'OpenSans-SemiBold',
+        fontSize: 16,
+        marginTop: 10
+      },
+      h3: {
+        color: '#FFFFFF',
+        fontFamily: 'OpenSans-SemiBold',
+        fontSize: 16,
+      },
+      h4: {
+        fontFamily: 'OpenSans-SemiBold',
+        fontSize: 12,
+      },
+})

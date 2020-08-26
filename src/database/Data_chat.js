@@ -10,27 +10,27 @@ import {
 import {TouchableWithoutFeedback} from 'react-native-gesture-handler';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import Realm from 'realm';
-export const USER_SCHEMA = "User";
+// export const USER_SCHEMA = "User";
 export const USER2_SCHEMA = "User2";
-export const PESANAN_SCHEMA = "Pesanan";
+// export const PESANAN_SCHEMA = "Pesanan";
 export const PESANAN2_SCHEMA = "Pesanan2";
 export const PRODUK2_SCHEMA = "Produk2";
 export const CHATTEMPLATE_SCHEMA = "ChatTemplate";
 export const CHAT_SCHEMA = "Chat";
 let realm;
 
-export const UserSchema = {
-  name: USER_SCHEMA,
-  primaryKey : 'user_id',
-  properties: {
-    user_id: {type: 'int', default: 0},
-    nama_user: 'string',
-    nama_toko : 'string',
-    foto_produk: 'string',
-    url_user : 'string',
-    // email : 'string',
-  }
-};
+// export const UserSchema = {
+//   name: USER_SCHEMA,
+//   primaryKey : 'user_id',
+//   properties: {
+//     user_id: {type: 'int', default: 0},
+//     nama_user: 'string',
+//     nama_toko : 'string',
+//     foto_produk: 'string',
+//     url_user : 'string',
+//     // email : 'string',
+//   }
+// };
 
 export const User2Schema = {
   name: USER2_SCHEMA,
@@ -48,23 +48,23 @@ export const User2Schema = {
   }
 };
 
-export const PesananSchema = {
-  name: PESANAN_SCHEMA,
-  primaryKey : 'pesanan_id',
-  properties: {
-    pesanan_id: {type: 'int', default: 0},
-    nama_pelanggan: 'string',
-    alamat_pelanggan : 'string',
-    notelp_pelanggan : 'string',
-    status_pesanan : 'string',
-    jumlah_produk : 'string',
-    total_harga : 'string',
-    metode_pembayaran: 'string',
-    biaya_pengiriman: 'string',
-    foto_produk: 'string',
-    url_user : 'string',
-  }
-};
+// export const PesananSchema = {
+//   name: PESANAN_SCHEMA,
+//   primaryKey : 'pesanan_id',
+//   properties: {
+//     pesanan_id: {type: 'int', default: 0},
+//     nama_pelanggan: 'string',
+//     alamat_pelanggan : 'string',
+//     notelp_pelanggan : 'string',
+//     status_pesanan : 'string',
+//     jumlah_produk : 'string',
+//     total_harga : 'string',
+//     metode_pembayaran: 'string',
+//     biaya_pengiriman: 'string',
+//     foto_produk: 'string',
+//     url_user : 'string',
+//   }
+// };
 
 export const Pesanan2Schema = {
   name: PESANAN2_SCHEMA,
@@ -126,7 +126,7 @@ export const ChatTemplateSchema = {
 
 const databaseOptions = {
   path: 'AselerApp.realm',
-  schema: [PesananSchema, UserSchema, Produk2Schema, ChatTemplateSchema, ChatSchema],
+  schema: [Pesanan2Schema, User2Schema, Produk2Schema, ChatTemplateSchema, ChatSchema],
   schemaVersion: 0,
 }
 
@@ -184,8 +184,6 @@ export const tambahPesanan = tambahPesanans => new Promise((resolve, reject) => 
   }).catch((error)=> reject(error));
 });
 
-
-
 export const queryAllPesanan = () => new Promise((resolve, reject) =>{
   Realm.open(databaseOptions).then(realm => {
     let allPesanan = realm.objects(PESANAN2_SCHEMA);
@@ -222,6 +220,7 @@ export const deleteProduk = produkId => new Promise((resolve, reject) =>{
     });
   }).catch((error) => reject(error));;
 });
+
 
 export const updateProduk = produkUp => new Promise((resolve, reject)=>{
   Realm.open(databaseOptions).then(realm => {

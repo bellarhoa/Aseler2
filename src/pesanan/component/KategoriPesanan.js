@@ -24,7 +24,7 @@ export default class KategoriPesanan extends React.Component {
           paddingTop: 12,
           paddingBottom: 15,
         }}>
-        <TouchableWithoutFeedback onPress={this.props.onPress}>
+        <TouchableWithoutFeedback>
           <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
             <Text
               style={{
@@ -34,12 +34,6 @@ export default class KategoriPesanan extends React.Component {
               }}>
               {this.props.judul}
             </Text>
-            <Ionicons
-              name="chevron-forward"
-              size={18}
-              color="#353535"
-              style={{paddingRight: 9}}
-            />
           </View>
         </TouchableWithoutFeedback>
 

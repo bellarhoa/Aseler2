@@ -30,6 +30,7 @@ class EditProduk extends Component{
   }
 
   componentDidMount(){
+    this.setState({produk_id : this.props.route.params.item.produk_id})
     this.setState({foto_produk : this.props.route.params.item.foto_produk});
     this.setState({nama_produk : this.props.route.params.item.nama_produk});
     this.setState({terjual_produk : this.props.route.params.item.terjual_produk});
@@ -38,16 +39,16 @@ class EditProduk extends Component{
     console.log('Id : '+JSON.stringify(this.props.route.params.item.produk_id));
   }
 
-//   showDialogComponentForUpdate = (existingChatTemplate) => {
-//     this.refs.popupDialog.show();
-//     this.setState({
-//         dialogTitle: 'Update a Chat Template',             
-//         chat_id: existingChatTemplate.chat_id,
-//         chat_judul: existingChatTemplate.chat_judul,
-//         chat_isi: existingChatTemplate.chat_isi,
-//         isAddNew: false
-//     });
-// }
+  showDialogComponentForUpdate = (existingChatTemplate) => {
+    this.refs.popupDialog.show();
+    this.setState({
+        dialogTitle: 'Update a Chat Template',             
+        chat_id: existingChatTemplate.chat_id,
+        chat_judul: existingChatTemplate.chat_judul,
+        chat_isi: existingChatTemplate.chat_isi,
+        isAddNew: false
+    });
+}
 
     render(){
         return(  
@@ -71,48 +72,6 @@ class EditProduk extends Component{
                     placeholder="Tulis pesan template yang dikirim"
                     keyboardType={this.props.type}
                     onChangeText={(namaproduk) => this.setState({nama_produk : namaproduk})} value={this.state.nama_produk}
-                    returnKeyType="done"
-                  />
-                </View>
-
-                <Text style={{marginTop : 20}}> Terjual Produk </Text>
-              <View
-                  style={{
-                    backgroundColor: '#EFEFEF',
-                    borderRadius: 5,
-                  }}>
-                  <TextInput
-                    style={{
-                      padding: 9,
-                      fontFamily: 'OpenSans-Regular',
-                      fontSize: 14,
-                      textAlignVertical: 'top',
-                    }}
-                    multiline={true}
-                    placeholder="Tulis pesan template yang dikirim"
-                    keyboardType={this.props.type}
-                    onChangeText={(terjualp) => this.setState({terjual_produk : terjualp})} value={this.state.terjual_produk}
-                    returnKeyType="done"
-                  />
-                </View>
-
-                <Text style={{marginTop : 20}}> Tersisa Produk </Text>
-              <View
-                  style={{
-                    backgroundColor: '#EFEFEF',
-                    borderRadius: 5,
-                  }}>
-                  <TextInput
-                    style={{
-                      padding: 9,
-                      fontFamily: 'OpenSans-Regular',
-                      fontSize: 14,
-                      textAlignVertical: 'top',
-                    }}
-                    multiline={true}
-                    placeholder="Tulis pesan template yang dikirim"
-                    keyboardType={this.props.type}
-                    onChangeText={(tersisap) => this.setState({tersisa_produk : tersisap})} value={this.state.tersisa_produk}
                     returnKeyType="done"
                   />
                 </View>
@@ -154,7 +113,8 @@ class EditProduk extends Component{
                         multiline={true}
                         placeholder="Tulis pesan template yang dikirim"
                         keyboardType={this.props.type}
-                        onChangeText={(hargap) => this.setState({harga_produk : hargap})} value={this.state.harga_produk}
+                        onChangeText={(hargap) => this.setState({harga_produk : hargap})} 
+                        value={this.state.harga_produk}
                         returnKeyType="done"
                       />
                   </View>
@@ -179,9 +139,9 @@ class EditProduk extends Component{
                             {
                                 text: 'Yes', onPress: () => {
                                   deleteProduk(this.state.produk_id).then(() => {
-                                    this.props.navigation.navigate('PesanTamplate');
+                                    this.props.navigation.navigate('ProdukPage');
                                   }).catch(error => {
-                                    alert(`Failed to delete todoList with id = ${this.state.produk_id}, error=${error}`);
+                                    alert(`Failed to delete produk with id = ${this.state.produk_id}, error=${error}`);
                                 });                                
                                 }
                             },
@@ -244,7 +204,7 @@ class EditProduk extends Component{
                         updateProduk(produkUp).then().catch((error) => {
                             alert(`Update produk error ${error}`);
                         });   
-                      this.props.navigation.navigate('ProdukPage')}}
+                        this.props.navigation.navigate('ProdukPage');}}
                       >
                       <View
                         style={[

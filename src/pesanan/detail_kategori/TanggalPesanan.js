@@ -53,7 +53,7 @@ class PesananSelesai extends Component{
                 tanggal={item.tanggal}
                 jumlah={item.jumlah}
                 harga={item.harga}
-                tekan={() => this.props.navigation.navigate(item.next)}
+                tekan={() => this.props.navigation.navigate('DaftarPesanan')}
                 />
             )}
             keyExtractor={(item) => item.id}
