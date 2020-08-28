@@ -1,13 +1,13 @@
 import React from 'react';
 import {View, StyleSheet, Text, Dimensions, Image} from 'react-native';
-import BarisInfoDP from '../component/BarisInfo_DetailPesanan';
-import BarisHargaDP from '../component/BarisHarga_DetailPesanan';
-import ButtonDP from '../component/Button_DetailPesanan';
+import BarisInfoDP from '../../pesanan/component/BarisInfo_DetailPesanan';
+import BarisHargaDP from '../../pesanan/component/BarisHarga_DetailPesanan';
+import ButtonDP from '../../pesanan/component/Button_DetailPesanan';
 import {ScrollView} from 'react-native-gesture-handler';
 import {} from '../../database/Data_chat';
 import realm from '../../database/Data_chat';
 
-export default class DetailPesanan1 extends React.Component {
+export default class DetailPesanan0 extends React.Component {
   constructor(props){
     super(props);
     this.state = {
@@ -49,17 +49,6 @@ export default class DetailPesanan1 extends React.Component {
     console.log('Id : '+JSON.stringify(this.props.route.params.item.pesanan_id));
   }
 
-  showDialogComponentForUpdate = (existingChatTemplate) => {
-    this.refs.popupDialog.show();
-    this.setState({
-        dialogTitle: 'Update a Chat Template',             
-        chat_id: existingChatTemplate.chat_id,
-        chat_judul: existingChatTemplate.chat_judul,
-        chat_isi: existingChatTemplate.chat_isi,
-        isAddNew: false
-    });
-}
-
   render() {
     return (
       <View
@@ -72,6 +61,7 @@ export default class DetailPesanan1 extends React.Component {
         }}>
         <ScrollView>
           <BarisInfoDP pertanyaan="Status Pesanan" jawaban={this.state.status_pesanan} />
+          <BarisInfoDP pertanyaan="Tanggal Pesanan" jawaban={this.state.tanggal_pesan} />
           <Text style={styles.judul}>Data Pembeli</Text>
           <BarisInfoDP pertanyaan="Nama Lengkap" jawaban={this.state.nama_pelanggan} />
           <BarisInfoDP
@@ -122,12 +112,12 @@ export default class DetailPesanan1 extends React.Component {
           </View>
           <BarisHargaDP
             pertanyaan="Biaya Pengiriman"
-            jawaban={"Rp "+this.state.biaya_pengiriman}
+            jawaban={"Rp " + this.state.biaya_pengiriman}
             color="#353535"
           />
           <BarisHargaDP
             pertanyaan="Total Pesanan"
-            jawaban={"Rp "+this.state.total_harga}
+            jawaban={"Rp " + this.state.total_harga}
             color="#3C6E71"
           />
           <View
@@ -137,12 +127,12 @@ export default class DetailPesanan1 extends React.Component {
               justifyContent: 'center',
               marginTop: 14,
             }}>
-             <ButtonDP
+            <ButtonDP
               text="Kirim Pesan Template"
               backgroundColor="#284B63"
               textColor="white"
               onPress={() =>
-                this.props.navigation.navigate('Pilih Pesan Template')
+                this.props.navigation.navigate('Pesan Template')
               }
             />
             <ButtonDP
@@ -150,8 +140,10 @@ export default class DetailPesanan1 extends React.Component {
               backgroundColor="#284B63"
               textColor="white"
             />
+            {/*
+            
             <ButtonDP
-              text="Konfirmasi Pembayaran Pesanan"
+              text="Tandai Pesanan sudah Dibayar"
               backgroundColor="#284B63"
               textColor="white"
             />
@@ -160,7 +152,7 @@ export default class DetailPesanan1 extends React.Component {
               backgroundColor="white"
               borderColor="#284B63"
               textColor="#284B63"
-            />
+            /> */}
           </View>
         </ScrollView>
       </View>
@@ -178,4 +170,3 @@ const styles = StyleSheet.create({
   produk: {color: '#353535', fontFamily: 'OpenSans-Regular', fontSize: 12},
   variasi: {color: '#707070', fontFamily: 'OpenSans-Regular', fontSize: 12},
 });
-

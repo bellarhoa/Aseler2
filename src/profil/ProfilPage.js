@@ -1,5 +1,5 @@
 import React from 'react';
-import {View, StyleSheet, Image, Text, FlatList} from 'react-native';
+import {View, StyleSheet, Image, Text, FlatList, ScrollView} from 'react-native';
 import Card from '../component/Card';
 import {TouchableWithoutFeedback} from 'react-native-gesture-handler';
 import {queryAllUser, tambahUser}from '../database/Data_chat';
@@ -29,7 +29,7 @@ const listProfil = [
     title: 'Daftar Pesanan Selesai',
     desc: 'Berisi semua pesanan yang sudah selesai',
     isRequired: false,
-    next: 'PesananSelesai',
+    next: 'DaftarSelesai',
   },
   {
     id: 4,
@@ -37,7 +37,7 @@ const listProfil = [
     title: 'Daftar Pesanan Dibatalkan',
     desc: 'Berisi semua pesanan yang dibatalkan',
     isRequired: false,
-    next: 'PesananBatal',
+    next: 'DaftarBatal',
   },
 ];
 
@@ -143,6 +143,7 @@ export default class ProfilPage extends React.Component {
             </Card>
           </TouchableWithoutFeedback> */}
         </View>
+        <ScrollView>
         <FlatList
           data={listProfil}
           renderItem={({item}) => (
@@ -155,7 +156,27 @@ export default class ProfilPage extends React.Component {
             />
           )}
           keyExtractor={(item) => item.id}
+          
         />
+        <TouchableWithoutFeedback>
+            <View
+              style={{
+                flexDirection: 'row',
+                paddingTop: 15,
+                paddingBottom: 15,
+                paddingLeft: 16,
+                paddingRight: 16,
+                borderBottomWidth: 1,
+                borderBottomColor: '#C4C4C4',
+                alignItems: 'center',
+                justifyContent: 'center',
+              }}>
+              <Ionicons name="log-out-outline" color="#858585" size={20} />
+              <Text style={[styles.h2, {color: '#525252', marginLeft: 10}]}>
+                Keluar
+              </Text>
+            </View>
+          </TouchableWithoutFeedback>
         {/* <FlatList
           style={{marginTop: null}}
           data={listProfil}
@@ -170,7 +191,9 @@ export default class ProfilPage extends React.Component {
           )}
           keyExtractor={(item) => item.id}
         /> */}
+        </ScrollView>
       </View>
+      
     );
   }
 }
@@ -212,6 +235,8 @@ const Item = ({icon, title,next, desc, isRequired, tekan}) => (
       ) : null}
     </View>
   </TouchableWithoutFeedback>
+  
+
 );
 
 const styles = StyleSheet.create({

@@ -55,6 +55,56 @@ const listKategori = [
     terjual_produk: 12,
     harga_produk: '85000',
   },
+//Baru
+  {
+    produk_id: Math.floor(Math.random()* 10000000000),
+    foto_produk:
+      'https://ecs7.tokopedia.net/img/cache/700/product-1/2020/7/22/78419712/78419712_d3dd32cf-8ea7-41ea-a397-a043469c7c8e_1100_1100',
+    nama_produk:
+      'Tas Selempang Wanita Logam Rantai Sling Bag Fahion Pesta Basic - Hijau',
+    tersisa_produk: 11,
+    terjual_produk: 9,
+    harga_produk: '69900',
+  },
+  {
+    produk_id: Math.floor(Math.random()* 10000000000),
+    foto_produk:
+      'https://ecs7-p.tokopedia.net/img/cache/300/product-1/2020/4/29/78419712/78419712_d0f3f6ea-0048-49ed-a064-24d529738491_1000_1000.webp',
+    nama_produk:
+      'Wanita Handbag Dompet Panjang Lipat Zipper Simple - Merah Muda',
+    tersisa_produk: 11,
+    terjual_produk: 9,
+    harga_produk: '59900',
+  },
+  {
+    produk_id: Math.floor(Math.random()* 10000000000),
+    foto_produk:
+      'https://ecs7-p.tokopedia.net/img/cache/300/product-1/2020/6/29/78419712/78419712_51994a14-b5f6-4fe9-bad0-243f15af4a09_1100_1100.webp',
+    nama_produk: 'Dompet Wanita Pendek Kecil Lipat Motif Lucu Karakter - Beige',
+    tersisa_produk: 11,
+    terjual_produk: 9,
+    harga_produk: '69900',
+  },
+  {
+    produk_id: Math.floor(Math.random()* 10000000000),
+    foto_produk:
+      'https://ecs7-p.tokopedia.net/img/cache/300/product-1/2020/4/28/78419712/78419712_c7f17a5b-1443-471a-8ea4-74a957a4a465_1000_1000.webp',
+    nama_produk:
+      'Tas Organizer Perlengkapan Mandi Lipat Portable Kosmetik - Abu-abu',
+    tersisa_produk: 11,
+    terjual_produk: 9,
+    harga_produk: '59900',
+  },
+  {
+    produk_id: Math.floor(Math.random()* 10000000000),
+    foto_produk:
+      'https://ecs7-p.tokopedia.net/img/cache/300/product-1/2020/8/20/24071379/24071379_e74484ad-6a88-4cc9-8d9b-7ee5d92f3679_1100_1100.webp',
+    nama_produk:
+      'Handuk Mandi Bath Towel 140x70cm Besar Berdaya Serap Tinggi - Koala',
+    tersisa_produk: 12,
+    terjual_produk: 8,
+    harga_produk: '109900',
+  },
 ];
 
 
@@ -71,7 +121,7 @@ class ProdukPage extends Component {
   }
 
   // componentDidMount(){
-  //   IsiProduk(listKategori[5]).then().catch((error) =>{
+  //   IsiProduk(listKategori[10]).then().catch((error) =>{
   //     alert(`Insert new chat error ${error}`);
   //   });
   // }
@@ -124,8 +174,8 @@ const Item = ({title, gambar, terjual, tersisa, tekan}) => {
         flexDirection: 'row',
         paddingTop: 10,
         paddingBottom: 10,
-        paddingLeft: 20,
-        paddingRight: 20,
+        paddingLeft: 10,
+        paddingRight: 10,
         borderWidth: 1,
         borderRadius: 5,
         borderColor: '#d6d6d6',
@@ -140,11 +190,11 @@ const Item = ({title, gambar, terjual, tersisa, tekan}) => {
         <View style={{flex: 0.18}}>
           <Image
             source={{ uri: gambar}}
-            style={{flex: 1, width: 60, height: 60, resizeMode: 'cover'}}
+            style={{ width: 60, height: 60, resizeMode: 'cover'}}
           />
         </View>
-        <View style={{flex: 1}}>
-          <Text style={[styles.h1, {marginLeft: 20, marginTop: 8}]}>
+        <View style={{flex : 1, alignItems : 'center', marginLeft : 10, width : 300}}>
+          <Text style={[styles.h1, {marginLeft:15, marginTop: 8, marginBottom : 10, justifyContent : 'center'}]}>
             {title}
           </Text>
           <View

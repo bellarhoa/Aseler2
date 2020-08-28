@@ -130,7 +130,7 @@ class DashboardPage extends Component {
             data={pesananA}
             navigation={this.props.navigation}
             onPress={() =>
-              this.props.navigation.navigate('DaftarPesanan', pesananA)
+              this.props.navigation.navigate('DaftarPesanan2', pesananA)
             }
           />
           <KategoriPesanan
@@ -138,7 +138,7 @@ class DashboardPage extends Component {
             data={pesananB}
             navigation={this.props.navigation}
             onPress={() =>
-              this.props.navigation.navigate('DaftarPesanan', pesananA)
+              this.props.navigation.navigate('DaftarPesanan1', pesananA)
             }
           />
           <KategoriPesanan

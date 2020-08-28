@@ -105,7 +105,7 @@ export default class DetailPesanan0 extends React.Component {
               source = {{uri : this.state.gambarproduk_pesanan}}
             />
             <View style={{marginLeft: 8}}>
-            <Text style={styles.produk}>{this.state.namaproduk_pesanan}</Text>
+            <Text style={[styles.produk,{width : 220}]}>{this.state.namaproduk_pesanan}</Text>
               <View
                 style={{
                   flexDirection: 'row',
@@ -122,12 +122,12 @@ export default class DetailPesanan0 extends React.Component {
           </View>
           <BarisHargaDP
             pertanyaan="Biaya Pengiriman"
-            jawaban={this.state.biaya_pengiriman}
+            jawaban={"Rp "+this.state.biaya_pengiriman}
             color="#353535"
           />
           <BarisHargaDP
             pertanyaan="Total Pesanan"
-            jawaban={this.state.total_harga}
+            jawaban={"Rp "+this.state.total_harga}
             color="#3C6E71"
           />
           <View
@@ -154,6 +154,9 @@ export default class DetailPesanan0 extends React.Component {
               text="Tandai Pesanan sudah Dibayar"
               backgroundColor="#284B63"
               textColor="white"
+              onPress = {() => {
+              }}
+              
             />
             <ButtonDP
               text="Tandai Pesanan Dibatalkan"

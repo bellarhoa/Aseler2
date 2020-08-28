@@ -4,19 +4,28 @@ import {
   StyleSheet,
   Text,
   TextInput,
+  ScrollView,
   TouchableWithoutFeedback,
 } from 'react-native';
 import {getStatusBarHeight} from 'react-native-status-bar-height';
+import {tambahUser} from '../database/Data_chat'
 import firebase from '../../Firebase';
 
 class SignUpPage extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      email: '',
-      password: '',
-      ulangiPassword: '',
-      errorMessage: null,
+      user_id: null,
+      nama_user: '',
+      nama_toko : '',
+      foto_produk: '',
+      url_user : '',
+      email : '',
+      password_user : '',
+      ulangipassword_user : '',
+      userToken : '',
+      pemasukkan_user : '',
+      isAddNew: true,
     };
   }
 
@@ -30,12 +39,23 @@ class SignUpPage extends Component {
   // };
   render() {
     return (
+      <ScrollView>
       <View style={styles.container}>
         <Text style={styles.h1}>Sebelum Mulai,</Text>
         <Text style={(styles.p, {marginBottom: 10})}>
           Lengkapi informasi data diri kamu terlebih dahulu untuk membuat akun
           baru
         </Text>
+        <InputForm
+          question="Nama User"
+          example="John Don"
+          onChangeText={(namauser) => this.setState({nama_user: namauser})}
+        />
+        <InputForm
+          question="Nama Toko"
+          example="Jaya Toko"
+          onChangeText={(namatoko) => this.setState({nama_toko: namatoko})}
+        />
         <InputForm
           question="Email"
           example="example@email.com"
@@ -46,44 +66,64 @@ class SignUpPage extends Component {
           question="Kata Sandi"
           example="......"
           pass={true}
-          onChangeText={(pass) => this.setState({password: pass})}
+          onChangeText={(pass) => this.setState({password_user: pass})}
         />
         <InputForm
           question="Ulangi Kata Sandi"
           example="......"
           pass={true}
-          onChangeText={(pass) => this.setState({ulangiPassword: pass})}
+          onChangeText={(pass) => this.setState({ulangipassword_user: pass})}
         />
         <TouchableWithoutFeedback
           onPress={() => {
-            // if (
-            //   this.state.email != '' &&
-            //   this.state.password != '' &&
-            //   this.state.ulangiPassword != ''
-            // ) {
-            //   if (validateEmail(this.state.email)) {
-            //     if (this.state.password == this.state.ulangiPassword) {
-            //       if (this.state.errorMessage != null) {
-            //         alert(this.state.errorMessage);
-            //       }
-            //       this.handleSignUp;
-            //     } else {
-            //       alert('Kata sandi tidak sama');
-            //     }
-            //   } else {
-            //     alert('Harap isi email dengan benar');
-            //   }
-            // } else {
-            //   alert('Harap isi dengan lengkap');
-            // }
-            this.props.navigation.navigate('Daftar Akun 2');
+            if (this.state.nama_user.trim()==""){
+              alert("Mohon lengkapi Nama User");
+              return;
+            }
+            if (this.state.nama_toko.trim()==""){
+              alert("Mohon lengkapi Nama Toko");
+              return;
+            }
+            if (this.state.email.trim()==""){
+              alert("Mohon lengkapi Email");
+              return;
+            }
+            if (this.state.password_user.trim()==""){
+              alert("Mohon lengkapi Password");
+              return;
+            }
+            if (this.state.password_user.trim() != this.state.ulangipassword_user.trim()){
+              alert("Password Tidak Sama Mohon Ulangi");
+              return;
+            }
+            if (this.state.isAddNew ==true){
+              const newUser = {
+                user_id : Math.floor(Math.random()* 10000000000),
+                nama_user : this.state.nama_user,
+                nama_toko : this.state.nama_toko,
+                url_user : 'Urlsuser',
+                foto_produk : 'https://www.popularitas.com/wp-content/uploads/2018/04/user-hero-blue.png',
+                email : this.state.email,
+                password_user : this.state.password_user,
+                ulangipassword_user : this.state.ulangipassword_user,
+                pemasukkan_user : '900000000',
+                userToken : Math.random().toString(36).substring(7),
+              };
+              tambahUser(newUser).then().catch((error) => {
+                alert(`Tambah User Error ${error}`);
+              });
+            } else{
+
+            }
+            
+            this.props.navigation.navigate('TabScreen');
           }}>
           <View
             style={{
               backgroundColor: '#284B63',
               borderRadius: 50,
               alignItems: 'center',
-              marginTop: 60,
+              marginTop: 30,
               width: 250,
               alignSelf: 'center',
             }}>
@@ -99,7 +139,7 @@ class SignUpPage extends Component {
           </View>
         </TouchableWithoutFeedback>
         <View
-          style={{flex: 1, justifyContent: 'flex-end', alignItems: 'center'}}>
+          style={{flex: 1,marginTop: 10, justifyContent: 'flex-end', alignItems: 'center'}}>
           <View style={{flexDirection: 'row'}}>
             <Text style={styles.p}>Sudah mempunyai akun?</Text>
             <Text
@@ -108,6 +148,7 @@ class SignUpPage extends Component {
                 fontFamily: 'OpenSans-SemiBold',
                 fontSize: 14,
                 textDecorationLine: 'underline',
+                
                 marginLeft: 10,
               }}
               onPress={() => this.props.navigation.navigate('Masuk Akun')}>
@@ -116,8 +157,10 @@ class SignUpPage extends Component {
           </View>
         </View>
       </View>
+      </ScrollView>
     );
   }
+  
 }
 
 const styles = StyleSheet.create({

@@ -7,8 +7,10 @@ import LihatChat from './chat_template/LihatChat';
 import EditChat from './chat_template/EditChat';
 import PesananSelesai from './pesanan_selesai/PesananSelesai';
 import DaftarSelesai from './pesanan_selesai/DaftarSelesai';
+import DetailPesananSel from './pesanan_selesai/DetailPesananSel';
 import PesananBatal from './pesanan_batal/PesananBatal';
 import DaftarBatal from './pesanan_batal/DaftarBatal';
+import DetailPesananBt from './pesanan_batal/DetailPesananBt';
 import EditAkun from './edit_akun/EditAkun';
 import TambahChat from './chat_template/TambahChat';
 
@@ -53,7 +55,7 @@ export default function ProfilScreen() {
       <Stack.Screen
         name="DaftarSelesai"
         component={DaftarSelesai}
-        options={{headerTitle: '25 Agustus 2020', tabBarVisible: false}}
+        options={{headerTitle: 'Daftar Selesai', tabBarVisible: false}}
       />
       <Stack.Screen
         name="PesananBatal"
@@ -63,12 +65,22 @@ export default function ProfilScreen() {
       <Stack.Screen
         name="DaftarBatal"
         component={DaftarBatal}
-        options={{headerTitle: '25 Agustus 2020', tabBarVisible: false}}
+        options={{headerTitle: 'Daftar Batal', tabBarVisible: false}}
       />
       <Stack.Screen
         name="EditAkun"
         component={EditAkun}
         options={{headerTitle: 'Edit Akun', tabBarVisible: false}}
+      />
+      <Stack.Screen
+        name="DetailPesananSel"
+        component={DetailPesananSel}
+        options={{headerTitle: 'Pesanan Selesai', tabBarVisible: false}}
+      />
+      <Stack.Screen
+        name="DetailPesananBt"
+        component={DetailPesananBt}
+        options={{headerTitle: 'Pesanan di Batalkan', tabBarVisible: false}}
       />
     </Stack.Navigator>
   );
