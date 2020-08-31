@@ -1,11 +1,13 @@
 import React from 'react';
-import {View, StyleSheet, Text, Dimensions, Image} from 'react-native';
+import {View,TouchableWithoutFeedback, StyleSheet, Alert, Text, Dimensions, Image} from 'react-native';
 import BarisInfoDP from '../component/BarisInfo_DetailPesanan';
 import BarisHargaDP from '../component/BarisHarga_DetailPesanan';
 import ButtonDP from '../component/Button_DetailPesanan';
 import {ScrollView} from 'react-native-gesture-handler';
-import {} from '../../database/Data_chat';
+import {deletePesanan4, tambahPesanan, tambah3Pesanan} from '../../database/Data_chat';
 import realm from '../../database/Data_chat';
+//Pesanan 2 = selsai, Pesanan 3 = batal, Pesanan 4 = belum kirim, Pesanan 5 = konfirmasi, Pesanan 6 = belum bayar
+//belum kirim
 
 export default class DetailPesanan0 extends React.Component {
   constructor(props){
@@ -150,20 +152,171 @@ export default class DetailPesanan0 extends React.Component {
               backgroundColor="#284B63"
               textColor="white"
             />
-            <ButtonDP
-              text="Tandai Pesanan sudah Dibayar"
-              backgroundColor="#284B63"
-              textColor="white"
-              onPress = {() => {
-              }}
-              
-            />
-            <ButtonDP
-              text="Tandai Pesanan Dibatalkan"
-              backgroundColor="white"
-              borderColor="#284B63"
-              textColor="#284B63"
-            />
+
+            {/* Telah Dikirim */}
+            <TouchableWithoutFeedback onPress = {() => {
+                      Alert.alert(
+                        'Pesanan Telah Dikirim',
+                        'Konfirmasi pesanan telah dikirim',
+                        [
+                            {
+                                text: 'No', onPress: () => { },//Do nothing
+                                style: 'cancel'
+                            },
+                            {
+                                text: 'Yes', onPress: () => {
+                                  const newPesanan = {
+                                    pesanan_id: this.state.pesanan_id,
+                                    nama_pelanggan: this.state.nama_pelanggan,
+                                    alamat_pelanggan : this.state.alamat_pelanggan,
+                                    notelp_pelanggan : this.state.notelp_pelanggan,
+                                    status_pesanan : 'Selesai',
+                                    metode_pembayaran: this.state.metode_pembayaran,
+                                    jumlah_produk : this.state.jumlah_produk,
+                                    foto_produk: this.state.foto_produk,
+                                    namaproduk_pesanan : this.state.namaproduk_pesanan,
+                                    hargaproduk_pesanan: this.state.hargaproduk_pesanan,
+                                    modelproduk_pesanan : this.state.modelproduk_pesanan,
+                                    gambarproduk_pesanan: this.state.gambarproduk_pesanan,
+                                    biaya_pengiriman: this.state.biaya_pengiriman,
+                                    total_harga : this.state.total_harga,
+                                    tanggal_pesan : this.state.tanggal_pesan,
+                                  };
+                                  tambahPesanan(newPesanan).then().catch((error) => {
+                                    alert(`Tambah User Error ${error}`);
+                                   });;
+                                  deletePesanan4(this.state.pesanan_id).then(() => {
+                                    this.props.navigation.navigate('DaftarPesanan');
+                                  }).catch(error => {
+                                    alert(`Failed to delete produk with id = ${this.state.pesanan_id}, error=${error}`);
+                                });                                
+                                }
+                            },
+                        ],
+                        { cancelable: true }
+                        );
+                   
+                    }
+                      }>
+              <View
+                style={[
+                  this.props.style,
+                  {
+                    flexDirection: 'row',
+                    backgroundColor: '#284B63',
+                    borderColor: this.props.borderColor,
+                    borderWidth: 1,
+                    borderRadius: 5,
+                    paddingTop: 6,
+                    paddingBottom: 6,
+                    paddingLeft: 8,
+                    paddingRight: 8,
+                    margin: 5,
+                    shadowColor: '#000',
+                    shadowOffset: {
+                      width: 0,
+                      height: 2,
+                    },
+                    shadowOpacity: 0.25,
+                    shadowRadius: 2,
+                    elevation: 3,
+                  },
+                ]}>
+                <Text
+                  style={{
+                    color: 'white',
+                    fontFamily: 'OpenSans-SemiBold',
+                    fontSize: 14,
+                  }}>
+                  Tandai Pesanan Telah Dikirim
+                </Text>
+              </View>
+            </TouchableWithoutFeedback>
+             
+            {/* Batal */}
+
+            <TouchableWithoutFeedback onPress = {() => {
+                      Alert.alert(
+                        'Pesanan Dibatalkan',
+                        'Konfirmasi pesanan dibatalkan',
+                        [
+                            {
+                                text: 'No', onPress: () => { },//Do nothing
+                                style: 'cancel'
+                            },
+                            {
+                                text: 'Yes', onPress: () => {
+                                  const newPesanan = {
+                                    pesanan_id: this.state.pesanan_id,
+                                    nama_pelanggan: this.state.nama_pelanggan,
+                                    alamat_pelanggan : this.state.alamat_pelanggan,
+                                    notelp_pelanggan : this.state.notelp_pelanggan,
+                                    status_pesanan : 'Batal',
+                                    metode_pembayaran: this.state.metode_pembayaran,
+                                    jumlah_produk : this.state.jumlah_produk,
+                                    foto_produk: this.state.foto_produk,
+                                    namaproduk_pesanan : this.state.namaproduk_pesanan,
+                                    hargaproduk_pesanan: this.state.hargaproduk_pesanan,
+                                    modelproduk_pesanan : this.state.modelproduk_pesanan,
+                                    gambarproduk_pesanan: this.state.gambarproduk_pesanan,
+                                    biaya_pengiriman: this.state.biaya_pengiriman,
+                                    total_harga : this.state.total_harga,
+                                    tanggal_pesan : this.state.tanggal_pesan,
+                                  };
+                                  tambah3Pesanan(newPesanan).then().catch((error) => {
+                                    alert(`Tambah User Error ${error}`);
+                                   });;
+                                  deletePesanan4(this.state.pesanan_id).then(() => {
+                                    this.props.navigation.navigate('DaftarPesanan0');
+                                  }).catch(error => {
+                                    alert(`Failed to delete produk with id = ${this.state.pesanan_id}, error=${error}`);
+                                });                                
+                                }
+                            },
+                        ],
+                        { cancelable: true }
+                        );
+                   
+                    }
+                      }>
+              <View
+                style={[
+                  this.props.style,
+                  {
+                    flexDirection: 'row',
+                    backgroundColor: 'white',
+                    borderColor: '#284B63',
+                    borderWidth: 1,
+                    borderRadius: 5,
+                    paddingTop: 6,
+                    paddingBottom: 6,
+                    paddingLeft: 8,
+                    paddingRight: 8,
+                    margin: 5,
+                    shadowColor: '#000',
+                    shadowOffset: {
+                      width: 0,
+                      height: 2,
+                    },
+                    shadowOpacity: 0.25,
+                    shadowRadius: 2,
+                    elevation: 3,
+                   
+                  },
+                ]}>
+                <Text
+                  style={{
+                    color: '#284B63',
+                    fontFamily: 'OpenSans-SemiBold',
+                    fontSize: 14,
+                    
+                  }}>
+                  Tandai Pesanan Dibatalkan
+                </Text>
+              </View>
+            </TouchableWithoutFeedback>
+
+           
           </View>
         </ScrollView>
       </View>

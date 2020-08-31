@@ -84,14 +84,15 @@ export default class KategoriPesanan extends React.Component {
 class TigaPesanan extends React.Component {
   render() {
     return (
+
       <FlatList
         data={this.props.data}
         renderItem={({item}) => (
           <RowPesanan
-            nama={item.nama}
-            produk={item.produk}
-            status={item.status}
-            harga={item.harga}
+            nama={item.nama_pelanggan}
+            produk={item.namaproduk_pesanan}
+            harga={item.hargaproduk_pesanan}
+            status={item.status_pesanan}
             navigation={this.props.navigation}
           />
         )}
@@ -104,28 +105,28 @@ class TigaPesanan extends React.Component {
 
 class RowPesanan extends React.Component {
   render() {
-    let sts, stsColor, press;
-    if (this.props.status === 0) {
-      sts = 'Belum Bayar';
-      stsColor = '#FFB4A2';
-      press = () => this.props.navigation.navigate('DetailPesanan0');
-    } else if (this.props.status === 1) {
-      sts = 'Belum Konfirmasi';
-      stsColor = '#E5989B';
-      press = () => this.props.navigation.navigate('DetailPesanan1');
-    } else if (this.props.status === 2) {
-      sts = 'Belum Kirim';
-      stsColor = '#B5838D';
-      press = () => this.props.navigation.navigate('DetailPesanan2');
-    } else if (this.props.status === 3) {
-      sts = 'Selesai';
-      stsColor = '#06D6A0';
-      press = () => this.props.navigation.navigate('DetailPesanan0');
-    } else if (this.props.status === -1) {
-      sts = 'Dibatalkan';
-      stsColor = '#F45B69';
-      press = () => this.props.navigation.navigate('DetailPesanan0');
-    }
+    // let sts, stsColor, press;
+    // if (this.props.status === 0) {
+    //   sts = 'Belum Bayar';
+    //   stsColor = '#FFB4A2';
+    //   press = () => this.props.navigation.navigate('DetailPesanan0');
+    // } else if (this.props.status === 1) {
+    //   sts = 'Belum Konfirmasi';
+    //   stsColor = '#E5989B';
+    //   press = () => this.props.navigation.navigate('DetailPesanan1');
+    // } else if (this.props.status === 2) {
+    //   sts = 'Belum Kirim';
+    //   stsColor = '#B5838D';
+    //   press = () => this.props.navigation.navigate('DetailPesanan2');
+    // } else if (this.props.status === 3) {
+    //   sts = 'Selesai';
+    //   stsColor = '#06D6A0';
+    //   press = () => this.props.navigation.navigate('DetailPesanan0');
+    // } else if (this.props.status === -1) {
+    //   sts = 'Dibatalkan';
+    //   stsColor = '#F45B69';
+    //   press = () => this.props.navigation.navigate('DetailPesanan0');
+    // }
     return (
       <TouchableWithoutFeedback onPress={press}>
         <View
@@ -145,7 +146,7 @@ class RowPesanan extends React.Component {
                 fontSize: 12,
                 color: '#353535',
               }}>
-              {this.props.nama}
+              {this.props.nama_pelanggan}
             </Text>
             <Text
               style={{
@@ -156,7 +157,7 @@ class RowPesanan extends React.Component {
               }}
               numberOfLines={1}
               ellipsizeMode="tail">
-              {this.props.produk}
+              {this.props.namaproduk_pesanan}
             </Text>
           </View>
           <View style={{justifyContent: 'center', alignItems: 'flex-end'}}>
@@ -174,7 +175,7 @@ class RowPesanan extends React.Component {
                 fontFamily: 'OpenSans-Regular',
                 fontSize: 14,
               }}>
-              Rp {currencyFormat(this.props.harga)}
+              Rp {currencyFormat(this.props.hargaproduk_pesanan)}
             </Text>
           </View>
         </View>

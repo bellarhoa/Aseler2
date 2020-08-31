@@ -39,16 +39,6 @@ class EditProduk extends Component{
     console.log('Id : '+JSON.stringify(this.props.route.params.item.produk_id));
   }
 
-  showDialogComponentForUpdate = (existingChatTemplate) => {
-    this.refs.popupDialog.show();
-    this.setState({
-        dialogTitle: 'Update a Chat Template',             
-        chat_id: existingChatTemplate.chat_id,
-        chat_judul: existingChatTemplate.chat_judul,
-        chat_isi: existingChatTemplate.chat_isi,
-        isAddNew: false
-    });
-}
 
     render(){
         return(  

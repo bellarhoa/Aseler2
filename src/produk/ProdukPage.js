@@ -154,7 +154,7 @@ class ProdukPage extends Component {
               tersisa={item.tersisa_produk}
               terjual={item.terjual_produk}
               gambar={item.foto_produk}
-              tekan={() => {this.props.navigation.navigate('EditProduk', {item})}
+              tekan={() => {this.props.navigation.navigate('DaftarUser', {item})}
               }
             />
           )}

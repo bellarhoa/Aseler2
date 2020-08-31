@@ -1,13 +1,13 @@
 import React from 'react';
-import {View, StyleSheet, Text, Dimensions, Image} from 'react-native';
+import {View, StyleSheet,TouchableWithoutFeedback, Alert, Text, Dimensions, Image} from 'react-native';
 import BarisInfoDP from '../../pesanan/component/BarisInfo_DetailPesanan';
 import BarisHargaDP from '../../pesanan/component/BarisHarga_DetailPesanan';
 import ButtonDP from '../../pesanan/component/Button_DetailPesanan';
 import {ScrollView} from 'react-native-gesture-handler';
-import {} from '../../database/Data_chat';
+import {deletePesanan} from '../../database/Data_chat';
 import realm from '../../database/Data_chat';
 
-export default class DetailPesanan0 extends React.Component {
+export default class DetailPesananSel extends React.Component {
   constructor(props){
     super(props);
     this.state = {
@@ -135,24 +135,65 @@ export default class DetailPesanan0 extends React.Component {
                 this.props.navigation.navigate('Pesan Template')
               }
             />
-            <ButtonDP
-              text="Hubungi Pembeli"
-              backgroundColor="#284B63"
-              textColor="white"
-            />
-            {/*
-            
-            <ButtonDP
-              text="Tandai Pesanan sudah Dibayar"
-              backgroundColor="#284B63"
-              textColor="white"
-            />
-            <ButtonDP
-              text="Tandai Pesanan Dibatalkan"
-              backgroundColor="white"
-              borderColor="#284B63"
-              textColor="#284B63"
-            /> */}
+             {/* Hubung diganti Hapus Sementara */}
+             <TouchableWithoutFeedback onPress = {() => {
+                      Alert.alert(
+                        'Delete',
+                        'Delete',
+                        [
+                            {
+                                text: 'No', onPress: () => { },//Do nothing
+                                style: 'cancel'
+                            },
+                            {
+                                text: 'Yes', onPress: () => {
+                                  deletePesanan(this.state.pesanan_id).then(() => {
+                                    this.props.navigation.navigate('DaftarSelesai');
+                                  }).catch(error => {
+                                    alert(`Failed to delete produk with id = ${this.state.pesanan_id}, error=${error}`);
+                                });                                
+                                }
+                            },
+                        ],
+                        { cancelable: true }
+                        );
+                   
+                    }
+                      }>
+              <View
+                style={[
+                  this.props.style,
+                  {
+                    flexDirection: 'row',
+                    backgroundColor: '#284B63',
+                    borderColor: this.props.borderColor,
+                    borderWidth: 1,
+                    borderRadius: 5,
+                    paddingTop: 6,
+                    paddingBottom: 6,
+                    paddingLeft: 8,
+                    paddingRight: 8,
+                    margin: 5,
+                    shadowColor: '#000',
+                    shadowOffset: {
+                      width: 0,
+                      height: 2,
+                    },
+                    shadowOpacity: 0.25,
+                    shadowRadius: 2,
+                    elevation: 3,
+                  },
+                ]}>
+                <Text
+                  style={{
+                    color: 'white',
+                    fontFamily: 'OpenSans-SemiBold',
+                    fontSize: 14,
+                  }}>
+                  Hubungi Pembeli
+                </Text>
+              </View>
+            </TouchableWithoutFeedback>
           </View>
         </ScrollView>
       </View>

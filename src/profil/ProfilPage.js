@@ -1,5 +1,5 @@
 import React from 'react';
-import {View, StyleSheet, Image, Text, FlatList, ScrollView} from 'react-native';
+import {View, StyleSheet, Alert, Image, Text, FlatList, ScrollView} from 'react-native';
 import Card from '../component/Card';
 import {TouchableWithoutFeedback} from 'react-native-gesture-handler';
 import {queryAllUser, tambahUser}from '../database/Data_chat';
@@ -101,12 +101,12 @@ export default class ProfilPage extends React.Component {
               justifyContent: 'center',
             }}>
             <Image
-              style={styles.image}
+              style={[styles.image, {marginLeft : 15}]}
               source={require('../../assets/image/profile.png')}
             />
             <View style={{marginLeft: 15, justifyContent: 'center'}}>
-              <Text style={styles.h1}>John Doe</Text>
-              <Text style={styles.h3}>Miniso Indonesia</Text>
+              <Text style={[styles.h1, {textAlign: 'center'}]}>John Doe</Text>
+              <Text style={[styles.h3, {textAlign: 'center'}]}>Miniso Indonesia</Text>
             </View>
           </View>
           <View style={{marginTop: 15}}>
@@ -122,15 +122,15 @@ export default class ProfilPage extends React.Component {
               justifyContent: 'space-between',
             }}>
             <View>
-              <Text style={[styles.h2, {textAlign: 'left'}]}>0</Text>
+              <Text style={[styles.h2, {textAlign: 'center'}]}>18</Text>
               <Text style={[styles.h5, {textAlign: 'left'}]}>Pesanan</Text>
             </View>
             <View>
-              <Text style={[styles.h2, {textAlign: 'left'}]}>0</Text>
+              <Text style={[styles.h2, {textAlign: 'center'}]}>30</Text>
               <Text style={[styles.h5, {textAlign: 'left'}]}>Selesai</Text>
             </View>
             <View>
-              <Text style={[styles.h2, {textAlign: 'left'}]}>0</Text>
+              <Text style={[styles.h2, {textAlign: 'center'}]}>8</Text>
               <Text style={[styles.h5, {textAlign: 'left'}]}>Dibatalkan</Text>
             </View>
           </View>
@@ -158,7 +158,26 @@ export default class ProfilPage extends React.Component {
           keyExtractor={(item) => item.id}
           
         />
-        <TouchableWithoutFeedback>
+        <TouchableWithoutFeedback onPress = {() => {
+                      Alert.alert(
+                        'Keluar',
+                        'Anda yakin ingin keluar?',
+                        [
+                            {
+                                text: 'No', onPress: () => { },//Do nothing
+                                style: 'cancel'
+                            },
+                            {
+                                text: 'Yes', onPress: () => {
+                                  this.props.navigation.navigate('Masuk Akun');                                
+                                }
+                            },
+                        ],
+                        { cancelable: true }
+                        );
+                   
+                    }
+                      }>
             <View
               style={{
                 flexDirection: 'row',

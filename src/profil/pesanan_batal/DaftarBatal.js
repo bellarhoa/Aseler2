@@ -109,7 +109,7 @@ const listKategori = [
 
 ];
 
-class DaftarPesanan extends Component {
+class DaftarBatal extends Component {
   constructor (props){
     super(props);
     this.state = {
@@ -190,7 +190,7 @@ const Item = ({nama, produk, harga, tekan, status}) => (
   </TouchableWithoutFeedback>
 );
 
-export default DaftarPesanan;
+export default DaftarBatal;
 
 
 const styles = StyleSheet.create({

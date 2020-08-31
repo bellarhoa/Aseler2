@@ -153,7 +153,7 @@ class DaftarPesanan extends Component {
     }).catch((error) => {
       alert(`Insert new chat error ${error}`);
     });
-    console.log('reloadData');
+    console.log('reloadData s');
   }
 
     render(){

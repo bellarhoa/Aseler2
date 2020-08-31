@@ -49,7 +49,7 @@ function TabScreen() {
         options={({route}) => ({
           tabBarLabel: 'Pesanan',
           tabBarIcon: ({color, size}) => (
-            <Ionicons name="cart" color={color} size={size} />
+            <Ionicons name="speedometer" color={color} size={size} />
           ),
           tabBarVisible: getTabBarVisibility(route),
         })}

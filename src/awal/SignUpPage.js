@@ -8,7 +8,8 @@ import {
   TouchableWithoutFeedback,
 } from 'react-native';
 import {getStatusBarHeight} from 'react-native-status-bar-height';
-import {tambahUser} from '../database/Data_chat'
+import Realm from 'realm';
+import {tambahUser} from '../database/Data_chat';
 import firebase from '../../Firebase';
 
 class SignUpPage extends Component {
@@ -29,14 +30,6 @@ class SignUpPage extends Component {
     };
   }
 
-  // handleSignUp = () => {
-  //   firebase
-  //     .auth()
-  //     .createUserWithEmailAndPassword(this.state.email, this.state.password)
-  //     .then(() => this.props.navigation.navigate('TabScreen'))
-  //     .catch((error) => this.setState({errorMessage: error.message}));
-  //   console.log('button pressed');
-  // };
   render() {
     return (
       <ScrollView>
@@ -101,7 +94,7 @@ class SignUpPage extends Component {
                 user_id : Math.floor(Math.random()* 10000000000),
                 nama_user : this.state.nama_user,
                 nama_toko : this.state.nama_toko,
-                url_user : 'Urlsuser',
+                url_user : 'Urls',
                 foto_produk : 'https://www.popularitas.com/wp-content/uploads/2018/04/user-hero-blue.png',
                 email : this.state.email,
                 password_user : this.state.password_user,
@@ -109,13 +102,36 @@ class SignUpPage extends Component {
                 pemasukkan_user : '900000000',
                 userToken : Math.random().toString(36).substring(7),
               };
+
               tambahUser(newUser).then().catch((error) => {
-                alert(`Tambah User Error ${error}`);
+               alert(`Tambah User Error ${error}`);
               });
+              // Realm.Sync.User.register('https://crossgroup-wooden-chair.us1a.cloud.realm.io', newUser.email, newUser.password_user,
+              //   (error, user) => {
+              //       if (error) {
+              //           console.log(error);
+              //       } else {
+              //           tambahUser(newUser).then().catch((error) => {
+                  
+              //             alert(`Tambah User Error ${error}`);
+              //           });
+              //       }
+              //   }
+           // );
+
+              // const authUrl = 'https://crossgroup-wooden-chair.us1a.cloud.realm.io'
+              // let creds = Realm.Sync.Credentials.usernamePassword('username', 'password', true)
+              // Realm.Sync.User.register('https://crossgroup-wooden-chair.us1a.cloud.realm.io', creds).then(user => {
+                
+              //   // user is logged in
+              //   // do stuff ...
+              // }).catch(error => {
+              // console.log ('Ini Errornya ' + error)
+              // });
+             
             } else{
 
             }
-            
             this.props.navigation.navigate('TabScreen');
           }}>
           <View

@@ -229,7 +229,6 @@ export const tambahUser = tambahUsers => new Promise((resolve, reject) => {
   Realm.open(databaseOptions).then(realm => {
     realm.write(()=> {
       realm.create(USER3_SCHEMA, tambahUsers);
-      
       resolve(tambahUsers);
     });
   }).catch((error)=> reject(error));
@@ -239,6 +238,29 @@ export const queryAllUser = () => new Promise((resolve, reject) =>{
   Realm.open(databaseOptions).then(realm => {
     let allUser = realm.objects(USER3_SCHEMA);
     resolve(allUser);
+  }).catch((error) => {
+    reject(error);
+  });;
+});
+
+export const filterUsers = (namausers) => new Promise((resolve, reject) => {
+  Realm.open(databaseOptions).then(realm => {
+      console.warn('namausers')
+      console.warn(namausers)
+      let filteredUsers = realm.objects(USER3_SCHEMA)
+                              .filtered(`nama_user == "${namausers}"`);//[c] = case insensitive
+      console.warn(filteredUsers)
+      resolve(filteredUsers);
+  }).catch((error) => {
+      reject(error);
+  });;
+});
+
+export const queryOneUser = (namauser) => new Promise((resolve, reject) =>{
+  Realm.open(databaseOptions).then(realm => {
+    let allUser = realm.objects(USER3_SCHEMA);
+    let user = allUser.filtered('nama_user == '+ namauser);
+    resolve(user);
   }).catch((error) => {
     reject(error);
   });;

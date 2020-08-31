@@ -44,7 +44,7 @@ const listKategori = [
 
 ];
 
-class DaftarPesanan extends Component {
+class DaftarSelesai extends Component {
   constructor (props){
     super(props);
     this.state = {
@@ -107,19 +107,19 @@ const Item = ({nama, produk, harga, tekan, status}) => (
           alignItems: 'center',
           justifyContent: 'space-between',
         }}>
-        <View
+          <View
           style={{
             flexDirection: 'row',
             alignItems: 'center',
             //marginTop: 10,
           }}>
-          <View>
+          <View style = {{width : 250}}>
             <Text style={[styles.h2, {color: '#353535'}]}>{nama}</Text>
             <Text style={[styles.h1, {color: '#858585'}]}>{produk}</Text>
           </View>
           <View style={{alignItems:'flex-end', flex: 1}}>
             <Text style={[styles.h4, {color: '#1985A1'}]}>{status}</Text>
-            <Text style={[styles.h3, {color: '#858585'}]}>{harga}</Text>
+            <Text style={[styles.h3, {color: '#858585'}]}> Rp. {harga}</Text>
           </View>
         </View>
       </View>
@@ -127,7 +127,7 @@ const Item = ({nama, produk, harga, tekan, status}) => (
     </TouchableWithoutFeedback>
   );
 
-export default DaftarPesanan;
+export default DaftarSelesai;
 
 
 const styles = StyleSheet.create({

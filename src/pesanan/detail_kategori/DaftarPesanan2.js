@@ -168,7 +168,7 @@ class DaftarPesanan2 extends Component {
                 produk={item.namaproduk_pesanan}
                 harga={item.hargaproduk_pesanan}
                 status={item.status_pesanan}
-                tekan={() => this.props.navigation.navigate('DetailPesanan0', {item})}
+                tekan={() => this.props.navigation.navigate('DetailPesanan2', {item})}
                 />
             )}
             keyExtractor={(item) => item.id}

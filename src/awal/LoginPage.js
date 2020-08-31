@@ -7,13 +7,24 @@ import {
   TouchableWithoutFeedback,
 } from 'react-native';
 import {getStatusBarHeight} from 'react-native-status-bar-height';
+import {queryOneUser, filterUsers, queryAllUser} from '../database/Data_chat';
+import RealmTask from '../database/RealmTask';
 
 class LoginPage extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      email: '',
-      password: '',
+      user_id: null,
+      nama_user: '',
+      nama_toko : '',
+      foto_produk: '',
+      url_user : '',
+      email : '',
+      password_user : '',
+      ulangipassword_user : '',
+      userToken : '',
+      pemasukkan_user : '',
+      isAddNew: true,
     };
   }
   render() {
@@ -24,19 +35,60 @@ class LoginPage extends Component {
           Lengkapi informasi akun kamu terlebih dahulu
         </Text>
         <InputForm
-          question="Email"
+          question="Nama User"
           example="example@email.com"
-          type="email-address"
-          onChangeText={(email) => this.setState({email: email})}
+          // type="email-address"
+          onChangeText={(namauser) => this.setState({nama_user: namauser})}
         />
         <InputForm
           question="Kata Sandi"
           example="......"
           pass={true}
-          onChangeText={(pass) => this.setState({password: pass})}
+          onChangeText={(pass) => this.setState({password_user: pass})}
         />
         <TouchableWithoutFeedback
           onPress={() => {
+            if (this.state.nama_user.trim()==""){
+              alert("Mohon lengkapi Nama User");
+              return;
+            }
+            if (this.state.password_user.trim()==""){
+              alert("Mohon lengkapi Password");
+              return;
+            }
+            filterUsers(this.state.nama_user).then((res) => {
+              console.warn('nn')
+              if(res.user_id != undefined){
+                alert('user_ada')
+                
+              } else {
+                alert(`User Tidak Terdaftar Mohon Daftarkan ${this.state.nama_user}`);
+              }
+              // console.log('Id : '+JSON.stringify(this.state.user_id
+            }).catch((error) => {
+              alert(`User Tidak Terdaftar Mohon Daftar ${this.state.nama_user + error}`);
+              
+            });
+            if (this.state.isAddNew ==true){
+              
+            }
+            //   Realm.Sync.User.login('https://crossgroup-wooden-chair.us1a.cloud.realm.io', this.state.email, this.state.password,
+            //     (error, user) => {
+            //         if (error) {
+            //             console.log(error);
+            //         } else {
+            //           RealmTask = new Realm({
+            //               sync: {
+            //                   user
+            //               }
+            //           });
+            //             queryOneUser(this.state.nama_user).then().catch((error) => {
+
+            //               alert(`User Tidak Terdaftar Mohon Daftar${error}`);
+            //             });
+            //         }
+            //     }
+            // );
             this.props.navigation.navigate('TabScreen');
           }}>
           <View

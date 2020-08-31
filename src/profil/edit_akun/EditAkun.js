@@ -7,21 +7,44 @@ import {
   TextInput,
   ScrollView,
   Switch,
+  Alert,
   Dimensions,
 } from 'react-native';
+import {updateUser} from '../../database/Data_chat'
 import Ionicons from 'react-native-vector-icons/Ionicons';
 
 export default class EditAkun extends React.Component {
-  state = {
-    nama: '',
-    harga: null,
-    stok: null,
-    merek: '',
-    berat: null,
-    kategori: '',
-    variasi: '',
-    publikasi: true,
-  };
+  constructor(props){
+    super(props);
+    this.state = {
+      user_id: null,
+      nama_user: '',
+      nama_toko : '',
+      foto_produk: '',
+      url_user : '',
+      email : '',
+      password_user : '',
+      ulangipassword_user : '',
+      userToken : '',
+      pemasukkan_user : '',
+      isAddNew : true,
+    };
+  }
+
+  // componentDidMount(){
+  //   this.setState({user_id : this.props.route.params.item.user_id});
+  //   this.setState({nama_user : this.props.route.params.item.nama_user});
+  //   this.setState({nama_toko : this.props.route.params.item.nama_toko});
+  //   this.setState({foto_produk : this.props.route.params.item.foto_produk});
+  //   this.setState({url_user : this.props.route.params.item.url_user});
+  //   this.setState({email : this.props.route.params.item.email});
+  //   this.setState({password_user : this.props.route.params.item.password_user});
+  //   this.setState({ulangipassword_user : this.props.route.params.item.ulangipassword_user});
+  //   this.setState({userToken : this.props.route.params.item.userToken});
+  //   this.setState({pemasukkan_user : this.props.route.params.item.pemasukkan_user});
+  //   console.log('qwerty'+JSON.stringify(this.props.route.params.item.chat_judul));
+  // }
+
   render() {
     return (
       <View style={styles.container}>
@@ -105,7 +128,26 @@ export default class EditAkun extends React.Component {
                   alignItems: 'center', 
                   alignContent : 'center',
                   }}>
-                    <TouchableWithoutFeedback onPress = {() => this.props.navigation.navigate('ProfilPage')}>
+                    <TouchableWithoutFeedback onPress = {() => {
+                      Alert.alert(
+                        'Simpan Perubahan',
+                        'Apakah anda yakin?',
+                        [
+                            {
+                                text: 'No', onPress: () => { },//Do nothing
+                                style: 'cancel'
+                            },
+                            {
+                                text: 'Yes', onPress: () => {
+                                  this.props.navigation.navigate('Profil Saya');
+                                }
+                            },
+                        ],
+                        { cancelable: true }
+                        );
+                   
+                    }
+                      }>
                       <View
                         style={[
                           this.props.style,
