@@ -1,73 +1,30 @@
 import React, {Component} from 'react';
-import {View, StyleSheet,FlatList, Text, Dimensions} from 'react-native';
+import {View, StyleSheet, FlatList, Text, Dimensions} from 'react-native';
 import {ScrollView} from 'react-native-gesture-handler';
 import KategoriPesanan from './component/KategoriPesanan';
 import {PieChart} from 'react-native-chart-kit';
-import {queryAllPesanan4, queryAllPesanan5, queryAllPesanan6} from '../database/Data_chat';
-import realm from '../database/Data_chat';
-import RealmTask from '../database/RealmTask';
-
-//Pesanan 2 = selsai, Pesanan 3 = batal, Pesanan 4 = belum kirim, Pesanan 5 = konfirmasi, Pesanan 6 = belum bayar
-
-const pesananA = [
-  {
-    id: 1,
-    nama: 'Bella Rhobiatul Adhawiyah',
-    produk: 'Jam Tangan, Tas Selempang',
-    status: 0,
-    harga: 82000,
-    tanggal: '15 Agustus 2020',
-  },
-  {
-    id: 2,
-    nama: 'Rhobiatul Adhawiyah',
-    produk: 'Jam Dinding',
-    status: 0,
-    harga: 14000,
-    tanggal: '15 Agustus 2020',
-  },
-];
-
-const pesananB = [
-  {
-    id: 1,
-    nama: 'Bella Rhobiatul Adhawiyah',
-    produk: 'Jam Tangan, Tas Selempang',
-    status: 1,
-    harga: 82000,
-    tanggal: '15 Agustus 2020',
-  },
-  {
-    id: 2,
-    nama: 'Rhobiatul Adhawiyah',
-    produk: 'Jam Dinding',
-    status: 1,
-    harga: 14000,
-    tanggal: '15 Agustus 2020',
-  },
-];
-
-const pesananC = [
-  {
-    id: 1,
-    nama: 'Bella Rhobiatul Adhawiyah',
-    produk: 'Jam Tangan, Tas Selempang',
-    status: 2,
-    harga: 82000,
-    tanggal: '15 Agustus 2020',
-  },
-  {
-    id: 2,
-    nama: 'Rhobiatul Adhawiyah',
-    produk: 'Jam Dinding',
-    status: 2,
-    harga: 14000,
-    tanggal: '15 Agustus 2020',
-  },
-];
+import {
+  queryAllPesanan0,
+  queryAllPesanan1,
+  queryAllPesanan2,
+  queryAllPesanan3,
+  tambahPesanan0,
+  tambahPesanan1,
+  tambahPesanan2,
+  tambahPesanan3,
+  tambahPesananMin1,
+} from '../database/Realm';
+import realm from '../database/Realm';
+import {
+  PesananSelesai,
+  PesananBatal,
+  PesananBelumBayar,
+  PesananBelumKonfirmasi,
+  PesananBelumKirim,
+} from '../database/Model';
 
 class DashboardPage extends Component {
-  constructor (props){
+  constructor(props) {
     super(props);
     this.state = {
       belumBayar: [],
@@ -78,50 +35,81 @@ class DashboardPage extends Component {
       duaBelumKonfirmasi: [],
       duaBelumKirim: [],
     };
-    this.reloadData1()
+    // this.addData();
+    this.reloadData1();
     realm.addListener('change', () => {
       this.reloadData1();
     });
-    this.reloadData2()
+    this.reloadData2();
     realm.addListener('change', () => {
       this.reloadData2();
     });
-    this.reloadData2()
+    this.reloadData3();
     realm.addListener('change', () => {
-      this.reloadData2();
+      this.reloadData3();
+    });
+    this.reloadData4();
+    realm.addListener('change', () => {
+      this.reloadData4();
     });
   }
-
+  // addData = () => {
+  //   for (let i = 0; i < PesananBatal.length; i++) {
+  //     tambahPesananMin1(PesananBatal[i])
+  //       .then(() => console.log('tambah pesanan selesai'))
+  //       .catch((error) => {
+  //         alert(`Gagal menambahkan pesanan ${error}`);
+  //       });
+  //   }
+  // };
   reloadData1 = () => {
-    queryAllPesanan6().then((belumBayar) => {
-      this.setState({belumBayar:belumBayar});
-    }).catch((error) => {
-      alert(`Insert new chat error ${error}`);
-    });
-    console.log('reloadData');
-    this.setState({duaBelumBayar: [this.state.belumBayar[0], this.state.belumBayar[1]]});
-  }
-
+    queryAllPesanan0()
+      .then((pesanan) => {
+        this.setState({belumBayar: pesanan});
+        this.setState({
+          duaBelumBayar: [this.state.belumBayar[0], this.state.belumBayar[1]],
+        });
+      })
+      .catch((error) => {
+        alert(`Gagal mendapatkan pesanan ${error}`);
+      });
+  };
   reloadData2 = () => {
-    queryAllPesanan5().then((belumKonfirmasi) => {
-      this.setState({belumKonfirmasi});
-    }).catch((error) => {
-      alert(`Insert new chat error ${error}`);
-    });
-    console.log('reloadData');
-    this.setState({duaBelumKonfirmasi: [this.state.belumKonfirmasi[0], this.state.belumKonfirmasi[1]]});
-  }
-
+    queryAllPesanan1()
+      .then((pesanan) => {
+        this.setState({belumKonfirmasi: pesanan});
+        this.setState({
+          duaBelumKonfirmasi: [
+            this.state.belumKonfirmasi[0],
+            this.state.belumKonfirmasi[1],
+          ],
+        });
+      })
+      .catch((error) => {
+        alert(`Gagal mendapatkan pesanan ${error}`);
+      });
+  };
   reloadData3 = () => {
-    queryAllPesanan4().then((belumKirim) => {
-      this.setState({belumKirim});
-    }).catch((error) => {
-      alert(`Insert new chat error ${error}`);
-    });
-    console.log('reloadData');
-    this.setState({duaBelumKirim: [this.state.belumKirim[0], this.state.belumKirim[1]]});
-  }
-
+    queryAllPesanan2()
+      .then((pesanan) => {
+        this.setState({belumKirim: pesanan});
+        this.setState({
+          duaBelumKirim: [this.state.belumKirim[0], this.state.belumKirim[1]],
+        });
+      })
+      .catch((error) => {
+        alert(`Gagal mendapatkan pesanan ${error}`);
+      });
+  };
+  reloadData4 = () => {
+    queryAllPesanan3()
+      .then((pesanan) => {
+        this.setState({selesai: pesanan});
+      })
+      .catch((error) => {
+        alert(`Gagal mendapatkan pesanan ${error}`);
+      });
+  };
   render() {
     return (
       <View style={styles.container}>
@@ -138,14 +126,17 @@ class DashboardPage extends Component {
             data={[
               {
                 name: 'Belum Selesai',
-                population: 60,
+                population:
+                  this.state.belumBayar.length +
+                  this.state.belumKonfirmasi.length +
+                  this.state.belumKirim.length,
                 color: '#F97206',
                 legendFontColor: '#353535',
                 legendFontSize: 12,
               },
               {
                 name: 'Selesai',
-                population: 40.0,
+                population: this.state.selesai.length,
                 color: '#033C66',
                 legendFontColor: '#353535',
                 legendFontSize: 12,
@@ -172,16 +163,31 @@ class DashboardPage extends Component {
             <DiagramJual
               name="Belum Bayar"
               jumlahPesanan={this.state.belumBayar.length}
+              jumlahTotal={
+                this.state.belumBayar.length +
+                this.state.belumKonfirmasi.length +
+                this.state.duaBelumKirim.length
+              }
               color="#FD8204"
             />
             <DiagramJual
               name={'Belum\nKonfirmasi'}
               jumlahPesanan={this.state.belumKonfirmasi.length}
+              jumlahTotal={
+                this.state.belumBayar.length +
+                this.state.belumKonfirmasi.length +
+                this.state.duaBelumKirim.length
+              }
               color="#FEC831"
             />
             <DiagramJual
               name="Belum Kirim"
               jumlahPesanan={this.state.belumKirim.length}
+              jumlahTotal={
+                this.state.belumBayar.length +
+                this.state.belumKonfirmasi.length +
+                this.state.duaBelumKirim.length
+              }
               color="#BF60EC"
             />
           </View>
@@ -190,42 +196,42 @@ class DashboardPage extends Component {
             data={this.state.duaBelumBayar}
             navigation={this.props.navigation}
             onPress={() =>
-              this.props.navigation.navigate('DaftarPesanan2', pesananA)
+              this.props.navigation.navigate('DaftarPesanan', {type: '0'})
             }
           />
           <KategoriPesanan
             judul="Pesanan Belum Konfirmasi"
-            // data={this.state.duaBelumKonfirmasi}
-            // navigation={this.props.navigation}
+            data={this.state.duaBelumKonfirmasi}
+            navigation={this.props.navigation}
             onPress={() =>
-              this.props.navigation.navigate('DaftarPesanan1', pesananA)
+              this.props.navigation.navigate('DaftarPesanan', {type: '1'})
             }
-          >
-            <View style={{flex: 1, backgroundColor: 'white'}}>
+          />
+          {/* <View style={{flex: 1, backgroundColor: 'white'}}>
               <FlatList
-              style={{marginTop: 10}}
-              data={this.state.belumKonfirmasi}
-              renderItem={({item}) => (
+                style={{marginTop: 10}}
+                data={this.state.belumKonfirmasi}
+                renderItem={({item}) => (
                   <Item
-                  nama={item.nama_pelanggan}
-                  produk={item.namaproduk_pesanan}
-                  harga={item.hargaproduk_pesanan}
-                  status={item.status_pesanan}
-                  tekan={() => this.props.navigation.navigate('DetailPesanan1', {item})}
+                    nama={item.nama_pelanggan}
+                    produk={item.namaproduk_pesanan}
+                    harga={item.hargaproduk_pesanan}
+                    status={item.status_pesanan}
+                    tekan={() =>
+                      this.props.navigation.navigate('DetailPesanan1', {item})
+                    }
                   />
-              )}
-              keyExtractor={(item) => item.id}
+                )}
+                keyExtractor={(item) => item.id}
               />
             </View>
-          </KategoriPesanan>
-
-
+          </KategoriPesanan> */}
           <KategoriPesanan
             judul="Pesanan Belum Dikirim"
             data={this.state.duaBelumKirim}
             navigation={this.props.navigation}
             onPress={() =>
-              this.props.navigation.navigate('DaftarPesanan', pesananA)
+              this.props.navigation.navigate('DaftarPesanan', {type: '2'})
             }
           />
         </ScrollView>
@@ -233,39 +239,6 @@ class DashboardPage extends Component {
     );
   }
 }
-
-const Item = ({nama, produk, harga, tekan, status}) => (
-  <TouchableWithoutFeedback onPress={tekan}>
-    <View
-      style={{
-        flexDirection: 'row',
-        paddingTop: 7,
-        paddingBottom: 20,
-        paddingLeft: 20,
-        paddingRight: 20,
-        borderBottomWidth: 1,
-        borderBottomColor: '#C4C4C4',
-        alignItems: 'center',
-        justifyContent: 'space-between',
-      }}>
-      <View
-        style={{
-          flexDirection: 'row',
-          alignItems: 'center',
-          //marginTop: 10,
-        }}>
-        <View style = {{width : 250}}>
-          <Text style={[styles.h2, {color: '#353535'}]}>{nama}</Text>
-          <Text style={[styles.h1, {color: '#858585'}]}>{produk}</Text>
-        </View>
-        <View style={{alignItems:'flex-end', flex: 1}}>
-          <Text style={[styles.h4, {color: 'red'}]}>{status}</Text>
-          <Text style={[styles.h3, {color: '#858585'}]}> Rp. {harga}</Text>
-        </View>
-      </View>
-    </View>
-  </TouchableWithoutFeedback>
-);
 
 export default DashboardPage;
 
@@ -308,7 +281,7 @@ const styles = StyleSheet.create({
     color: '#FFFFFF',
     fontFamily: 'OpenSans-SemiBold',
     fontSize: 16,
-    marginTop: 10
+    marginTop: 10,
   },
   h3: {
     color: '#FFFFFF',
@@ -336,7 +309,7 @@ class DiagramJual extends React.Component {
             },
             {
               name: 'Selesai',
-              population: 100 - this.props.jumlahPesanan,
+              population: this.props.jumlahTotal,
               color: '#858585',
               legendFontColor: '#353535',
               legendFontSize: 12,
@@ -358,7 +331,10 @@ class DiagramJual extends React.Component {
             fontSize: 15,
             paddingRight: 60,
           }}>
-          {this.props.jumlahPesanan}%
+          {((this.props.jumlahPesanan / this.props.jumlahTotal) * 100).toFixed(
+            1,
+          )}
+          %
         </Text>
         <Text
           style={{

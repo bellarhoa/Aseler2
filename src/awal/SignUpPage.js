@@ -8,181 +8,156 @@ import {
   TouchableWithoutFeedback,
 } from 'react-native';
 import {getStatusBarHeight} from 'react-native-status-bar-height';
-import Realm from 'realm';
-import {tambahUser} from '../database/Data_chat';
-import firebase from '../../Firebase';
+import {tambahUser} from '../database/Realm';
+import AsyncStorage from '@react-native-community/async-storage';
 
 class SignUpPage extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      user_id: null,
       nama_user: '',
-      nama_toko : '',
-      foto_produk: '',
-      url_user : '',
-      email : '',
-      password_user : '',
-      ulangipassword_user : '',
-      userToken : '',
-      pemasukkan_user : '',
-      isAddNew: true,
+      nama_toko: '',
+      email: '',
+      password_user: '',
+      ulangipassword_user: '',
     };
   }
 
   render() {
     return (
       <ScrollView>
-      <View style={styles.container}>
-        <Text style={styles.h1}>Sebelum Mulai,</Text>
-        <Text style={(styles.p, {marginBottom: 10})}>
-          Lengkapi informasi data diri kamu terlebih dahulu untuk membuat akun
-          baru
-        </Text>
-        <InputForm
-          question="Nama User"
-          example="John Don"
-          onChangeText={(namauser) => this.setState({nama_user: namauser})}
-        />
-        <InputForm
-          question="Nama Toko"
-          example="Jaya Toko"
-          onChangeText={(namatoko) => this.setState({nama_toko: namatoko})}
-        />
-        <InputForm
-          question="Email"
-          example="example@email.com"
-          type="email-address"
-          onChangeText={(email) => this.setState({email: email})}
-        />
-        <InputForm
-          question="Kata Sandi"
-          example="......"
-          pass={true}
-          onChangeText={(pass) => this.setState({password_user: pass})}
-        />
-        <InputForm
-          question="Ulangi Kata Sandi"
-          example="......"
-          pass={true}
-          onChangeText={(pass) => this.setState({ulangipassword_user: pass})}
-        />
-        <TouchableWithoutFeedback
-          onPress={() => {
-            if (this.state.nama_user.trim()==""){
-              alert("Mohon lengkapi Nama User");
-              return;
-            }
-            if (this.state.nama_toko.trim()==""){
-              alert("Mohon lengkapi Nama Toko");
-              return;
-            }
-            if (this.state.email.trim()==""){
-              alert("Mohon lengkapi Email");
-              return;
-            }
-            if (this.state.password_user.trim()==""){
-              alert("Mohon lengkapi Password");
-              return;
-            }
-            if (this.state.password_user.trim() != this.state.ulangipassword_user.trim()){
-              alert("Password Tidak Sama Mohon Ulangi");
-              return;
-            }
-            if (this.state.isAddNew ==true){
-              const newUser = {
-                user_id : Math.floor(Math.random()* 10000000000),
-                nama_user : this.state.nama_user,
-                nama_toko : this.state.nama_toko,
-                url_user : 'Urls',
-                foto_produk : 'https://www.popularitas.com/wp-content/uploads/2018/04/user-hero-blue.png',
-                email : this.state.email,
-                password_user : this.state.password_user,
-                ulangipassword_user : this.state.ulangipassword_user,
-                pemasukkan_user : '900000000',
-                userToken : Math.random().toString(36).substring(7),
-              };
-
-              tambahUser(newUser).then().catch((error) => {
-               alert(`Tambah User Error ${error}`);
-              });
-              // Realm.Sync.User.register('https://crossgroup-wooden-chair.us1a.cloud.realm.io', newUser.email, newUser.password_user,
-              //   (error, user) => {
-              //       if (error) {
-              //           console.log(error);
-              //       } else {
-              //           tambahUser(newUser).then().catch((error) => {
-                  
-              //             alert(`Tambah User Error ${error}`);
-              //           });
-              //       }
-              //   }
-           // );
-
-              // const authUrl = 'https://crossgroup-wooden-chair.us1a.cloud.realm.io'
-              // let creds = Realm.Sync.Credentials.usernamePassword('username', 'password', true)
-              // Realm.Sync.User.register('https://crossgroup-wooden-chair.us1a.cloud.realm.io', creds).then(user => {
-                
-              //   // user is logged in
-              //   // do stuff ...
-              // }).catch(error => {
-              // console.log ('Ini Errornya ' + error)
-              // });
-             
-            } else{
-
-            }
-            this.props.navigation.navigate('TabScreen');
-          }}>
+        <View style={styles.container}>
+          <Text style={styles.h1}>Sebelum Mulai,</Text>
+          <Text style={(styles.p, {marginBottom: 10})}>
+            Lengkapi informasi data diri kamu terlebih dahulu untuk membuat akun
+            baru
+          </Text>
+          <InputForm
+            question="Nama User"
+            example="John Doe"
+            onChangeText={(namauser) => this.setState({nama_user: namauser})}
+          />
+          <InputForm
+            question="Nama Toko"
+            example="Jaya Market"
+            onChangeText={(namatoko) => this.setState({nama_toko: namatoko})}
+          />
+          <InputForm
+            question="Email"
+            example="example@email.com"
+            type="email-address"
+            onChangeText={(email) => this.setState({email: email})}
+          />
+          <InputForm
+            question="Kata Sandi"
+            example="......"
+            pass={true}
+            onChangeText={(pass) => this.setState({password_user: pass})}
+          />
+          <InputForm
+            question="Ulangi Kata Sandi"
+            example="......"
+            pass={true}
+            onChangeText={(pass) => this.setState({ulangipassword_user: pass})}
+          />
+          <TouchableWithoutFeedback
+            onPress={() => {
+              if (this.state.nama_user.trim() == '') {
+                alert('Mohon lengkapi Nama User');
+                return;
+              } else if (this.state.nama_toko.trim() == '') {
+                alert('Mohon lengkapi Nama Toko');
+                return;
+              } else if (this.state.email.trim() == '') {
+                alert('Mohon lengkapi Email');
+                return;
+              } else if (this.state.password_user.trim() == '') {
+                alert('Mohon lengkapi Password');
+                return;
+              } else if (
+                this.state.password_user.trim() !=
+                this.state.ulangipassword_user.trim()
+              ) {
+                alert('Password Tidak Sama Mohon Ulangi');
+                return;
+              } else if (this.state.isAddNew == true) {
+                const newUser = {
+                  user_id: Math.floor(Math.random() * 10000000000),
+                  nama_user: this.state.nama_user,
+                  nama_toko: this.state.nama_toko,
+                  url_user: 'Urls',
+                  foto_produk:
+                    'https://www.popularitas.com/wp-content/uploads/2018/04/user-hero-blue.png',
+                  email: this.state.email,
+                  password_user: this.state.password_user,
+                  ulangipassword_user: this.state.ulangipassword_user,
+                  pemasukkan_user: '900000000',
+                  userToken: Math.random().toString(36).substring(7),
+                };
+                tambahUser(newUser)
+                  .then(() => {
+                    AsyncStorage.setItem('USER', newUser.nama_user);
+                    AsyncStorage.setItem('TOKEN', newUser.userToken);
+                    this.props.navigation.navigate('TabScreen');
+                  })
+                  .catch((error) => {
+                    alert(`Tambah User Error ${error}`);
+                  });
+              }
+            }}>
+            <View
+              style={{
+                backgroundColor: '#284B63',
+                borderRadius: 50,
+                alignItems: 'center',
+                marginTop: 30,
+                width: 250,
+                alignSelf: 'center',
+              }}>
+              <Text
+                style={{
+                  color: 'white',
+                  fontFamily: 'OpenSans-SemiBold',
+                  fontSize: 14,
+                  padding: 9,
+                }}>
+                Daftar
+              </Text>
+            </View>
+          </TouchableWithoutFeedback>
           <View
             style={{
-              backgroundColor: '#284B63',
-              borderRadius: 50,
+              flex: 1,
+              marginTop: 10,
+              justifyContent: 'flex-end',
               alignItems: 'center',
-              marginTop: 30,
-              width: 250,
-              alignSelf: 'center',
             }}>
-            <Text
-              style={{
-                color: 'white',
-                fontFamily: 'OpenSans-SemiBold',
-                fontSize: 14,
-                padding: 9,
-              }}>
-              Daftar
-            </Text>
-          </View>
-        </TouchableWithoutFeedback>
-        <View
-          style={{flex: 1,marginTop: 10, justifyContent: 'flex-end', alignItems: 'center'}}>
-          <View style={{flexDirection: 'row'}}>
-            <Text style={styles.p}>Sudah mempunyai akun?</Text>
-            <Text
-              style={{
-                color: '#1985A1',
-                fontFamily: 'OpenSans-SemiBold',
-                fontSize: 14,
-                textDecorationLine: 'underline',
-                
-                marginLeft: 10,
-              }}
-              onPress={() => this.props.navigation.navigate('Masuk Akun')}>
-              Masuk disini
-            </Text>
+            <View style={{flexDirection: 'row'}}>
+              <Text style={styles.p}>Sudah mempunyai akun?</Text>
+              <Text
+                style={{
+                  color: '#1985A1',
+                  fontFamily: 'OpenSans-SemiBold',
+                  fontSize: 14,
+                  textDecorationLine: 'underline',
+
+                  marginLeft: 10,
+                }}
+                onPress={() => this.props.navigation.navigate('Masuk Akun')}>
+                Masuk disini
+              </Text>
+            </View>
           </View>
         </View>
-      </View>
       </ScrollView>
     );
   }
-  
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    paddingTop: getStatusBarHeight() + 40,
+    paddingTop: getStatusBarHeight() + 10,
     paddingBottom: 50,
     paddingLeft: 30,
     paddingRight: 30,

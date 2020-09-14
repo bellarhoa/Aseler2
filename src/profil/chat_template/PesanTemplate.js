@@ -8,31 +8,30 @@ import {
   TouchableOpacity,
 } from 'react-native';
 import {TouchableWithoutFeedback} from 'react-native-gesture-handler';
-import Ionicons from 'react-native-vector-icons/Ionicons';
-import { updateChatTemplate, queryAllChatTemplate} from '../../database/Data_chat';
-import realm from '../../database/Data_chat';
-import Realm from 'realm';
+import {queryAllChatTemplate} from '../../database/Realm';
+import realm from '../../database/Realm';
 
 class PesanTemplate extends Component {
-  constructor (props){
+  constructor(props) {
     super(props);
     this.state = {
-      chatTemplate:[]
+      chatTemplate: [],
     };
-    this.reloadData()
+    this.reloadData();
     realm.addListener('change', () => {
       this.reloadData();
     });
   }
 
   reloadData = () => {
-    queryAllChatTemplate().then((chatTemplate) => {
-      this.setState({chatTemplate});
-    }).catch((error) => {
-      alert(`Insert new chat error ${error}`);
-    });
-    console.log('reloadData');
-  }
+    queryAllChatTemplate()
+      .then((chatTemplate) => {
+        this.setState({chatTemplate});
+      })
+      .catch((error) => {
+        alert(`Insert new chat error ${error}`);
+      });
+  };
 
   render() {
     return (
@@ -43,12 +42,13 @@ class PesanTemplate extends Component {
           renderItem={({item, index}) => (
             <Item
               title={item.chat_judul}
-              itemIndex = {index}
-              //tekan={() => {this.state.navigation.navigate('LihatChat'); 
-              tekan={() => {this.props.navigation.navigate('EditChat', {item}); 
-              // console.log(item.chat_id)
-            }
-            }
+              itemIndex={index}
+              tekan={() => {
+                this.props.navigation.navigate('EditChat', {
+                  item: item,
+                  notelp: this.props.route.params.notelp,
+                });
+              }}
             />
           )}
           keyExtractor={(item) => item.chat_id}
@@ -98,7 +98,6 @@ const Item = ({title, tekan}) => (
           flexDirection: 'row',
           alignItems: 'center',
           marginTop: 5,
-          //backgroundColor : 'pink',
         }}>
         <View
           style={{

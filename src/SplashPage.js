@@ -1,24 +1,27 @@
 import React, {Component} from 'react';
 import {View, Image, ActivityIndicator} from 'react-native';
-import auth from '@react-native-firebase/auth';
-import firebase from '../Firebase';
+import AsyncStorage from '@react-native-community/async-storage';
 
 export default class SplashPage extends Component {
-  // componentDidMount() {
-  //   firebase.auth().onAuthStateChanged((user) => {
-  //     this.props.navigation.navigate(user ? 'TabScreen' : 'AwalScreen');
-  //   });
-  // }
-  performTimeConsumingTask = async () => {
+  loading = async () => {
     return new Promise((resolve) =>
-      setTimeout(() => {
-        resolve('result');
-      }, 2000),
+      setTimeout(async () => {
+        let userToken;
+        userToken = null;
+        try {
+          userToken = await AsyncStorage.getItem('TOKEN');
+        } catch (e) {
+          console.log(e);
+        }
+        resolve(userToken);
+      }, 1000),
     );
   };
   async componentDidMount() {
-    const data = await this.performTimeConsumingTask();
+    const data = await this.loading();
     if (data !== null) {
+      this.props.navigation.navigate('TabScreen');
+    } else {
       this.props.navigation.navigate('AwalScreen');
     }
   }

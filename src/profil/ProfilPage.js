@@ -1,10 +1,25 @@
 import React from 'react';
-import {View, StyleSheet, Alert, Image, Text, FlatList, ScrollView} from 'react-native';
-import Card from '../component/Card';
+import {
+  View,
+  StyleSheet,
+  Alert,
+  Image,
+  Text,
+  FlatList,
+  ScrollView,
+} from 'react-native';
 import {TouchableWithoutFeedback} from 'react-native-gesture-handler';
-import {queryAllUser, tambahUser}from '../database/Data_chat';
-import realm from '../database/Data_chat';
+import {
+  filterUsers,
+  queryAllPesanan0,
+  queryAllPesanan1,
+  queryAllPesanan2,
+  queryAllPesanan3,
+  queryAllPesananMin1,
+} from '../database/Realm';
+import realm from '../database/Realm';
 import Ionicons from 'react-native-vector-icons/Ionicons';
+import AsyncStorage from '@react-native-community/async-storage';
 
 const listProfil = [
   {
@@ -14,6 +29,7 @@ const listProfil = [
     desc: 'Mengedit data akun aplikasi',
     isRequired: false,
     next: 'EditAkun',
+    type: null,
   },
   {
     id: 2,
@@ -21,97 +37,137 @@ const listProfil = [
     title: 'Pesan Template',
     desc: 'Tidak perlu mengetik berulang-ulang',
     isRequired: false,
-    next: 'PesanTamplate',
+    next: 'PesanTemplate',
+    type: null,
   },
   {
     id: 3,
-    icon: 'chatbubble-ellipses',
+    icon: 'checkmark-circle',
     title: 'Daftar Pesanan Selesai',
     desc: 'Berisi semua pesanan yang sudah selesai',
     isRequired: false,
-    next: 'DaftarSelesai',
+    next: 'DaftarPesanan',
+    type: '3',
   },
   {
     id: 4,
-    icon: 'chatbubble-ellipses',
+    icon: 'close-circle',
     title: 'Daftar Pesanan Dibatalkan',
     desc: 'Berisi semua pesanan yang dibatalkan',
     isRequired: false,
-    next: 'DaftarBatal',
+    next: 'DaftarPesanan',
+    type: '-1',
   },
 ];
-
-const User = [
-  {
-    user_id: 1,
-    nama_user: 'Ani Widi',
-    nama_toko: 'Miniso Indonesia Malang',
-    foto_produk: 'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&w=1000&q=80',
-    email : 'asd@asd.asd',
-    password_user: 'asd123',
-    userToken: '1234',
-    pemasukan_user: '90000000',
-  },
-];
-
- 
 
 export default class ProfilPage extends React.Component {
-  constructor (props){
+  constructor(props) {
     super(props);
     this.state = {
-      User:[]
+      user: [],
+      nUSER: '',
+      belumBayar: [],
+      belumKonfirmasi: [],
+      belumKirim: [],
+      selesai: [],
+      batal: [],
     };
-    this.reloadData()
+    this.getUser();
     realm.addListener('change', () => {
+      this.getUser();
+    });
+  }
+  getUser = async () => {
+    try {
+      let user;
+      user = '';
+      user = await AsyncStorage.getItem('USER');
+      this.setState({nUSER: user});
+    } catch (e) {
+      console.log(e);
+    } finally {
       this.reloadData();
-    });
-  }
-
-  // componentDidMount(){
-  //  tambahUser (User[0]).then().catch((error) =>{
-  //     alert(` chat error ${error}`);
-  //   });
-  // }
-
+    }
+  };
   reloadData = () => {
-    queryAllUser().then((User) => {
-      this.setState({User});
-    }).catch((error) => {
-      alert(`Reload error ${error}`);
-    });
-    console.log('Id : '+ User.nama_user);
-  }
-
-
+    filterUsers(this.state.nUSER)
+      .then((res) => {
+        this.setState({user: res[0]});
+      })
+      .catch((error) => {
+        alert(`User Tidak Terdaftar Mohon Daftarkan ${error}`);
+      });
+    queryAllPesanan0()
+      .then((pesanan) => {
+        this.setState({belumBayar: pesanan});
+      })
+      .catch((error) => {
+        alert(`Gagal mendapatkan pesanan ${error}`);
+      });
+    queryAllPesanan1()
+      .then((pesanan) => {
+        this.setState({belumKonfirmasi: pesanan});
+      })
+      .catch((error) => {
+        alert(`Gagal mendapatkan pesanan ${error}`);
+      });
+    queryAllPesanan2()
+      .then((pesanan) => {
+        this.setState({belumKirim: pesanan});
+      })
+      .catch((error) => {
+        alert(`Gagal mendapatkan pesanan ${error}`);
+      });
+    queryAllPesanan3()
+      .then((pesanan) => {
+        this.setState({selesai: pesanan});
+      })
+      .catch((error) => {
+        alert(`Gagal mendapatkan pesanan ${error}`);
+      });
+    queryAllPesananMin1()
+      .then((pesanan) => {
+        this.setState({batal: pesanan});
+      })
+      .catch((error) => {
+        alert(`Gagal mendapatkan pesanan ${error}`);
+      });
+  };
   render() {
     return (
       <View style={{flex: 1, backgroundColor: 'white'}}>
-        <View style={{
-          backgroundColor: '#284B63',
-          paddingBottom: 20
-          // value : {this.state.User}}
-        }}
-          >
+        <View
+          style={{
+            backgroundColor: '#284B63',
+            paddingBottom: 20,
+          }}>
           <View
             style={{
-              // flexDirection: 'row',
-              marginTop: 20,
+              marginTop: 15,
               alignItems: 'center',
               justifyContent: 'center',
             }}>
             <Image
-              style={[styles.image, {marginLeft : 15}]}
+              style={[styles.image, {marginLeft: 15}]}
               source={require('../../assets/image/profile.png')}
             />
-            <View style={{marginLeft: 15, justifyContent: 'center'}}>
-              <Text style={[styles.h1, {textAlign: 'center'}]}>John Doe</Text>
-              <Text style={[styles.h3, {textAlign: 'center'}]}>Miniso Indonesia</Text>
+            <View
+              style={{marginLeft: 15, marginTop: 5, justifyContent: 'center'}}>
+              <Text style={[styles.h1, {textAlign: 'center'}]}>
+                {this.state.user.nama_user}
+              </Text>
+              <Text style={[styles.h3, {textAlign: 'center'}]}>
+                {this.state.user.nama_toko}
+              </Text>
             </View>
           </View>
           <View style={{marginTop: 15}}>
-            <Text style={[styles.h6]}>Harga Total Pemasukan</Text>
-            <Text style={[styles.h7]}>Rp. 90.000.000</Text>
+            <Text style={[styles.h6, {marginBottom: 0}]}>
+              Harga Total Pemasukan
+            </Text>
+            <Text style={[styles.h7, {marginTop: 0}]}>
+              Rp {currencyFormat(Number(this.state.user.pemasukkan_user))}
+            </Text>
           </View>
           <View
             style={{
@@ -122,62 +178,70 @@ export default class ProfilPage extends React.Component {
               justifyContent: 'space-between',
             }}>
             <View>
-              <Text style={[styles.h2, {textAlign: 'center'}]}>18</Text>
+              <Text style={[styles.h2, {textAlign: 'center'}]}>
+                {this.state.belumBayar.length +
+                  this.state.belumKonfirmasi.length +
+                  this.state.belumKirim.length +
+                  this.state.selesai.length}
+              </Text>
               <Text style={[styles.h5, {textAlign: 'left'}]}>Pesanan</Text>
             </View>
             <View>
-              <Text style={[styles.h2, {textAlign: 'center'}]}>30</Text>
+              <Text style={[styles.h2, {textAlign: 'center'}]}>
+                {this.state.selesai.length}
+              </Text>
               <Text style={[styles.h5, {textAlign: 'left'}]}>Selesai</Text>
             </View>
             <View>
-              <Text style={[styles.h2, {textAlign: 'center'}]}>8</Text>
+              <Text style={[styles.h2, {textAlign: 'center'}]}>
+                {this.state.batal.length}
+              </Text>
               <Text style={[styles.h5, {textAlign: 'left'}]}>Dibatalkan</Text>
             </View>
           </View>
-          
-          {/* <TouchableWithoutFeedback style={{alignItems: 'center'}}>
-            <Card style={styles.button} onPress={() => this.props.navigation.navigate('Profil Toko')}>
-              <Text style={[styles.h4, {color: '#353535'}]}>
-                Lihat Profil Toko
-              </Text>
-            </Card>
-          </TouchableWithoutFeedback> */}
         </View>
         <ScrollView>
-        <FlatList
-          data={listProfil}
-          renderItem={({item}) => (
-            <Item
-              icon={item.icon}
-              title={item.title}
-              desc={item.desc}
-              isRequired={item.isRequired}
-              tekan={() => this.props.navigation.navigate(item.next)}
-            />
-          )}
-          keyExtractor={(item) => item.id}
-          
-        />
-        <TouchableWithoutFeedback onPress = {() => {
-                      Alert.alert(
-                        'Keluar',
-                        'Anda yakin ingin keluar?',
-                        [
-                            {
-                                text: 'No', onPress: () => { },//Do nothing
-                                style: 'cancel'
-                            },
-                            {
-                                text: 'Yes', onPress: () => {
-                                  this.props.navigation.navigate('Masuk Akun');                                
-                                }
-                            },
-                        ],
-                        { cancelable: true }
-                        );
-                   
-                    }
-                      }>
+          <FlatList
+            data={listProfil}
+            renderItem={({item}) => (
+              <Item
+                icon={item.icon}
+                title={item.title}
+                desc={item.desc}
+                isRequired={item.isRequired}
+                tekan={() =>
+                  this.props.navigation.navigate(item.next, {
+                    type: item.type,
+                    user: this.state.user,
+                  })
+                }
+              />
+            )}
+            keyExtractor={(item) => item.id}
+          />
+          <TouchableWithoutFeedback
+            onPress={() => {
+              Alert.alert(
+                'Keluar',
+                'Anda yakin ingin keluar?',
+                [
+                  {
+                    text: 'Batal',
+                    onPress: () => {}, //Do nothing
+                    style: 'cancel',
+                  },
+                  {
+                    text: 'Iya',
+                    onPress: () => {
+                      AsyncStorage.removeItem('USER');
+                      AsyncStorage.removeItem('TOKEN');
+                      this.props.navigation.navigate('AwalScreen');
+                    },
+                  },
+                ],
+                {cancelable: true},
+              );
+            }}>
             <View
               style={{
                 flexDirection: 'row',
@@ -196,28 +260,13 @@ export default class ProfilPage extends React.Component {
               </Text>
             </View>
           </TouchableWithoutFeedback>
-        {/* <FlatList
-          style={{marginTop: null}}
-          data={listProfil}
-          renderItem={({item}) => (
-            <Item
-              icon={item.icon}
-              title={item.title}
-              desc={item.desc}
-              isRequired={item.isRequired}
-              tekan={() => this.props.navigation.navigate(item.next)}
-            />
-          )}
-          keyExtractor={(item) => item.id}
-        /> */}
         </ScrollView>
       </View>
-      
     );
   }
 }
 
-const Item = ({icon, title,next, desc, isRequired, tekan}) => (
+const Item = ({icon, title, next, desc, isRequired, tekan}) => (
   <TouchableWithoutFeedback onPress={tekan}>
     <View
       style={{
@@ -254,8 +303,6 @@ const Item = ({icon, title,next, desc, isRequired, tekan}) => (
       ) : null}
     </View>
   </TouchableWithoutFeedback>
-  
-
 );
 
 const styles = StyleSheet.create({
@@ -286,19 +333,19 @@ const styles = StyleSheet.create({
     fontSize: 13,
   },
   h6: {
-    fontSize: 13, 
-    fontFamily: 'OpenSans', 
-    color: 'white', 
+    fontSize: 13,
+    fontFamily: 'OpenSans',
+    color: 'white',
     alignContent: 'center',
-    textAlign:'center'
+    textAlign: 'center',
   },
-  h7:{
+  h7: {
     marginTop: 5,
-    fontSize: 30,  
-    fontFamily: 'OpenSans-SemiBold', 
-    color: 'white', 
+    fontSize: 30,
+    fontFamily: 'OpenSans-SemiBold',
+    color: 'white',
     alignContent: 'center',
-    textAlign:'center'
+    textAlign: 'center',
   },
   button: {
     marginTop: 20,
@@ -308,3 +355,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
 });
+
+function currencyFormat(num) {
+  return num.toFixed(0).replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1.');
+}

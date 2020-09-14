@@ -7,24 +7,15 @@ import {
   TouchableWithoutFeedback,
 } from 'react-native';
 import {getStatusBarHeight} from 'react-native-status-bar-height';
-import {queryOneUser, filterUsers, queryAllUser} from '../database/Data_chat';
-import RealmTask from '../database/RealmTask';
+import {filterUsers} from '../database/Realm';
+import AsyncStorage from '@react-native-community/async-storage';
 
 class LoginPage extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      user_id: null,
       nama_user: '',
-      nama_toko : '',
-      foto_produk: '',
-      url_user : '',
-      email : '',
-      password_user : '',
-      ulangipassword_user : '',
-      userToken : '',
-      pemasukkan_user : '',
-      isAddNew: true,
+      password_user: '',
     };
   }
   render() {
@@ -36,7 +27,7 @@ class LoginPage extends Component {
         </Text>
         <InputForm
           question="Nama User"
-          example="example@email.com"
+          example="John Doe"
           // type="email-address"
           onChangeText={(namauser) => this.setState({nama_user: namauser})}
         />
@@ -48,48 +39,36 @@ class LoginPage extends Component {
         />
         <TouchableWithoutFeedback
           onPress={() => {
-            if (this.state.nama_user.trim()==""){
-              alert("Mohon lengkapi Nama User");
+            if (this.state.nama_user.trim() == '') {
+              alert('Mohon lengkapi Nama User');
               return;
-            }
-            if (this.state.password_user.trim()==""){
-              alert("Mohon lengkapi Password");
+            } else if (this.state.password_user.trim() == '') {
+              alert('Mohon lengkapi Password');
               return;
+            } else {
+              filterUsers(this.state.nama_user)
+                .then((res) => {
+                  if (
+                    res[0].nama_user == this.state.nama_user &&
+                    res[0].password_user == this.state.password_user
+                  ) {
+                    AsyncStorage.setItem('USER', res[0].nama_user);
+                    AsyncStorage.setItem('TOKEN', res[0].userToken);
+                    this.props.navigation.navigate('TabScreen');
+                  } else {
+                    alert(
+                      `User Tidak Terdaftar Mohon Daftarkan ${this.state.nama_user}`,
+                    );
+                  }
+                })
+                .catch((error) => {
+                  alert(
+                    `User Tidak Terdaftar Mohon Daftarkan ${
+                      this.state.nama_user + error
+                    }`,
+                  );
+                });
             }
-            filterUsers(this.state.nama_user).then((res) => {
-              console.warn('nn')
-              if(res.user_id != undefined){
-                alert('user_ada')
-                
-              } else {
-                alert(`User Tidak Terdaftar Mohon Daftarkan ${this.state.nama_user}`);
-              }
-              // console.log('Id : '+JSON.stringify(this.state.user_id
-            }).catch((error) => {
-              alert(`User Tidak Terdaftar Mohon Daftar ${this.state.nama_user + error}`);
-              
-            });
-            if (this.state.isAddNew ==true){
-              
-            }
-            //   Realm.Sync.User.login('https://crossgroup-wooden-chair.us1a.cloud.realm.io', this.state.email, this.state.password,
-            //     (error, user) => {
-            //         if (error) {
-            //             console.log(error);
-            //         } else {
-            //           RealmTask = new Realm({
-            //               sync: {
-            //                   user
-            //               }
-            //           });
-            //             queryOneUser(this.state.nama_user).then().catch((error) => {
-
-            //               alert(`User Tidak Terdaftar Mohon Daftar${error}`);
-            //             });
-            //         }
-            //     }
-            // );
-            this.props.navigation.navigate('TabScreen');
           }}>
           <View
             style={{
@@ -136,7 +115,7 @@ class LoginPage extends Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    paddingTop: getStatusBarHeight() + 40,
+    paddingTop: getStatusBarHeight() + 10,
     paddingBottom: 50,
     paddingLeft: 30,
     paddingRight: 30,

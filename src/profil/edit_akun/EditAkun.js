@@ -6,44 +6,45 @@ import {
   Text,
   TextInput,
   ScrollView,
-  Switch,
   Alert,
   Dimensions,
 } from 'react-native';
-import {updateUser} from '../../database/Data_chat'
-import Ionicons from 'react-native-vector-icons/Ionicons';
+import {updateUser} from '../../database/Realm';
 
 export default class EditAkun extends React.Component {
-  constructor(props){
+  constructor(props) {
     super(props);
     this.state = {
-      user_id: null,
+      user_id: 0,
       nama_user: '',
-      nama_toko : '',
+      nama_toko: '',
       foto_produk: '',
-      url_user : '',
-      email : '',
-      password_user : '',
-      ulangipassword_user : '',
-      userToken : '',
-      pemasukkan_user : '',
-      isAddNew : true,
+      url_user: '',
+      email: '',
+      password_user: '',
+      ulangipassword_user: '',
+      userToken: '',
+      pemasukkan_user: '',
+      isAddNew: true,
     };
   }
 
-  // componentDidMount(){
-  //   this.setState({user_id : this.props.route.params.item.user_id});
-  //   this.setState({nama_user : this.props.route.params.item.nama_user});
-  //   this.setState({nama_toko : this.props.route.params.item.nama_toko});
-  //   this.setState({foto_produk : this.props.route.params.item.foto_produk});
-  //   this.setState({url_user : this.props.route.params.item.url_user});
-  //   this.setState({email : this.props.route.params.item.email});
-  //   this.setState({password_user : this.props.route.params.item.password_user});
-  //   this.setState({ulangipassword_user : this.props.route.params.item.ulangipassword_user});
-  //   this.setState({userToken : this.props.route.params.item.userToken});
-  //   this.setState({pemasukkan_user : this.props.route.params.item.pemasukkan_user});
-  //   console.log('qwerty'+JSON.stringify(this.props.route.params.item.chat_judul));
-  // }
+  componentDidMount() {
+    this.setState({user_id: this.props.route.params.user.user_id});
+    this.setState({nama_user: this.props.route.params.user.nama_user});
+    this.setState({nama_toko: this.props.route.params.user.nama_toko});
+    this.setState({foto_produk: this.props.route.params.user.foto_produk});
+    this.setState({url_user: this.props.route.params.user.url_user});
+    this.setState({email: this.props.route.params.user.email});
+    this.setState({password_user: this.props.route.params.user.password_user});
+    this.setState({
+      ulangipassword_user: this.props.route.params.user.ulangipassword_user,
+    });
+    this.setState({userToken: this.props.route.params.user.userToken});
+    this.setState({
+      pemasukkan_user: this.props.route.params.user.pemasukkan_user,
+    });
+  }
 
   render() {
     return (
@@ -51,17 +52,16 @@ export default class EditAkun extends React.Component {
         <ScrollView>
           <TouchableWithoutFeedback>
             <View style={{alignItems: 'center', flex: 1}}>
-                <View
+              <View
                 style={{
-                    height: 80,
-                    width: 80,
-                    backgroundColor: '#EFEFEF',
-                    justifyContent: 'center',
-                    alignItems: 'center',
-
+                  height: 80,
+                  width: 80,
+                  backgroundColor: '#EFEFEF',
+                  justifyContent: 'center',
+                  alignItems: 'center',
                 }}>
                 <View
-                    style={{
+                  style={{
                     height: 70,
                     width: 70,
                     borderWidth: 1,
@@ -70,15 +70,15 @@ export default class EditAkun extends React.Component {
                     borderStyle: 'dashed',
                     justifyContent: 'center',
                     alignItems: 'center',
-                    }}>
-                    <Text style={[styles.hint, {textAlign: 'center'}]}>
+                  }}>
+                  <Text style={[styles.hint, {textAlign: 'center'}]}>
                     Tambah Gambar
-                    </Text>
+                  </Text>
                 </View>
-                </View>
+              </View>
             </View>
           </TouchableWithoutFeedback>
-          <Text style={[styles.pertanyaan, {marginTop: 20, marginBottom: 5}]}>
+          <Text style={[styles.pertanyaan, {marginTop: 15, marginBottom: 5}]}>
             Nama User
           </Text>
           <View
@@ -94,9 +94,9 @@ export default class EditAkun extends React.Component {
                 fontSize: 14,
                 width: Dimensions.get('window').width - 18 - 18 - 18,
               }}
-              placeholder="John Doe"
-              onChangeText={(ans) => this.setState({nama: ans})}
+              onChangeText={(ans) => this.setState({nama_user: ans})}
               returnKeyType="done"
+              value={this.state.nama_user}
             />
           </View>
           <Text style={[styles.pertanyaan, {marginTop: 20, marginBottom: 5}]}>
@@ -116,76 +116,191 @@ export default class EditAkun extends React.Component {
                 fontSize: 14,
                 width: Dimensions.get('window').width - 18 - 18 - 18,
               }}
-              placeholder="Miniso"
-              onChangeText={(ans) => this.setState({nama: ans})}
+              onChangeText={(ans) => this.setState({nama_toko: ans})}
               returnKeyType="done"
+              value={this.state.nama_toko}
             />
           </View>
-          <View style = {{
-                  flexDirection : 'row',
-                  justifyContent :'space-evenly', 
-                  marginTop : 20, 
-                  alignItems: 'center', 
-                  alignContent : 'center',
+          <Text style={[styles.pertanyaan, {marginTop: 20, marginBottom: 5}]}>
+            Email
+          </Text>
+          <View
+            style={{
+              flexDirection: 'row',
+              backgroundColor: '#EFEFEF',
+              borderRadius: 5,
+              alignItems: 'center',
+            }}>
+            <TextInput
+              style={{
+                padding: 9,
+                fontFamily: 'OpenSans-Regular',
+                fontSize: 14,
+                width: Dimensions.get('window').width - 18 - 18 - 18,
+              }}
+              onChangeText={(ans) => this.setState({email: ans})}
+              returnKeyType="done"
+              value={this.state.email}
+            />
+          </View>
+          <Text style={[styles.pertanyaan, {marginTop: 20, marginBottom: 5}]}>
+            Kata Sandi
+          </Text>
+          <View
+            style={{
+              flexDirection: 'row',
+              backgroundColor: '#EFEFEF',
+              borderRadius: 5,
+              alignItems: 'center',
+            }}>
+            <TextInput
+              style={{
+                padding: 9,
+                fontFamily: 'OpenSans-Regular',
+                fontSize: 14,
+                width: Dimensions.get('window').width - 18 - 18 - 18,
+              }}
+              onChangeText={(ans) => this.setState({password_user: ans})}
+              returnKeyType="done"
+              value={this.state.password_user}
+              secureTextEntry={true}
+            />
+          </View>
+          <Text style={[styles.pertanyaan, {marginTop: 20, marginBottom: 5}]}>
+            Ulangi Kata Sandi
+          </Text>
+          <View
+            style={{
+              flexDirection: 'row',
+              backgroundColor: '#EFEFEF',
+              borderRadius: 5,
+              alignItems: 'center',
+            }}>
+            <TextInput
+              style={{
+                padding: 9,
+                fontFamily: 'OpenSans-Regular',
+                fontSize: 14,
+                width: Dimensions.get('window').width - 18 - 18 - 18,
+              }}
+              onChangeText={(ans) => this.setState({ulangipassword_user: ans})}
+              returnKeyType="done"
+              secureTextEntry={true}
+            />
+          </View>
+          <View
+            style={{
+              flexDirection: 'row',
+              justifyContent: 'space-evenly',
+              marginTop: 20,
+              alignItems: 'center',
+              alignContent: 'center',
+            }}>
+            <TouchableWithoutFeedback
+              onPress={() => {
+                Alert.alert(
+                  'Simpan Perubahan',
+                  'Apakah anda yakin?',
+                  [
+                    {
+                      text: 'Batal',
+                      onPress: () => {}, //Do nothing
+                      style: 'cancel',
+                    },
+                    {
+                      text: 'Iya',
+                      onPress: () => {
+                        try {
+                          if (this.state.ulangipassword_user == '') {
+                            const update = {
+                              user_id: this.state.user_id,
+                              nama_user: this.state.nama_user,
+                              nama_toko: this.state.nama_toko,
+                              foto_produk: this.state.foto_produk,
+                              url_user: this.state.url_user,
+                              email: this.state.email,
+                              password_user: this.state.password_user,
+                              ulangipassword_user: this.state.password_user,
+                              userToken: this.state.userToken,
+                              pemasukkan_user: this.state.pemasukkan_user,
+                            };
+                            updateUser(update);
+                          } else if (
+                            this.state.password_user ==
+                            this.state.ulangipassword_user
+                          ) {
+                            const update = {
+                              user_id: this.state.user_id,
+                              nama_user: this.state.nama_user,
+                              nama_toko: this.state.nama_toko,
+                              foto_produk: this.state.foto_produk,
+                              url_user: this.state.url_user,
+                              email: this.state.email,
+                              password_user: this.state.password_user,
+                              ulangipassword_user: this.state
+                                .ulangipassword_user,
+                              userToken: this.state.userToken,
+                              pemasukkan_user: this.state.pemasukkan_user,
+                            };
+                            updateUser(update);
+                          } else {
+                          }
+                        } catch (e) {
+                          Alert.alert(
+                            'Pemberitahuan',
+                            'Gagal mengubah data akun, mohon dicoba lagi',
+                          );
+                          console.log(e);
+                        } finally {
+                          Alert.alert(
+                            'Pemberitahuan',
+                            'Data akun berhasil diubah',
+                          );
+                        }
+                      },
+                    },
+                  ],
+                  {cancelable: true},
+                );
+              }}>
+              <View
+                style={[
+                  this.props.style,
+                  {
+                    flexDirection: 'row',
+                    backgroundColor: '#284B63',
+                    borderColor: 'white',
+                    borderWidth: 1,
+                    borderRadius: 16,
+                    paddingTop: 6,
+                    paddingBottom: 6,
+                    paddingRight: 8,
+                    margin: 5,
+                    shadowColor: '#000',
+                    shadowOffset: {
+                      width: 0,
+                      height: 2,
+                    },
+                    shadowOpacity: 0.25,
+                    shadowRadius: 2,
+                    elevation: 3,
+                    width: 200,
+                    justifyContent: 'center',
+                  },
+                ]}>
+                {this.props.children}
+                <Text
+                  style={{
+                    color: 'white',
+                    fontFamily: 'OpenSans-SemiBold',
+                    fontSize: 14,
+                    marginLeft: 15,
                   }}>
-                    <TouchableWithoutFeedback onPress = {() => {
-                      Alert.alert(
-                        'Simpan Perubahan',
-                        'Apakah anda yakin?',
-                        [
-                            {
-                                text: 'No', onPress: () => { },//Do nothing
-                                style: 'cancel'
-                            },
-                            {
-                                text: 'Yes', onPress: () => {
-                                  this.props.navigation.navigate('Profil Saya');
-                                }
-                            },
-                        ],
-                        { cancelable: true }
-                        );
-                   
-                    }
-                      }>
-                      <View
-                        style={[
-                          this.props.style,
-                          {
-                            flexDirection: 'row',
-                            backgroundColor:'#284B63',
-                            borderColor: 'white',
-                            borderWidth: 1,
-                            borderRadius: 16,
-                            paddingTop: 6,
-                            paddingBottom: 6,
-                            paddingRight: 8,
-                            margin: 5,
-                            shadowColor: '#000',
-                            shadowOffset: {
-                              width: 0,
-                              height: 2,
-                            },
-                            shadowOpacity: 0.25,
-                            shadowRadius: 2,
-                            elevation: 3,
-                            width : 200,
-                            justifyContent: "center",
-                          },
-                        ]}>
-                      {this.props.children}
-                        <Text
-                          style={{
-                            color: 'white',
-                            fontFamily: 'OpenSans-SemiBold',
-                            fontSize: 14,
-                            marginLeft : 15,
-                          }}>
-                          Simpan
-                        </Text>
-                      </View>
-                    </TouchableWithoutFeedback>
-                </View>
+                  Simpan
+                </Text>
+              </View>
+            </TouchableWithoutFeedback>
+          </View>
         </ScrollView>
       </View>
     );

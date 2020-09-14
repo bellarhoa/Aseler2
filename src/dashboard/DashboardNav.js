@@ -6,26 +6,27 @@ import DetailPesanan0 from './detail_pesanan/DetailPesanan0';
 import DetailPesanan1 from './detail_pesanan/DetailPesanan1';
 import DetailPesanan2 from './detail_pesanan/DetailPesanan2';
 import PesanTemplate from '../profil/chat_template/PesanTemplate';
-import LihatChat from '../profil/chat_template/LihatChat';
+import TambahChat from '../profil/chat_template/TambahChat';
 import EditChat from '../profil/chat_template/EditChat';
-import DaftarPesanan from './detail_kategori/DaftarPesanan';
-import DaftarPesanan1 from './detail_kategori/DaftarPesanan1';
-import DaftarPesanan2 from './detail_kategori/DaftarPesanan2';
-import TanggalPesanan from './detail_kategori/TanggalPesanan';
+import DaftarPesanan from './component/DaftarPesanan';
 
 const Stack = createStackNavigator();
 
 export default function DashboardNav() {
   return (
     <Stack.Navigator
-      initialRouteName="Pesanan Saya"
+      initialRouteName="Dashboard"
       screenOptions={{
         headerStyle: {backgroundColor: 'white'},
         headerTintColor: '#353535',
         headerTitleAlign: 'center',
         headerTitleStyle: {fontFamily: 'OpenSans-Regular', fontSize: 18},
       }}>
-      <Stack.Screen name="Pesanan Saya" component={DashboardPage} />
+      <Stack.Screen
+        name="Dashboard"
+        component={DashboardPage}
+        options={{headerLeft: null}}
+      />
       <Stack.Screen
         name="DetailPesanan0"
         component={DetailPesanan0}
@@ -42,42 +43,25 @@ export default function DashboardNav() {
         options={{headerTitle: 'Detail Pesanan', tabBarVisible: false}}
       />
       <Stack.Screen
-        name="Pilih Pesan Template"
+        name="PesanTemplate"
         component={PesanTemplate}
-        options={{tabBarVisible: false}}
-      />
-      <Stack.Screen
-        name="LihatChat"
-        component={LihatChat}
-        options={{tabBarVisible: false}}
+        options={{tabBarVisible: false, headerTitle: 'Pilih Pesan Template'}}
       />
       <Stack.Screen
         name="EditChat"
         component={EditChat}
-        options={{tabBarVisible: false}}
+        options={{tabBarVisible: false, headerTitle: 'Edit Pesan Template'}}
+      />
+      <Stack.Screen
+        name="TambahChat"
+        component={TambahChat}
+        options={{tabBarVisible: false, headerTitle: 'Tambah Pesan Template'}}
       />
       <Stack.Screen
         name="DaftarPesanan"
         component={DaftarPesanan}
         options={{tabBarVisible: false}}
-        options={{headerTitle: 'Pesanan Belum Kirim', tabBarVisible: false}}
-      />
-      <Stack.Screen
-        name="DaftarPesanan1"
-        component={DaftarPesanan1}
-        options={{tabBarVisible: false}}
-        options={{headerTitle: 'Pesanan Belum Konfirmasi', tabBarVisible: false}}
-      />
-      <Stack.Screen
-        name="DaftarPesanan2"
-        component={DaftarPesanan2}
-        options={{tabBarVisible: false}}
-        options={{headerTitle: 'Pesanan Belum Bayar', tabBarVisible: false}}
-      />
-      <Stack.Screen
-        name="TanggalPesanan"
-        component={TanggalPesanan}
-        options={{tabBarVisible: false}}
+        options={{headerTitle: 'Daftar Pesanan', tabBarVisible: false}}
       />
     </Stack.Navigator>
   );
