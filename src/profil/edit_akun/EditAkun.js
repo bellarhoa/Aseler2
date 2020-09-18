@@ -15,34 +15,21 @@ export default class EditAkun extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      user_id: 0,
       nama_user: '',
       nama_toko: '',
-      foto_produk: '',
-      url_user: '',
       email: '',
       password_user: '',
       ulangipassword_user: '',
-      userToken: '',
-      pemasukkan_user: '',
-      isAddNew: true,
     };
   }
 
   componentDidMount() {
-    this.setState({user_id: this.props.route.params.user.user_id});
     this.setState({nama_user: this.props.route.params.user.nama_user});
     this.setState({nama_toko: this.props.route.params.user.nama_toko});
-    this.setState({foto_produk: this.props.route.params.user.foto_produk});
-    this.setState({url_user: this.props.route.params.user.url_user});
     this.setState({email: this.props.route.params.user.email});
     this.setState({password_user: this.props.route.params.user.password_user});
     this.setState({
       ulangipassword_user: this.props.route.params.user.ulangipassword_user,
-    });
-    this.setState({userToken: this.props.route.params.user.userToken});
-    this.setState({
-      pemasukkan_user: this.props.route.params.user.pemasukkan_user,
     });
   }
 
@@ -213,16 +200,18 @@ export default class EditAkun extends React.Component {
                         try {
                           if (this.state.ulangipassword_user == '') {
                             const update = {
-                              user_id: this.state.user_id,
+                              user_id: this.props.route.params.user.user_id,
                               nama_user: this.state.nama_user,
                               nama_toko: this.state.nama_toko,
-                              foto_produk: this.state.foto_produk,
-                              url_user: this.state.url_user,
+                              foto_produk: this.props.route.params.user
+                                .foto_produk,
+                              url_user: this.props.route.params.user.url_user,
                               email: this.state.email,
                               password_user: this.state.password_user,
                               ulangipassword_user: this.state.password_user,
-                              userToken: this.state.userToken,
-                              pemasukkan_user: this.state.pemasukkan_user,
+                              userToken: this.props.route.params.user.userToken,
+                              pemasukkan_user: this.props.route.params.user
+                                .pemasukkan_user,
                             };
                             updateUser(update);
                           } else if (
@@ -230,17 +219,19 @@ export default class EditAkun extends React.Component {
                             this.state.ulangipassword_user
                           ) {
                             const update = {
-                              user_id: this.state.user_id,
+                              user_id: this.props.route.params.user.user_id,
                               nama_user: this.state.nama_user,
                               nama_toko: this.state.nama_toko,
-                              foto_produk: this.state.foto_produk,
-                              url_user: this.state.url_user,
+                              foto_produk: this.props.route.params.user
+                                .foto_produk,
+                              url_user: this.props.route.params.user.url_user,
                               email: this.state.email,
                               password_user: this.state.password_user,
                               ulangipassword_user: this.state
                                 .ulangipassword_user,
-                              userToken: this.state.userToken,
-                              pemasukkan_user: this.state.pemasukkan_user,
+                              userToken: this.props.route.params.user.userToken,
+                              pemasukkan_user: this.props.route.params.user
+                                .pemasukkan_user,
                             };
                             updateUser(update);
                           } else {

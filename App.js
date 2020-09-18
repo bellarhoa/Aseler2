@@ -49,7 +49,7 @@ function TabScreen() {
         name="PesananScreen"
         component={DashboardNav}
         options={({route}) => ({
-          tabBarLabel: 'Pesanan',
+          tabBarLabel: 'Dashboard',
           tabBarIcon: ({color, size}) => (
             <Ionicons name="speedometer" color={color} size={size} />
           ),
@@ -72,13 +72,14 @@ function TabScreen() {
       <Tab.Screen
         name="ProfilScreen"
         component={ProfilNav}
-        options={{
+        options={({route}) => ({
           tabBarLabel: 'Profil',
           tabBarIcon: ({color, size}) => (
             <Ionicons name="person" color={color} size={size} />
           ),
+          tabBarVisible: getTabBarVisibility(route),
           headerLeft: null,
-        }}
+        })}
       />
     </Tab.Navigator>
   );
